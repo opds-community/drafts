@@ -45,13 +45,13 @@ Every OPDS Catalog Feed Document MUST either be an Acquisition Feed or a Navigat
 
 ### 2.1. Navigation Feeds
 
-A Navigation Feed is an OPDS Catalog Feed Document whose Atom Entries serve to create a suggested hierarchy for presentation and browsing. A Navigation Feed MUST NOT contain OPDS Catalog Entries but instead contains Atom Entries that link to other Navigation or Acquisition Feeds or other Resources. Each Atom Entry's "atom:content" element SHOULD include a brief description of the linked Resource.
+A Navigation Feed is an OPDS Catalog Feed Document whose Atom Entries serve to create a suggested hierarchy for presentation and browsing. A Navigation Feed MUST NOT contain OPDS Catalog Entries but instead contains Atom Entries that link to other Navigation or Acquisition Feeds or other Resources. Each Atom Entry's `atom:content` element SHOULD include a brief description of the linked Resource.
 
 Links to Navigation Feeds SHOULD use the "type" attribute `application/atom+xml;profile=opds-catalog;kind=navigation`. OPDS Catalog providers SHOULD choose the best relation for each Navigation Feed based on the relations in the section OPDS Catalog Relations. The relation "subsection" SHOULD be used if no other relation is more appropriate.
 
 **Example**
 
-An OPDS Catalog Root that is the top of a set of Navigation Feeds references three Acquisition Feeds using atom:links:
+An OPDS Catalog Root that is the top of a set of Navigation Feeds references three Acquisition Feeds using `atom:link`:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -215,18 +215,18 @@ The OPDS Catalog Root is the top-level OPDS Catalog Feed Document. It is either 
 
 External links to the OPDS Catalog Resource SHOULD use the IRI of the OPDS Catalog Root.
 
-Each OPDS Catalog Feed Document SHOULD contain an atom:link element with a link relation of "start", which references the OPDS Catalog Root Resource.
+Each OPDS Catalog Feed Document SHOULD contain an `atom:link` element with a link relation of "start", which references the OPDS Catalog Root Resource.
 
 
 ### 2.4. Element Definitions
 
 #### The `atom:feed` Element
 
-The "atom:feed" element is the document (i.e., top-level) element of an OPDS Catalog Feed Document, acting as a container for metadata, hierarchy, and Publications associated with the OPDS Catalog. Its element children consist of metadata elements followed by zero or more atom:entry child elements.
+The `atom:feed` element is the document (i.e., top-level) element of an OPDS Catalog Feed Document, acting as a container for metadata, hierarchy, and Publications associated with the OPDS Catalog. Its element children consist of metadata elements followed by zero or more `atom:entry` child elements.
 
 The following child elements are refined by this specification:
 
-- OPDS Catalog Feed Documents SHOULD contain one atom:link element with a "rel" attribute value of "self". This is the preferred URI for retrieving the atom:feed representing this OPDS Catalog Feed Document.
+- OPDS Catalog Feed Documents SHOULD contain one `atom:link` element with a "rel" attribute value of "self". This is the preferred URI for retrieving the `atom:feed` representing this OPDS Catalog Feed Document.
 
 
 ## x. Media Type Considerations
