@@ -47,7 +47,9 @@ Every OPDS Catalog Feed Document MUST either be an Acquisition Feed or a Navigat
 
 A Navigation Feed is an OPDS Catalog Feed Document whose Atom Entries serve to create a suggested hierarchy for presentation and browsing. A Navigation Feed MUST NOT contain OPDS Catalog Entries but instead contains Atom Entries that link to other Navigation or Acquisition Feeds or other Resources. Each Atom Entry's `atom:content` element SHOULD include a brief description of the linked Resource.
 
-Links to Navigation Feeds SHOULD use the "type" attribute `application/atom+xml;profile=opds-catalog;kind=navigation`. OPDS Catalog providers SHOULD choose the best relation for each Navigation Feed based on the relations in the section OPDS Catalog Relations. The relation "subsection" SHOULD be used if no other relation is more appropriate.
+Links to Navigation Feeds MUST use the "type" attribute `application/atom+xml;profile=opds-catalog;kind=navigation`. 
+
+OPDS Catalog providers SHOULD choose the best relation for each Navigation Feed based on the relations in the section OPDS Catalog Relations. The relation "subsection" SHOULD be used if no other relation is more appropriate.
 
 **Example**
 
@@ -103,7 +105,7 @@ An OPDS Catalog Root that is the top of a set of Navigation Feeds references thr
 
 An Acquisition Feed is an OPDS Catalog Feed Document that collects OPDS Catalog Entries into a single, ordered set. The simplest complete OPDS Catalog would be a single Acquisition Feed listing all of the available OPDS Catalog Entries from that provider. In more complex OPDS Catalogs, Acquisition Feeds are used to present and organize sets of related OPDS Catalog Entries for browsing and discovery by clients and aggregators.
 
-Links to Acquisition Feeds SHOULD use the "type" attribute `application/atom+xml;profile=opds-catalog;kind=acquisition`.
+Links to Acquisition Feeds MUST use the "type" attribute `application/atom+xml;profile=opds-catalog;kind=acquisition`.
 
 For further details on limiting the size of Acquisition Feeds through pagination, Partial Catalog Entries, and compression, see the Section Listing Acquisition Feeds.
 
@@ -228,6 +230,50 @@ The following child elements are refined by this specification:
 
 - OPDS Catalog Feed Documents SHOULD contain one `atom:link` element with a "rel" attribute value of "self". This is the preferred URI for retrieving the `atom:feed` representing this OPDS Catalog Feed Document.
 
+## 3. Search
+
+An OPDS Catalog MAY provide a search facility through an [OpenSearch] description document. 
+
+Links to [OpenSearch] description documents MUST use the "search" relation value and the `application/opensearchdescription+xml` media type as defined in the "Autodiscovery" section of the [OpenSearch] specification.
+
+```xml
+<link rel="search"
+      href="search.xml"
+      type="application/opensearchdescription+xml"/>
+````
+
+In an [OpenSearch] description document, the search interface MUST use the media type associated to OPDS Catalogs:
+
+```xml
+<Url type="application/atom+xml;profile=opds-catalog;kind=acquisition"
+     template="http://example.com/search?q={searchTerms}" />
+````
+
+An OPDS Catalog MAY also provide more advanced possibilities for its search endpoint, using one or more fully qualified parameters from the Atom namespace such as:
+
+- atom:author
+- atom:contributor
+- atom:title
+
+
+OPDS Catalog Feed Documents MAY include elements from the [OpenSearch] namespace such as "opensearch:totalResults" or "opensearch:itemsPerPage" in [OpenSearch] responses.
+
+
+**Open Search Description Document Example**
+
+In order to provide a search endpoint that supports both basic (keyword based) and advanced search, an OPDS Catalog could provide the following template in its [OpenSearch] Description document:
+```xml
+<Url type="application/atom+xml;profile=opds-catalog"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     template="http://example.com/search?q={searchTerms}&amp;author={atom:author}&amp;contributor={atom:contributor}&amp;title={atom:title}" />
+````
+
+With such a template, an OPDS Client could for example support the following search queries:
+
+- http://example.com/search?q=gardening
+- http://example.com/search?q=gardening&author=smith
+- http://example.com/search?author=drucker
+- http://example.com/search?author=ferriss&title=four
 
 ## x. Media Type Considerations
 
@@ -237,11 +283,11 @@ Publishers of OPDS Catalogs SHOULD use the type parameter to help clients distin
 OPDS Catalog Entries and OPDS Catalog Feeds.
 
 ### x.2. The OPDS Catalog Profile Parameter
-Relations to OPDS Catalog Feed Document and OPDS Catalog Entry Document Resources SHOULD use a "profile" parameter 
+Relations to OPDS Catalog Feed Document and OPDS Catalog Entry Document Resources MUST use a "profile" parameter 
 following Section 4.3 of [RFC4288] with the value "opds-catalog". 
 This profile parameter provides clients with an advisory hint that the Resource should be a component of an OPDS Catalog.
 
-The complete media type for a relation to an OPDS Catalog Entry Document Resource SHOULD be:
+The complete media type for a relation to an OPDS Catalog Entry Document Resource MUST be:
 
 `application/atom+xml;type=entry;profile=opds-catalog`
 
@@ -254,12 +300,11 @@ Navigation Feed.
 This value is intended to make it easier for OPDS clients to display basic contextual information about the feed without 
 requiring that those clients dereference, parse, and analyze linked resources. That said, the client MUST NOT 
 assume this parameter to provide completely accurate information about the nature of the feed. 
-Feed publishers SHOULD make an effort to ensure that this value is accurate.
 
-The complete media type for a relation to an Acquisition Feed SHOULD be:
+The complete media type for a relation to an Acquisition Feed MUST be:
 
 `application/atom+xml;profile=opds-catalog;kind=acquisition`
 
-The complete media type for a relation to a Navigation Feed SHOULD be:
+The complete media type for a relation to a Navigation Feed MUST be:
 
 `application/atom+xml;profile=opds-catalog;kind=navigation`
