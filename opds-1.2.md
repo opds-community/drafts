@@ -18,12 +18,18 @@ This document is a draft of the 1.2 version of the OPDS Catalog specification.
   * [1.2. Terminology](#12-terminology)
   * [1.3. Conformance Statements](#13-conformance-statements)
 - [2. OPDS Catalog Feed Documents](#2-opds-catalog-feed-documents)
-  * [2.1. Navigation Feeds](#21-navigation-feeds)
-  * [2.2. Acquisition Feeds](#22-acquisition-feeds)
-  * [2.3. OPDS Catalog Root](#23-opds-catalog-root)
-  * [2.4. Element Definitions](#24-element-definitions)
+  * [2.1. OPDS Catalog Root](#21-opds-catalog-root)
+  * [2.2. Navigation Feeds](#22-navigation-feeds)
+  * [2.3. Acquisition Feeds](#23-acquisition-feeds)
+  * [2.4. Listing Acquisition Feeds](#24-listing-acquisition-feeds)
+  * [2.5. Complete Acquisition Feeds](#25-complete-acquisition-feeds)
+  * [2.6. Element Definitions](#26-element-definitions)
+      + [The `atom:feed` Element](#the--atom-feed--element)
 - [3. Search](#3-search)
 - [4. Facets](#4-facets)
+    + [The `opds:facetGroup` Attribute](#the--opds-facetgroup--attribute)
+    + [The `opds:activeFacet` Attribute](#the--opds-activefacet--attribute)
+    + [The `thr:count` Attribute](#the--thr-count--attribute)
 - [5. OPDS Catalog Entry Documents](#5-opds-catalog-entry-documents)
   * [5.1. Metadata](#51-metadata)
       + [5.1.1. Relationship Between Atom and Dublin Core Metadata](#511-relationship-between-atom-and-dublin-core-metadata)
@@ -33,15 +39,29 @@ This document is a draft of the 1.2 version of the OPDS Catalog specification.
       + [5.2.1. Acquisition Relations](#521-acquisition-relations)
       + [5.2.2. Artwork Relations](#522-artwork-relations)
   * [5.3. Element Definitions](#53-element-definitions)
+      + [The `atom:entry` Element](#the--atom-entry--element)
+      + [The `atom:link` Element](#the--atom-link--element)
+      + [The `opds:price` Element](#the--opds-price--element)
+      + [The `opds:indirectAcquisition` Element](#the--opds-indirectacquisition--element)
 - [6. Additional Link Relations](#6-additional-link-relations)
   * [6.1. Relations for Previously Acquired Content](#61-relations-for-previously-acquired-content)
   * [6.2. Sorting Relations](#62-sorting-relations)
   * [6.3. Featured Relation](#63-featured-relation)
   * [6.4. Recommendations](#64-recommendations)
-- [x. Media Type Considerations](#x-media-type-considerations)
-  * [x.1. The Atom Format Type Parameter](#x1-the-atom-format-type-parameter)
-  * [x.2. The OPDS Catalog Profile Parameter](#x2-the-opds-catalog-profile-parameter)
-  * [x.3. The OPDS Kind Parameter](#x3-the-opds-kind-parameter)
+- [x. Other Considerations](#x-other-considerations)
+  * [x. Discovering OPDS Catalogs](#x-discovering-opds-catalogs)
+  * [x. Aggregating OPDS Catalogs](#x-aggregating-opds-catalogs)
+  * [x. Media Type Considerations](#x-media-type-considerations)
+      + [x.1. The Atom Format Type Parameter](#x1-the-atom-format-type-parameter)
+      + [x.2. The OPDS Catalog Profile Parameter](#x2-the-opds-catalog-profile-parameter)
+      + [x.3. The OPDS Kind Parameter](#x3-the-opds-kind-parameter)
+  * [x. Security Considerations](#x-security-considerations)
+      + [x.2 Securing a Catalog](#x2-securing-a-catalog)
+      + [x.2 Linked Resources](#x2-linked-resources)
+      + [x.3 URIs and IRIs](#x3-uris-and-iris)
+      + [x.4 Code Injection and Cross Site Scripting](#x4-code-injection-and-cross-site-scripting)
+  * [x. Bandwidth and Processing Considerations](#x-bandwidth-and-processing-considerations)
+
 
 ## 1. Overview
 
@@ -137,7 +157,15 @@ While Navigation Feeds do provide a suggested hierarchy from the OPDS Catalog pu
 
 Every OPDS Catalog Feed Document MUST either be an Acquisition Feed or a Navigation Feed. An Acquisition Feed can be identified by the presence of Acquisition Links in each Atom Entry.
 
-### 2.1. Navigation Feeds
+### 2.1. OPDS Catalog Root
+
+The OPDS Catalog Root is the top-level OPDS Catalog Feed Document. It is either a single Acquisition Feed in the simple case or the start of a set of Navigation Feeds. Every OPDS Catalog MUST have one and only one OPDS Catalog Root.
+
+External links to the OPDS Catalog Resource SHOULD use the IRI of the OPDS Catalog Root.
+
+Each OPDS Catalog Feed Document SHOULD contain an `atom:link` element with a link relation of "start", which references the OPDS Catalog Root Resource.
+
+### 2.2. Navigation Feeds
 
 A Navigation Feed is an OPDS Catalog Feed Document whose Atom Entries serve to create a suggested hierarchy for presentation and browsing. A Navigation Feed MUST NOT contain OPDS Catalog Entries but instead contains Atom Entries that link to other Navigation or Acquisition Feeds or other Resources. Each Atom Entry's `atom:content` element SHOULD include a brief description of the linked Resource.
 
@@ -196,7 +224,7 @@ An OPDS Catalog Root that is the top of a set of Navigation Feeds references thr
 </feed>
 ```
 
-### 2.2. Acquisition Feeds
+### 2.3. Acquisition Feeds
 
 An Acquisition Feed is an OPDS Catalog Feed Document that collects OPDS Catalog Entries into a single, ordered set. The simplest complete OPDS Catalog would be a single Acquisition Feed listing all of the available OPDS Catalog Entries from that provider. In more complex OPDS Catalogs, Acquisition Feeds are used to present and organize sets of related OPDS Catalog Entries for browsing and discovery by clients and aggregators.
 
@@ -305,16 +333,31 @@ An Acquisition Feed listing OPDS Catalog Entries from the "Unpopular Publication
 </feed>
 ```
 
-### 2.3. OPDS Catalog Root
+### 2.4. Listing Acquisition Feeds
 
-The OPDS Catalog Root is the top-level OPDS Catalog Feed Document. It is either a single Acquisition Feed in the simple case or the start of a set of Navigation Feeds. Every OPDS Catalog MUST have one and only one OPDS Catalog Root.
+OPDS Catalog Feed Documents, especially Acquisition Feeds, may contain large numbers of Atom Entries.
 
-External links to the OPDS Catalog Resource SHOULD use the IRI of the OPDS Catalog Root.
+A client such as a web spider or web browser might be overwhelmed if the response to a GET contained every Atom Entry in an Acquisition Feed — in turn the server might also waste bandwidth and processing time on generating a response that cannot be handled. For this reason, servers MAY respond to Acquisition Feed GET requests with a paginated response: an OPDS Catalog Feed Document containing a partial list of the Acquisition Feed's member Atom Entries and a link to the next partial Acquisition Feed, if it exists, as defined in Section 3 of [RFC5005].
 
-Each OPDS Catalog Feed Document SHOULD contain an `atom:link` element with a link relation of "start", which references the OPDS Catalog Root Resource.
+OPDS Catalog providers SHOULD use Partial Catalog Entries in all Acquisition Feeds except Complete Acquisition Feeds, which are intended for crawling and are referenced using the http://opds-spec.org/crawlable relation.
 
+Clients MUST NOT assume that an OPDS Catalog Entry returned in the Acquisition Feed is a full representation of an OPDS Catalog Entry Resource, as described in the Section Partial and Complete Entries.
 
-### 2.4. Element Definitions
+### 2.5. Complete Acquisition Feeds
+
+An OPDS Catalog provider MAY provide a single, consolidated Acquisition Feed that includes the complete representation of every unique OPDS Catalog Entry Document in an OPDS Catalog in an atom:feed to facilitate crawling and aggregation. Complete Acquisition Feeds SHOULD NOT be paginated unless they are extremely large.
+
+This representation is called a Complete Acquisition Feed and each OPDS Catalog Entry MUST be ordered by atom:updated, with the most recently updated Atom Entries coming first in the document order.
+
+If available, each OPDS Catalog Feed Document in the OPDS Catalog SHOULD contain an atom:link element with a relation of "http://opds-spec.org/crawlable" that references the Complete Acquisition Feed Resource.
+
+A Complete Acquisition Feed MUST include a fh:complete element from [RFC5005] unless pagination is required. See Section 2 of [RFC5005] for the specification of the fh:complete element.
+
+OPDS Catalog providers SHOULD use a compressed Content-Encoding when transmitting Complete Acquisition Feeds over HTTP. See Section 14.11 of [RFC2616] for more on compression.
+
+OPDS Catalog providers MUST include Complete Catalog Entries when serializing a Complete Acquisition Feed.
+
+### 2.6. Element Definitions
 
 #### The `atom:feed` Element
 
@@ -418,7 +461,7 @@ Facets CAN be grouped together by the OPDS Catalog provider using an `opds:facet
 
 A Facet MUST NOT appear in more than a single group.
 
-#### The "opds:activeFacet" Attribute
+#### The `opds:activeFacet` Attribute
 
 A Facet is considered active, if the attribute associated to the Facet is already being used to filter Publications in the current Acquisition Feed.
 
@@ -428,7 +471,7 @@ If the Facet is not active, the `opds:activeFacet` attribute SHOULD NOT appear i
 
 In a group of Facets, an OPDS Catalog provider MUST NOT mark more than one Facet as active.
 
-#### The "thr:count" Attribute
+#### The `thr:count` Attribute
 
 The OPDS Catalog provider MAY provide an additional hint about the number of items expected in the Acquisition Feed, if an OPDS client follows a link.
 
@@ -712,7 +755,7 @@ The following relations are derived from [RFC5988], with some clarification:
 - "start": The OPDS Catalog Root.
 - "subsection": A Navigation Feed not better described by a more specific relation.
 
-When creating an OPDS Catalog with Navigation and Acquisition Feeds, OPDS Catalog providers are encouraged to use the relations defined in this specification and [RFC5988]. If no appropriate relation is found, the Feeds SHOULD use a descriptive "atom:title" element and the "atom:link"s SHOULD use a descriptive "title" attribute.
+When creating an OPDS Catalog with Navigation and Acquisition Feeds, OPDS Catalog providers are encouraged to use the relations defined in this specification and [RFC5988]. If no appropriate relation is found, the Feeds SHOULD use a descriptive `atom:title` element and the `atom:link` elements SHOULD use a descriptive "title" attribute.
 
 ### 6.1. Relations for Previously Acquired Content
 
@@ -742,14 +785,44 @@ This specification also defines a relation to describe an Acquisition Feed of re
 
 - "http://opds-spec.org/recommended": An Acquisition Feed with recommended OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected specifically for the user. Acquisition Feeds using the "http://opds-spec.org/recommended" relation SHOULD be ordered with the most recommended items first.
 
-## x. Media Type Considerations
+## x. Other Considerations
 
-### x.1. The Atom Format Type Parameter
+### x. Discovering OPDS Catalogs
+
+OPDS Catalogs may be referenced in HTML/XHTML pages, HTTP headers, or using other techniques. These links may reference both OPDS Catalog Entries or Feeds. Links to OPDS Catalog Entry Document Resources MUST use a type attribute of "application/atom+xml;type=entry;profile=opds-catalog". Links to OPDS Catalog Feed Document Resources MUST use a type attribute of "application/atom+xml;profile=opds-catalog".
+
+The most common mechanism for encouraging the auto-discovery of OPDS Catalogs is to link from an HTML document to the OPDS Catalog Root Resource, using the auto-discovery pattern popularized by the syndicated feed community [AUTODISCOVERY].
+
+Multiple links to OPDS Catalog Resources MAY be expressed in a single HTML document.
+
+An example of two links inside an HTML page about the same Publication:
+
+```xml
+<link rel="related"   
+      href="/opds-catalogs/root" 
+      type="application/atom+xml;profile=opds-catalog"  
+      title="Example OPDS Catalog" /> 
+ 
+<link rel="alternate" 
+      href="/entry/1"
+      type="application/atom+xml;type=entry;profile=opds-catalog" 
+      title="Example OPDS Entry" />
+```
+
+Auto-discovery links MAY also be expressed using HTTP headers as defined in [RFC5988].
+
+### x. Aggregating OPDS Catalogs
+
+OPDS Catalogs may be aggregated using the same techniques as Atom Feeds. Aggregators SHOULD use the atom:source element from Section 4.2.11 of [RFC4287] to include information about the original OPDS Catalog.
+
+### x. Media Type Considerations
+
+#### x.1. The Atom Format Type Parameter
 The Atom Publishing Protocol [RFC5023] defines the Atom Format Type Parameter.
 Publishers of OPDS Catalogs SHOULD use the type parameter to help clients distinguish between relations to 
 OPDS Catalog Entries and OPDS Catalog Feeds.
 
-### x.2. The OPDS Catalog Profile Parameter
+#### x.2. The OPDS Catalog Profile Parameter
 Relations to OPDS Catalog Feed Document and OPDS Catalog Entry Document Resources MUST use a "profile" parameter 
 following Section 4.3 of [RFC4288] with the value "opds-catalog". 
 This profile parameter provides clients with an advisory hint that the Resource should be a component of an OPDS Catalog.
@@ -758,7 +831,7 @@ The complete media type for a relation to an OPDS Catalog Entry Document Resourc
 
 `application/atom+xml;type=entry;profile=opds-catalog`
 
-### x.3. The OPDS Kind Parameter
+#### x.3. The OPDS Kind Parameter
 In addition to the new "profile" parameter, this specification also introduces a new "kind" parameter following Section 4.3 
 of [RFC4288] with the value "acquisition" or "navigation". 
 This "kind" parameter provides clients with an advisory hint whether the Resource should be an Acquisition Feed or a 
@@ -775,3 +848,35 @@ The complete media type for a relation to an Acquisition Feed MUST be:
 The complete media type for a relation to a Navigation Feed MUST be:
 
 `application/atom+xml;profile=opds-catalog;kind=navigation`
+
+### x. Security Considerations
+
+OPDS Catalogs are Atom documents delivered over HTTP and thus subject to the security considerations found in Section 15 of [RFC2616] and Section 5 of [RFC4287].
+
+#### x.2 Securing a Catalog
+
+OPDS Catalogs are delivered over HTTP. Authentication requirements for HTTP are covered in Section 11 of [RFC2616].
+
+The type of authentication required for any OPDS Catalog is a decision to be made by the OPDS Catalog provider. OPDS Catalog clients are likely to face authentication schemes that vary across OPDS Catalogs. At a minimum, client and server implementations MUST be capable of being configured to use HTTP Basic Authentication [RFC2617] in conjunction with a connection made with TLS 1.0 [RFC2246] or a subsequent standards-track version of TLS supporting the conventions for using HTTP over TLS described in [RFC2818]. It is RECOMMENDED that OPDS Catalog clients be implemented in such a way that new authentication schemes can be deployed.
+
+Because this protocol uses HTTP response status codes as the primary means of reporting the result of a request, OPDS Catalog providers are advised to respond to unauthorized or unauthenticated requests using an appropriate 4xx HTTP response code (e.g., 401 "Unauthorized" or 403 "Forbidden") in accordance with [RFC2617].
+
+#### x.2 Linked Resources
+
+OPDS Catalogs can contain XML External Entities as defined in Section 4.2.2 of [REC-xml]. OPDS Catalog implementations are not required to load external entities. External entities are subject to the same security concerns as any network operation and can alter the semantics of an OPDS Catalog Feed Document or OPDS Catalog Entry Document. The same issues exist for Resources linked to by elements such as atom:link and atom:content.
+
+#### x.3 URIs and IRIs
+
+OPDS Catalog implementations handle URIs and IRIs. See Section 7 of [RFC3986] and Section 8 of [RFC3987] for security considerations related to their handling and use.
+
+#### x.4 Code Injection and Cross Site Scripting
+
+OPDS Catalogs can contain a broad range of content types including code that might be executable in some contexts. Malicious publishers could attempt to attack servers or other clients by injecting code into OPDS Catalog Feed Documents or OPDS Catalog Entry Documents or Media Resources.
+
+Server implementations are strongly encouraged to verify that external content is safe prior to aggregating, processing, or publishing it. In the case of HTML, experience indicates that verification based on a white list of acceptable content is more effective than a black list of forbidden content.
+
+Additional information about XHTML and HTML content safety can be found in Section 8.1 of [RFC4287].
+
+### x. Bandwidth and Processing Considerations
+
+Many OPDS Catalog clients operate in mobile environments, which may impose strict limitations on bandwidth and processing resources. OPDS Catalog publishers are strongly encouraged to publish their OPDS Catalogs using compression and caching techniques and the partial feeds described in the Section Listing Acquisition Feeds. Implementers are encouraged to investigate and use alternative mechanisms regarded as equivalently good or better at the time of deployment. See [CACHING] for more on caching techniques.
