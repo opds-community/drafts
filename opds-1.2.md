@@ -1,15 +1,47 @@
 # OPDS Catalog 1.2
 
-## Status of this Document
-
-This document is a draft of the 1.2 version of the OPDS Catalog specification. 
-
-## Abstract
 The Open Publication Distribution System (OPDS) Catalog format is a syndication format for electronic 
 publications based on Atom and HTTP. OPDS Catalogs enable the aggregation, distribution, discovery, 
 and acquisition of electronic publications. 
 
 OPDS Catalogs use existing or emergent open standards and conventions, with a priority on simplicity.
+
+## Status of this Document
+
+This document is a draft of the 1.2 version of the OPDS Catalog specification. 
+
+## Table of Contents
+
+
+- [1. Overview](#1-overview)
+  * [1.1. Introduction](#11-introduction)
+  * [1.2. Terminology](#12-terminology)
+  * [1.3. Conformance Statements](#13-conformance-statements)
+- [2. OPDS Catalog Feed Documents](#2-opds-catalog-feed-documents)
+  * [2.1. Navigation Feeds](#21-navigation-feeds)
+  * [2.2. Acquisition Feeds](#22-acquisition-feeds)
+  * [2.3. OPDS Catalog Root](#23-opds-catalog-root)
+  * [2.4. Element Definitions](#24-element-definitions)
+- [3. Search](#3-search)
+- [4. Facets](#4-facets)
+- [5. OPDS Catalog Entry Documents](#5-opds-catalog-entry-documents)
+  * [5.1. Metadata](#51-metadata)
+      + [5.1.1. Relationship Between Atom and Dublin Core Metadata](#511-relationship-between-atom-and-dublin-core-metadata)
+      + [5.1.2. Partial and Complete Catalog Entries](#512-partial-and-complete-catalog-entries)
+      + [5.1.3. Summary and Content](#513-summary-and-content)
+  * [5.2. Catalog Entry Relations](#52-catalog-entry-relations)
+      + [5.2.1. Acquisition Relations](#521-acquisition-relations)
+      + [5.2.2. Artwork Relations](#522-artwork-relations)
+  * [5.3. Element Definitions](#53-element-definitions)
+- [6. Additional Link Relations](#6-additional-link-relations)
+  * [6.1. Relations for Previously Acquired Content](#61-relations-for-previously-acquired-content)
+  * [6.2. Sorting Relations](#62-sorting-relations)
+  * [6.3. Featured Relation](#63-featured-relation)
+  * [6.4. Recommendations](#64-recommendations)
+- [x. Media Type Considerations](#x-media-type-considerations)
+  * [x.1. The Atom Format Type Parameter](#x1-the-atom-format-type-parameter)
+  * [x.2. The OPDS Catalog Profile Parameter](#x2-the-opds-catalog-profile-parameter)
+  * [x.3. The OPDS Kind Parameter](#x3-the-opds-kind-parameter)
 
 ## 1. Overview
 
@@ -338,11 +370,80 @@ With such a template, an OPDS Client could for example support the following sea
 - http://example.com/search?author=drucker
 - http://example.com/search?author=ferriss&title=four
 
-## 4. OPDS Catalog Entry Documents
+## 4. Facets
 
-### 4.1. Metadata
+An Acquisition Feed MAY offer multiple links to reorder the Publications listed in the feed or limit them to a subset. This specification defines one new relation to identify such links as Facets:
 
-#### 4.1.1. Relationship Between Atom and Dublin Core Metadata
+- "http://opds-spec.org/facet": An Acquisition Feed with a subset or an alternate order of the Publications listed.
+
+Links using this relation MUST only appear in Acquisition Feeds.
+
+**Example**
+
+```xml
+<link rel="http://opds-spec.org/facet" 
+      href="/sci-fi" 
+      title="Science-Fiction" 
+      opds:facetGroup="Categories" 
+      opds:activeFacet="true" />
+ 
+<link rel="http://opds-spec.org/facet" 
+      href="/romance" 
+      title="Romance"  
+      opds:facetGroup="Categories" 
+      thr:count="600" />
+ 
+<link rel="http://opds-spec.org/facet" 
+      href="/thrillers" 
+      title="Thrillers"  
+      opds:facetGroup="Categories" 
+      thr:count="1200" />
+ 
+<link rel="http://opds-spec.org/facet" 
+      href="/sci-fi/english" 
+      title="English" 
+      opds:facetGroup="Language" 
+      opds:activeFacet="true" />
+ 
+<link rel="http://opds-spec.org/facet" 
+      href="/sci-fi/french" 
+      title="French"  
+      opds:facetGroup="Language" 
+      thr:count="40" />
+```
+
+#### The `opds:facetGroup` Attribute
+
+Facets CAN be grouped together by the OPDS Catalog provider using an `opds:facetGroup` attribute. The value of this attribute is the name of the group.
+
+A Facet MUST NOT appear in more than a single group.
+
+#### The "opds:activeFacet" Attribute
+
+A Facet is considered active, if the attribute associated to the Facet is already being used to filter Publications in the current Acquisition Feed.
+
+The OPDS Catalog provider SHOULD indicate that a Facet is active using the `opds:activeFacet` attribute set to "true".
+
+If the Facet is not active, the `opds:activeFacet` attribute SHOULD NOT appear in the link.
+
+In a group of Facets, an OPDS Catalog provider MUST NOT mark more than one Facet as active.
+
+#### The "thr:count" Attribute
+
+The OPDS Catalog provider MAY provide an additional hint about the number of items expected in the Acquisition Feed, if an OPDS client follows a link.
+
+The `thr:count` attribute, extracted from [RFC4685] MAY be added to a Facet in order to provide this information.
+
+
+## 5. OPDS Catalog Entry Documents
+
+OPDS Catalog Entry Documents are Atom [RFC4287] Entry documents that provide a complete representation of the metadata and data associated with an available Publication.
+
+Each OPDS Catalog Entry Document MUST include at least one Acquisition Link.
+
+### 5.1. Metadata
+
+#### 5.1.1. Relationship Between Atom and Dublin Core Metadata
 
 OPDS Catalog providers are encouraged to include metadata from the Dublin Core Metadata Initiative (DCMI) Metadata Terms [DCTERMS] whenever appropriate. However, these elements are not required. Some of the elements defined in [DCTERMS] overlap in meaning with similar elements defined by Atom in [RFC4287]. In general, OPDS Catalog Entries prefer the Atom elements over the [DCTERMS] elements and the following rules should be used by OPDS Catalog providers when choosing elements:
 
@@ -360,7 +461,7 @@ All metadata elements required by Atom are required in OPDS Catalog Entries and 
 
 Following Atom [RFC4287] Section 4.2.6, the content of an `atom:id` identifying an OPDS Catalog Entry MUST NOT change when the OPDS Catalog Entry is "relocated, migrated, syndicated, republished, exported, or imported" and "MUST be created in a way that assures uniqueness."
 
-#### 4.1.2. Partial and Complete Catalog Entries
+#### 5.1.2. Partial and Complete Catalog Entries
 
 An OPDS Catalog Entry may be represented as either a Partial or Complete Catalog Entry. Partial Catalog Entries include only critical metadata elements to reduce the size of OPDS Catalog documents for bandwidth- and resource-limited clients and link to their alternate representation as a Complete Catalog Entries, which include all metadata elements.
 
@@ -464,7 +565,7 @@ The Complete Catalog Entry for the same Publication:
 </entry>
 ```
 
-#### 4.1.3. Summary and Content
+#### 5.1.3. Summary and Content
 
 OPDS Catalog Entries use `atom:content` and `atom:summary` elements to describe a Publication. This is a distinction from Atom [RFC4287], which uses "atom:content" for the "content of the entry." Instead, OPDS Catalog Entries reference an electronic document with the Publication's content using Acquisition Links. OPDS Catalog Entries SHOULD include either `atom:summary` or `atom:content` elements or both to provide a description, summary, abstract, or excerpt of the Publication.
 
@@ -483,13 +584,14 @@ atomSummary =
   }
 ```
 
-### 4.2. Catalog Entry Relations
+### 5.2. Catalog Entry Relations
 
 OPDS Catalog Entry Documents SHOULD include links to related Resources. This specification defines new relations for linking from OPDS Catalog Entry Documents. They are defined in the Sections Acquisition Relations and Artwork Relations.
 
 OPDS Catalog providers are encouraged to use relations from [RFC5988] inside OPDS Catalog Entry Documents where appropriate.
 
-#### 4.2.1. Acquisition Relations
+#### 5.2.1. Acquisition Relations
+
 Acquisition relations describe the extent of the content referred to by an Acquisition Link or the manner in which that Resource may be acquired. This specification defines six Acquisition Relations, which all begin with "http://opds-spec.org/acquisition":
 
 - "http://opds-spec.org/acquisition": A generic relation that indicates that the complete representation of the content Resource may be retrieved.
@@ -498,6 +600,147 @@ Acquisition relations describe the extent of the content referred to by an Acqui
 - "http://opds-spec.org/acquisition/buy": Indicates that the complete representation of the content Resource may be retrieved as part of a purchase.
 - "http://opds-spec.org/acquisition/sample": Indicates that a subset of the content Resource may be retrieved.
 - "http://opds-spec.org/acquisition/subscribe": Indicates that the complete representation of the content Resource may be retrieved as part of a subscription.
+
+#### 5.2.2. Artwork Relations
+
+OPDS Catalog Entries MAY include `atom:link` elements to images that provide a visual representation of the Publication. For many Publications, these images will be the Publication's artwork. This specification defines two Artwork Relations, which begin with "http://opds-spec.org/image":
+
+- "http://opds-spec.org/image": a graphical Resource associated to the OPDS Catalog Entry
+- "http://opds-spec.org/image/thumbnail": a reduced-size version of a graphical Resource associated to the OPS Catalog Entry
+Image resources related by http://opds-spec.org/image/thumbnail SHOULD be suitable for presentation at a small size.
+
+The atom:links with these relations SHOULD include at least one link with a type attribute of "image/gif", "image/jpeg", or "image/png" and the image Resources MUST be in GIF, JPEG, or PNG format.
+
+Additional atom:links MAY also include additional resources using a vector-based format.
+
+While either image Resource is optional and may be included independently, OPDS Catalog providers are encouraged to provide both these relations and Resources whenever possible.
+
+Some OPDS Catalog providers MAY choose to provide http://opds-spec.org/image/thumbnail image Resources using the "data" URL scheme from [RFC2397]. scheme if they support Artwork relations.
+
+### 5.3. Element Definitions
+
+#### The `atom:entry` Element
+
+The `atom:entry` element is the document (i.e., top-level) element of an OPDS Catalog Entry Document, acting as a container for metadata and data associated with an available Publication.
+
+The following child elements are refined by this specification:
+
+- OPDS Catalog Entry Documents MUST contain at least one Acquisition Link, an atom:link element with a rel attribute that begins with "http://opds-spec.org/acquisition".
+
+
+#### The `atom:link` Element
+
+The `atom:link` element defines a reference from an Atom Entry or Atom Feed to a Resource.
+
+```
+atomLink =
+  element atom:link {
+    atomCommonAttributes ,
+    attribute href { atomUri },
+    attribute type { atomMediaType }? ,
+    attribute hreflang { atomLanguageTag }? ,
+    attribute title { text }? ,
+    attribute length { text }? ,
+    ((attribute rel { "http://opds-spec.org/facet" }, (attribute 
+    opds:facetGroup { text }? & attribute opds:activeFacet { "true" }? ))
+    |
+    (attribute rel { "http://opds-spec.org/acquisition/buy" }, opdsPrice+ )
+    |
+    (attribute rel { OPDSUrisExceptBuy }, opdsPrice*)
+    |
+    (attribute rel { atomNCName | ( atomUriExceptOPDS ) } ))? ,
+    (opdsIndirectAcquisition |
+    anyOPDSForeignElement |
+    text)*
+  }
+     
+  # Here is where OPDS Catalogs use John Cowan's pragmatic evaluation of an
+  # IRI. This modifies xsd:anyURI in XSD 1.0 to exclude ASCII characters not
+  # valid in 1.1 or IRI's without being escaped. This matches the OPDS and Atom
+  # specs, but not the non-normative atom.rnc.
+  atomUri = xsd:anyURI - xsd:string {pattern = '.*[ <>{}|^`"\nrt].*'}
+```
+  
+The following child elements are defined by this specification:
+
+- `atom:link` elements with a rel attribute value set to "http://opds-spec.org/acquisition/buy" MUST contain at least one `opds:price` element.
+- `atom:link` elements with a rel attribute set to "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/subscribe", or "http://opds-spec.org/acquisition/sample" MAY contain one or more `opds:price` elements.
+
+#### The `opds:price` Element
+
+The `opds:price` element represents the acquisition price in a particular currency of an individual Publication in a particular format from a particular provider. This element can appear as a child of the `atom:link` element (in OPDS Catalog Entry Documents).
+
+The content of `opds:price` is text describing a currency value. A currency sign MUST NOT be included.
+
+```
+opdsPrice = 
+  element opds:price {
+    atomCommonAttributes,
+    attribute currencycode { opdsPriceCurrencyCode },
+    xsd:decimal { minInclusive="0.0" } 
+  }
+```
+      
+In the `opds:price` element, the value of the "currencycode" attribute MUST be an active code from [ISO4217] representing a currency. It defines the currency used for the content of `the opds:price` element.
+
+#### The `opds:indirectAcquisition` Element
+
+In some cases, the OPDS Catalog provider MAY require the client to acquire an intermediate Resource before acquiring the final Publication. This can be the case for example with containers (archive formats, multimedia containers for various formats) or when a payment is required (need to go through a series of HTML pages to handle the transaction).
+
+The `opds:indirectAcquisition` element represents these secondary media types [MIMEREG] that the client can expect to acquire if they follow the Acquisition Link.
+
+These `opds:indirectAcquisition` elements CAN be arbitrarily nested to represent several levels of indirection.
+
+```
+opdsIndirectAcquisition = 
+  element opds:indirectAcquisition {
+    atomCommonAttributes,
+    attribute type { atomMediaType },
+    (  anyOPDSForeignElement | 
+      opdsIndirectAcquisition) *
+  }
+```
+
+## 6. Additional Link Relations
+
+OPDS Catalog Feed Documents SHOULD include links to other available Acquisition and Navigation Feeds and other related Resources to encourage independent navigation.
+
+These relations MAY be used by clients to provide additional or alternative navigation, both in a Navigation Feed or an Acquisition Feed.
+
+The following relations are derived from [RFC5988], with some clarification:
+
+- "start": The OPDS Catalog Root.
+- "subsection": A Navigation Feed not better described by a more specific relation.
+
+When creating an OPDS Catalog with Navigation and Acquisition Feeds, OPDS Catalog providers are encouraged to use the relations defined in this specification and [RFC5988]. If no appropriate relation is found, the Feeds SHOULD use a descriptive "atom:title" element and the "atom:link"s SHOULD use a descriptive "title" attribute.
+
+### 6.1. Relations for Previously Acquired Content
+
+An OPDS catalog MAY track content that was previously acquired by the user. This specification defines two new relations to identify Acquisition Feeds listing such resources:
+
+- "http://opds-spec.org/shelf": A Resource that includes a user's existing set of Acquired Content, which MAY be represented as an OPDS Catalog.
+- "http://opds-spec.org/subscriptions": A Resource that includes a user's set of subscriptions, which MAY be represented as an OPDS Catalog.
+An OPDS client MAY use these links to automatically sync content to the user's local shelf or check for periodical content updates.
+
+### 6.2. Sorting Relations
+
+This specification defines two new relations, which begin with "http://opds-spec.org/sort", to describe how an Acquisition Feed is sorted. These relations SHOULD be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
+
+- "http://opds-spec.org/sort/new": An Acquisition Feed with newly released OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog based on the publication date of the Publication.
+- "http://opds-spec.org/sort/popular": An Acquisition Feed with popular OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog based on a numerical ranking criteria.
+Acquisition Feeds using the "http://opds-spec.org/sort/new" relation SHOULD be ordered with the most recent items first. Acquisition Feeds using the "http://opds-spec.org/sort/popular" relation SHOULD be ordered with the most popular items first.
+
+### 6.3. Featured Relation
+
+This specification also defines a relation to describe an Acquisition Feed of featured items. This relation SHOULD be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
+
+- "http://opds-spec.org/featured": An Acquisition Feed with featured OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected for promotion by the OPDS Catalog provider. No order is implied.
+
+### 6.4. Recommendations
+
+This specification also defines a relation to describe an Acquisition Feed of recommended items. Since recommendations can be customized for the user, such feed may require some kind of prior authentication. This relation SHOULD be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
+
+- "http://opds-spec.org/recommended": An Acquisition Feed with recommended OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected specifically for the user. Acquisition Feeds using the "http://opds-spec.org/recommended" relation SHOULD be ordered with the most recommended items first.
 
 ## x. Media Type Considerations
 
