@@ -12,11 +12,11 @@ This document is a draft of the 1.2 version of the OPDS Catalog specification.
 
 ## Table of Contents
 
-
 - [1. Overview](#1-overview)
   * [1.1. Introduction](#11-introduction)
   * [1.2. Terminology](#12-terminology)
   * [1.3. Conformance Statements](#13-conformance-statements)
+  * [1.4. RELAX NG Schema](#14-relax-ng-schema)
 - [2. OPDS Catalog Feed Documents](#2-opds-catalog-feed-documents)
   * [2.1. OPDS Catalog Root](#21-opds-catalog-root)
   * [2.2. Navigation Feeds](#22-navigation-feeds)
@@ -38,7 +38,8 @@ This document is a draft of the 1.2 version of the OPDS Catalog specification.
   * [5.2. Catalog Entry Relations](#52-catalog-entry-relations)
       + [5.2.1. Acquisition Relations](#521-acquisition-relations)
       + [5.2.2. Artwork Relations](#522-artwork-relations)
-  * [5.3. Element Definitions](#53-element-definitions)
+  * [5.3. Acquiring Publications](#53-acquiring-publications)
+  * [5.4. Element Definitions](#54-element-definitions)
       + [The `atom:entry` Element](#the--atom-entry--element)
       + [The `atom:link` Element](#the--atom-link--element)
       + [The `opds:price` Element](#the--opds-price--element)
@@ -48,19 +49,24 @@ This document is a draft of the 1.2 version of the OPDS Catalog specification.
   * [6.2. Sorting Relations](#62-sorting-relations)
   * [6.3. Featured Relation](#63-featured-relation)
   * [6.4. Recommendations](#64-recommendations)
-- [x. Other Considerations](#x-other-considerations)
-  * [x. Discovering OPDS Catalogs](#x-discovering-opds-catalogs)
-  * [x. Aggregating OPDS Catalogs](#x-aggregating-opds-catalogs)
-  * [x. Media Type Considerations](#x-media-type-considerations)
-      + [x.1. The Atom Format Type Parameter](#x1-the-atom-format-type-parameter)
-      + [x.2. The OPDS Catalog Profile Parameter](#x2-the-opds-catalog-profile-parameter)
-      + [x.3. The OPDS Kind Parameter](#x3-the-opds-kind-parameter)
-  * [x. Security Considerations](#x-security-considerations)
-      + [x.2 Securing a Catalog](#x2-securing-a-catalog)
-      + [x.2 Linked Resources](#x2-linked-resources)
-      + [x.3 URIs and IRIs](#x3-uris-and-iris)
-      + [x.4 Code Injection and Cross Site Scripting](#x4-code-injection-and-cross-site-scripting)
-  * [x. Bandwidth and Processing Considerations](#x-bandwidth-and-processing-considerations)
+- [7. Other Considerations](#7-other-considerations)
+  * [7. Discovering OPDS Catalogs](#7-discovering-opds-catalogs)
+  * [7. Aggregating OPDS Catalogs](#7-aggregating-opds-catalogs)
+  * [7.1 Media Type Considerations](#71-media-type-considerations)
+      + [7.1.1. The Atom Format Type Parameter](#711-the-atom-format-type-parameter)
+      + [7.1.2. The OPDS Catalog Profile Parameter](#712-the-opds-catalog-profile-parameter)
+      + [7.1.3. The OPDS Kind Parameter](#713-the-opds-kind-parameter)
+  * [7.2. Security Considerations](#72-security-considerations)
+      + [7.2.1. Securing a Catalog](#721-securing-a-catalog)
+      + [7.2.2 Linked Resources](#722-linked-resources)
+      + [7.2.3 URIs and IRIs](#723-uris-and-iris)
+      + [7.2.4 Code Injection and Cross Site Scripting](#724-code-injection-and-cross-site-scripting)
+  * [7.3. Bandwidth and Processing Considerations](#73-bandwidth-and-processing-considerations)
+- [8. References](#8-references)
+  * [8.1. Normative References](#81-normative-references)
+  * [8.2. Informative References](#82-informative-references)
+- [Appendix A. Contributors](#appendix-a-contributors)
+- [Appendix B. RELAX NG Compact Schema](#appendix-b-relax-ng-compact-schema)
 
 
 ## 1. Overview
@@ -144,6 +150,10 @@ OPDS Catalogs may be aggregated and combined into larger OPDS Catalogs.
 ### 1.3. Conformance Statements
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
+
+### 1.4. RELAX NG Schema
+
+Some sections of this specification are illustrated with fragments of a non-normative RELAX NG Compact schema [RNC]. However, the text of this specification provides the definition of conformance. Complete schemas appear in Appendix B.
 
 
 ## 2. OPDS Catalog Feed Documents
@@ -652,15 +662,73 @@ OPDS Catalog Entries MAY include `atom:link` elements to images that provide a v
 - "http://opds-spec.org/image/thumbnail": a reduced-size version of a graphical Resource associated to the OPS Catalog Entry
 Image resources related by http://opds-spec.org/image/thumbnail SHOULD be suitable for presentation at a small size.
 
-The atom:links with these relations SHOULD include at least one link with a type attribute of "image/gif", "image/jpeg", or "image/png" and the image Resources MUST be in GIF, JPEG, or PNG format.
+The `atom:link` elements with these relations SHOULD include at least one link with a type attribute of "image/gif", "image/jpeg", or "image/png" and the image Resources MUST be in GIF, JPEG, or PNG format.
 
-Additional atom:links MAY also include additional resources using a vector-based format.
+Additional `atom:link` elements MAY also include resources using a vector-based format.
 
 While either image Resource is optional and may be included independently, OPDS Catalog providers are encouraged to provide both these relations and Resources whenever possible.
 
 Some OPDS Catalog providers MAY choose to provide http://opds-spec.org/image/thumbnail image Resources using the "data" URL scheme from [RFC2397]. scheme if they support Artwork relations.
 
-### 5.3. Element Definitions
+### 5.3. Acquiring Publications
+
+The goal of OPDS Catalogs is to make Publications both discoverable and straightforward to acquire on a range of devices and platforms. To support that goal, this specification strives to provide a framework for describing how a Publication may be acquired while not attempting to constrain this very complex topic. Commonly-used acquisition scenarios may be specified in an update to this specification.
+
+All Acquisition Links MUST include a "type" attribute that advises clients on the media type of the representation that is expected to be returned when the value of the href attribute is dereferenced. As with Atom, the value of the type attribute MUST conform to the syntax of a MIME media type [MIMEREG].
+
+Publications in a format using Digital Rights Management SHOULD use a different value for the type attribute of the Acquisition Link than the same format without Digital Rights Management.
+
+OPDS Catalog clients may only support a subset of all possible Publication media types. These clients will need to filter both the type attribute of Acquisition Links.
+
+OPDS Catalogs may only provide certain Publications through an Indirect Acquisition, either through a container or a different Acquisition workflow. In such cases, it is up to the clients to filter these publications based on both the "opds:indirectAcquisition" and "atom:link" type attributes.
+
+**Examples**
+
+```
+The simplest case is a Publication available in one format:
+
+<link rel="http://opds-spec.org/acquisition" 
+      type="video/mp4v-es" 
+      href="/content/free/4561.mp4"/>
+If the Publication was available in multiple formats as unique Resources, they would simply be listed:
+
+<link rel="http://opds-spec.org/acquisition/borrow" 
+      href="/content/borrow/4561.mobi"
+      type="application/x-mobipocket-ebook" />
+ 
+<link rel="http://opds-spec.org/acquisition/borrow" 
+      href="/content/borrow/4561.epub"
+      type="application/epub+zip" />
+If the Publication requires payment, at least one "opds:price" element is required:
+
+<link rel="http://opds-spec.org/acquisition/buy"
+      href="/product/song1.mp3"
+      type="audio/mpeg">
+  <opds:price currencycode="USD">1.99</opds:price> 
+</link>
+If the same Publication requires a payment through an HTML page, then an "opds:indirectAcquisition" element is required to describe the content type of the final Publication Representation:
+
+<link rel="http://opds-spec.org/acquisition/buy"
+      href="/product/1"
+      type="text/html">
+  <opds:price currencycode="USD">1.99</opds:price>
+  <opds:indirectAcquisition type="audio/mpeg" />
+</link>
+Multiple "opds:indirectAcquisition" elements can also be used as child elements of an Acquisition Link or another "opds:indirectAcquisition" when this is necessary (a bundle would be a good example):
+
+<link type="text/html" 
+      rel="http://opds-spec.org/acquisition/buy" 
+      href="/item/1111/buy/">
+  <opds:price currencycode="EUR">10.99</opds:price>
+  <opds:indirectAcquisition type="application/zip">
+    <opds:indirectAcquisition type="application/epub+zip" />
+    <opds:indirectAcquisition type="application/pdf" />
+    <opds:indirectAcquisition type="application/x-mobipocket-ebook" />
+  </opds:indirectAcquisition>
+</link>
+```
+
+### 5.4. Element Definitions
 
 #### The `atom:entry` Element
 
@@ -785,9 +853,9 @@ This specification also defines a relation to describe an Acquisition Feed of re
 
 - "http://opds-spec.org/recommended": An Acquisition Feed with recommended OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected specifically for the user. Acquisition Feeds using the "http://opds-spec.org/recommended" relation SHOULD be ordered with the most recommended items first.
 
-## x. Other Considerations
+## 7. Other Considerations
 
-### x. Discovering OPDS Catalogs
+### 7. Discovering OPDS Catalogs
 
 OPDS Catalogs may be referenced in HTML/XHTML pages, HTTP headers, or using other techniques. These links may reference both OPDS Catalog Entries or Feeds. Links to OPDS Catalog Entry Document Resources MUST use a type attribute of "application/atom+xml;type=entry;profile=opds-catalog". Links to OPDS Catalog Feed Document Resources MUST use a type attribute of "application/atom+xml;profile=opds-catalog".
 
@@ -811,18 +879,20 @@ An example of two links inside an HTML page about the same Publication:
 
 Auto-discovery links MAY also be expressed using HTTP headers as defined in [RFC5988].
 
-### x. Aggregating OPDS Catalogs
+### 7. Aggregating OPDS Catalogs
 
 OPDS Catalogs may be aggregated using the same techniques as Atom Feeds. Aggregators SHOULD use the atom:source element from Section 4.2.11 of [RFC4287] to include information about the original OPDS Catalog.
 
-### x. Media Type Considerations
+### 7.1 Media Type Considerations
 
-#### x.1. The Atom Format Type Parameter
+#### 7.1.1. The Atom Format Type Parameter
+
 The Atom Publishing Protocol [RFC5023] defines the Atom Format Type Parameter.
 Publishers of OPDS Catalogs SHOULD use the type parameter to help clients distinguish between relations to 
 OPDS Catalog Entries and OPDS Catalog Feeds.
 
-#### x.2. The OPDS Catalog Profile Parameter
+#### 7.1.2. The OPDS Catalog Profile Parameter
+
 Relations to OPDS Catalog Feed Document and OPDS Catalog Entry Document Resources MUST use a "profile" parameter 
 following Section 4.3 of [RFC4288] with the value "opds-catalog". 
 This profile parameter provides clients with an advisory hint that the Resource should be a component of an OPDS Catalog.
@@ -831,7 +901,8 @@ The complete media type for a relation to an OPDS Catalog Entry Document Resourc
 
 `application/atom+xml;type=entry;profile=opds-catalog`
 
-#### x.3. The OPDS Kind Parameter
+#### 7.1.3. The OPDS Kind Parameter
+
 In addition to the new "profile" parameter, this specification also introduces a new "kind" parameter following Section 4.3 
 of [RFC4288] with the value "acquisition" or "navigation". 
 This "kind" parameter provides clients with an advisory hint whether the Resource should be an Acquisition Feed or a 
@@ -849,11 +920,11 @@ The complete media type for a relation to a Navigation Feed MUST be:
 
 `application/atom+xml;profile=opds-catalog;kind=navigation`
 
-### x. Security Considerations
+### 7.2. Security Considerations
 
 OPDS Catalogs are Atom documents delivered over HTTP and thus subject to the security considerations found in Section 15 of [RFC2616] and Section 5 of [RFC4287].
 
-#### x.2 Securing a Catalog
+#### 7.2.1. Securing a Catalog
 
 OPDS Catalogs are delivered over HTTP. Authentication requirements for HTTP are covered in Section 11 of [RFC2616].
 
@@ -861,15 +932,15 @@ The type of authentication required for any OPDS Catalog is a decision to be mad
 
 Because this protocol uses HTTP response status codes as the primary means of reporting the result of a request, OPDS Catalog providers are advised to respond to unauthorized or unauthenticated requests using an appropriate 4xx HTTP response code (e.g., 401 "Unauthorized" or 403 "Forbidden") in accordance with [RFC2617].
 
-#### x.2 Linked Resources
+#### 7.2.2 Linked Resources
 
 OPDS Catalogs can contain XML External Entities as defined in Section 4.2.2 of [REC-xml]. OPDS Catalog implementations are not required to load external entities. External entities are subject to the same security concerns as any network operation and can alter the semantics of an OPDS Catalog Feed Document or OPDS Catalog Entry Document. The same issues exist for Resources linked to by elements such as atom:link and atom:content.
 
-#### x.3 URIs and IRIs
+#### 7.2.3 URIs and IRIs
 
 OPDS Catalog implementations handle URIs and IRIs. See Section 7 of [RFC3986] and Section 8 of [RFC3987] for security considerations related to their handling and use.
 
-#### x.4 Code Injection and Cross Site Scripting
+#### 7.2.4 Code Injection and Cross Site Scripting
 
 OPDS Catalogs can contain a broad range of content types including code that might be executable in some contexts. Malicious publishers could attempt to attack servers or other clients by injecting code into OPDS Catalog Feed Documents or OPDS Catalog Entry Documents or Media Resources.
 
@@ -877,6 +948,207 @@ Server implementations are strongly encouraged to verify that external content i
 
 Additional information about XHTML and HTML content safety can be found in Section 8.1 of [RFC4287].
 
-### x. Bandwidth and Processing Considerations
+### 7.3. Bandwidth and Processing Considerations
 
 Many OPDS Catalog clients operate in mobile environments, which may impose strict limitations on bandwidth and processing resources. OPDS Catalog publishers are strongly encouraged to publish their OPDS Catalogs using compression and caching techniques and the partial feeds described in the Section Listing Acquisition Feeds. Implementers are encouraged to investigate and use alternative mechanisms regarded as equivalently good or better at the time of deployment. See [CACHING] for more on caching techniques.
+
+## 8. References
+
+### 8.1. Normative References
+
+- [DCTERMS] DCMI Usage Board, "DCMI Metadata Terms", January 2008, http://dublincore.org/documents/dcmi-terms/.
+- [ISO4217] "ISO 4217 currency and funds name and code elements", International Standard ISO 4217, http://www.iso.org/iso/en/prods-services/popstds/currencycodeslist.html.
+- [MIMEREG] Freed, N. and J. Klensin, "Media Type Specifications and Registration Procedures", BCP 13, RFC 4288, December 2005.
+- [OpenSearch] Clinton D., "Open Search 1.1 Draft 4", http://www.opensearch.org/Specifications/OpenSearch/1.1.
+- [REC-xml] Yergeau, F., Paoli, J., Bray, T., Sperberg-McQueen?, C., and E. Maler, "Extensible Markup Language (XML) 1.0 (Fourth Edition)", World Wide Web Consortium Recommendation REC-xml-20060816, August 2006, http://www.w3.org/TR/2006/REC-xml-20060816.
+- [REC-xml-infoset] Cowan, J. and R. Tobin, "XML Information Set (Second Edition)", World Wide Web Consortium Recommendation REC-xml-infoset-20040204, February 2004, http://www.w3.org/TR/2004/REC-xml-infoset-20040204.
+- [REC-xml-names] Hollander, D., Bray, T., Tobin, R., and A. Layman, "Namespaces in XML 1.0 (Second Edition)", World Wide Web Consortium Recommendation REC-xml-names-20060816, August 2006, http://www.w3.org/TR/2006/REC-xml-names-20060816.
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.
+- [RFC2246] Dierks, T. and C. Allen, "The TLS Protocol Version 1.0", RFC 2246, January 1999.
+- [RFC2397] Masinter, L., "The 'data' URL scheme", RFC 2397, August 1998.
+- [RFC2616] Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext Transfer Protocol — HTTP/1.1", RFC 2616, June 1999.
+- [RFC2617] Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, "HTTP Authentication: Basic and Digest Access Authentication", RFC 2617, June 1999.
+- [RFC2818] Rescorla, E., "HTTP Over TLS", RFC 2818, May 2000.
+- [RFC3986] Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, January 2005.
+- [RFC3987] Duerst, M. and M. Suignard, "Internationalized Resource Identifiers (IRIs)", RFC 3987, January 2005.
+- [RFC4287] Nottingham, M. and R. Sayre, "The Atom Syndication Format", RFC 4287, December 2005.
+- [RFC4288] Freed, N. and J. Klensin, "Media Type Specifications and Registration Procedures", RFC 4288, December 2005.
+- [RFC4685] Snell, J., "Atom Threading Extensions", RFC 4685, September 2006.
+- [RFC5005] Nottingham, M., "Feed Paging and Archiving", RFC 5005, September 2007.
+- [RFC5988] Nottingham, M., "Web Linking", RFC5988, October 2010.
+
+### 8.2. Informative References
+
+- [AUTODISCOVERY] Cadenhead, R., Holderness, J., Morin, R., "RSS Autodiscovery", November 2006, http://www.rssboard.org/rss-autodiscovery.
+- [CACHING] Nottingham, M., "Caching Tutorial", 1998, http://www.mnot.net/cache_docs/.
+- [REC-webarch] Walsh, N. and I. Jacobs, "Architecture of the World Wide Web, Volume One", W3C REC REC-webarch-20041215, December 2004, http://www.w3.org/TR/2004/REC-webarch-20041215.
+- [RNC] Clark, J., "RELAX NG Compact Syntax", December 2001, http://www.oasis-open.org/committees/relax-ng/compact-20021121.html.
+
+## Appendix A. Contributors
+
+The content and concepts within this specification are a product of the OPDS Community.
+
+The two editors for this revision of the specification are Hadrien Gardeur and Leonard Richardson.
+
+## Appendix B. RELAX NG Compact Schema
+
+This appendix is informative.
+
+The RELAX NG schema explicitly excludes elements in the OPDS Catalog namespace that
+are not defined in this revision of the specification. Requirements for Atom Protocol
+processors encountering such markup are given in Sections 6.2 and 6.3 of
+[RFC4287].
+
+The Schema for OPDS Catalog Feed & Entry Documents:
+
+```
+# -*- rnc -*- 
+# RELAX NG Compact Syntax Grammar for OPDS Catalog Feed & Entry Documents
+# Version 2010-08-18
+namespace atom = "http://www.w3.org/2005/Atom"
+namespace opds = "http://opds-spec.org/2010/catalog"
+namespace local = ""
+   
+# The OPDS Catalog spec extends Atom (RFC4287), and the additions require some
+# patterns not used in the Atom schema. The first is atomUriExceptOPDS, which
+# is used to describe an atomLink whose rel value is an atomNCName (no-colon
+# name) or any URI other than these from OPDS Catalogs. In these cases, no
+# opds:price element should appear.
+atomUriExceptOPDS = string - ( string "http://opds-spec.org/acquisition/buy"
+                             | string "http://opds-spec.org/acquisition/borrow"
+                             | string "http://opds-spec.org/acquisition/subscribe"
+                             | string "http://opds-spec.org/acquisition/sample" )
+   
+# Next is OPDSUrisExceptBuy, which is used to describe an atomLink whose
+# rel value is from OPDS Catalogs but is not ".../acquisition/buy". In such
+# cases, an opds:price element is optional.
+OPDSUrisExceptBuy = string "http://opds-spec.org/acquisition/borrow"
+                  | string "http://opds-spec.org/acquisition/subscribe"
+                  | string "http://opds-spec.org/acquisition/sample"
+ 
+# To simplify OPDS Catalog validation, we do not use Schematron to assert that
+# any atom:link with a rel value of ".../acquisition/buy" must be accompanied
+# by one or more opds:price elements.
+# Instead we rely on Relax NG to describe one of three situations:
+# - the rel value is ".../acquisition/buy" and at least one opds:price element
+#   is required
+# - the rel value is ".../acquisition/borrow" or ".../acquisition/subscribe" or
+#   ".../acquisition/sample", in case opds:price elements may be
+#   included; or
+# - the value of the rel attribute is any other URI or an Atom-defined no-colon
+#   name, and no opds:price element is permitted
+ 
+# Note that this OPDS Catalog schema includes atom.rnc, so that schema must be
+# present for validation.
+# 
+# Note also that atom.rnc defines atomUri as text and not as xsd:anyURI, and so
+# wherever the Atom spec requires an IRI, the schema will not check the value
+# against any URI pattern or logic. The OPDS Catalog schema overrides atom.rnc
+# to provide a relatively accurate test. With the approval of XSD 1.1, the
+# schema definition should change to xsd:anyURI to match what the spec text
+# says.
+include "atom.rnc" {
+ 
+undefinedAttribute =
+  attribute * - (xml:base | xml:lang | local:*| opds:* ) { text }
+ 
+  atomLink =
+    element atom:link {
+      atomCommonAttributes ,
+      attribute href { atomUri },
+      attribute type { atomMediaType }? ,
+      attribute hreflang { atomLanguageTag }? ,
+      attribute title { text }? ,
+      attribute length { text }? ,
+      ((attribute rel { "http://opds-spec.org/facet" }, (attribute
+       opds:facetGroup { text }? & attribute opds:activeFacet { "true" }? ))
+      |
+      (attribute rel { "http://opds-spec.org/acquisition/buy" }, opdsPrice+ )
+      |
+      (attribute rel { OPDSUrisExceptBuy }, opdsPrice*)
+      |
+      (attribute rel { atomNCName | ( atomUriExceptOPDS ) } ))? ,
+      (opdsIndirectAcquisition |
+      anyOPDSForeignElement |
+      text)*
+    }
+  
+# Here is where OPDS Catalogs use John Cowan's pragmatic evaluation of an
+# IRI. This modifies xsd:anyURI in XSD 1.0 to exclude ASCII characters not
+# valid in 1.1 or IRI's without being escaped. This matches the OPDS and Atom
+# specs, but not the non-normative atom.rnc.
+  atomUri = xsd:anyURI - xsd:string {pattern = '.*[ <>{}|^`"\nrt].*'}
+    
+# Here we override Atom to account for HTML abuse in the summary element,
+# restricting it in OPDS Catalog to text:
+  atomSummary = 
+    element atom:summary {
+      atomCommonAttributes,
+      attribute type { "text" }?,
+      text
+    }
+  } 
+   
+  anyOPDSForeignElement =
+    element * - ( atom:* | opds:* ) {
+      ( attribute * { text }
+      | text
+      | anyElement )*
+    } 
+   
+# An opds:indirectAcquisition should use strictly MIME media type for
+#its type attribute
+  opdsIndirectAcquisition = 
+    element opds:indirectAcquisition {
+      atomCommonAttributes,
+      attribute type { atomMediaType },
+      (  anyOPDSForeignElement | 
+        opdsIndirectAcquisition) *
+    }
+      
+# An opds:price element should not contain a currency symbol; it is
+# restricted to non-negative decimal numbers.
+  opdsPrice = 
+    element opds:price {
+      atomCommonAttributes,
+      attribute currencycode { opdsPriceCurrencyCode },
+      xsd:decimal { minInclusive="0.0" } 
+    }
+   
+   
+# Instead of allowing every possible 3-letter or 3-digit combination as a
+# currency code, here the permissible codes (as identified in ISO4217 as of
+# 2010-08-25) are enumerated. In 2012 or so, that standard may add, remove or
+# change some currency codes, thus requiring this schema to be updated. Note
+# that codes for metals and funds are not included.
+  opdsPriceCurrencyCode =  (   
+    "AED" | "AFN" | "ALL" | "AMD" | "ANG" | "AOA" | "ARS" | "AUD" | "AWG" | "AZN" | "BAM" | "BBD" | "BDT" | 
+    "BGN" | "BHD" | "BIF" | "BMD" | "BND" | "BOB" | "BOV" | "BRL" | "BSD" | "BTN" | "BWP" | "BYR" | "BZD" | 
+    "CAD" | "CDF" | "CHE" | "CHF" | "CHW" | "CLF" | "CLP" | "CNY" | "COP" | "COU" | "CRC" | "CUC" | "CUP" | 
+    "CVE" | "CZK" | "DJF" | "DKK" | "DOP" | "DZD" | "EEK" | "EGP" | "ERN" | "ETB" | "EUR" | "FJD" | "FKP" | 
+    "GBP" | "GEL" | "GHS" | "GIP" | "GMD" | "GNF" | "GTQ" | "GYD" | "HKD" | "HNL" | "HRK" | "HTG" | "HUF" | 
+    "IDR" | "ILS" | "INR" | "IQD" | "IRR" | "ISK" | "JMD" | "JOD" | "JPY" | "KES" | "KGS" | "KHR" | "KMF" | 
+    "KPW" | "KRW" | "KWD" | "KYD" | "KZT" | "LAK" | "LBP" | "LKR" | "LRD" | "LSL" | "LTL" | "LVL" | "LYD" | 
+    "MAD" | "MDL" | "MGA" | "MKD" | "MMK" | "MNT" | "MOP" | "MRO" | "MUR" | "MVR" | "MWK" | "MXN" | "MXV" | 
+    "MYR" | "MZN" | "NAD" | "NGN" | "NIO" | "NOK" | "NPR" | "NZD" | "OMR" | "PAB" | "PEN" | "PGK" | "PHP" | 
+    "PKR" | "PLN" | "PYG" | "QAR" | "RON" | "RSD" | "RUB" | "RWF" | "SAR" | "SBD" | "SCR" | "SDG" | "SEK" | 
+    "SGD" | "SHP" | "SLL" | "SOS" | "SRD" | "STD" | "SVC" | "SYP" | "SZL" | "THB" | "TJS" | "TMT" | "TND" | 
+    "TOP" | "TRY" | "TTD" | "TWD" | "TZS" | "UAH" | "UGX" | "USD" | "USN" | "USS" | "UYI" | "UYU" | "UZS" | 
+    "VEF" | "VND" | "VUV" | "WST" | "XAF" | "XAG" | "XAU" | "XBA" | "XBB" | "XBC" | "XBD" | "XCD" | "XDR" | 
+    "XFU" | "XOF" | "XPD" | "XPF" | "XPT" | "XTS" | "XXX" | "YER" | "ZAR" | "ZMK" | "ZWL" | "008" | "012" | 
+    "032" | "036" | "044" | "048" | "050" | "051" | "052" | "060" | "064" | "068" | "072" | "084" | "090" | 
+    "096" | "104" | "108" | "116" | "124" | "132" | "136" | "144" | "152" | "156" | "170" | "174" | "188" | 
+    "191" | "192" | "203" | "208" | "214" | "222" | "230" | "232" | "233" | "238" | "242" | "262" | "270" | 
+    "292" | "320" | "324" | "328" | "332" | "340" | "344" | "348" | "352" | "356" | "360" | "364" | "368" | 
+    "376" | "388" | "392" | "398" | "400" | "404" | "408" | "410" | "414" | "417" | "418" | "422" | "426" | 
+    "428" | "430" | "434" | "440" | "446" | "454" | "458" | "462" | "478" | "480" | "484" | "496" | "498" | 
+    "504" | "512" | "516" | "524" | "532" | "533" | "548" | "554" | "558" | "566" | "578" | "586" | "590" | 
+    "598" | "600" | "604" | "608" | "634" | "643" | "646" | "654" | "678" | "682" | "690" | "694" | "702" | 
+    "704" | "706" | "710" | "748" | "752" | "756" | "760" | "764" | "776" | "780" | "784" | "788" | "800" | 
+    "807" | "818" | "826" | "834" | "840" | "858" | "860" | "882" | "886" | "894" | "901" | "931" | "932" | 
+    "934" | "936" | "937" | "938" | "940" | "941" | "943" | "944" | "946" | "947" | "948" | "949" | "950" | 
+    "951" | "952" | "953" | "955" | "956" | "957" | "958" | "959" | "960" | "961" | "962" | "963" | "964" | 
+    "968" | "969" | "970" | "971" | "972" | "973" | "974" | "975" | "976" | "977" | "978" | "979" | "980" | 
+    "981" | "984" | "985" | "986" | "990" | "997" | "998" | "999"
+  )
+```
