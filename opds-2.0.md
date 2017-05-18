@@ -11,10 +11,11 @@ This document is a draft of the 2.0 version of the OPDS Catalog specification.
 
 | Role  | Semantics | Compact? | Required? | Reference |
 | ----- | --------- | -------- | --------- | --------- |
-| facets  | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
-| groups  | Structural element in a catalog meant to group publications together.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 | navigation  | An ordered list of links meant to browse a catalog in depth.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
 | publication  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| images  | A list of resources that can be displayed as the image representation of a publication.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
+| facets  | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| groups  | Structural element in a catalog meant to group publications together.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 
 ### The `navigation` role
 
@@ -59,6 +60,11 @@ This document is a draft of the 2.0 version of the OPDS Catalog specification.
       },
       "links": [
         {"rel": "self", "href": "http://example.org/manifest.json", "type": "application/webpub+json"}
+      ],
+      "images": [
+        {"href": "http://example.org/cover.jpg", "type": "image/jpeg", "height": 1400, "width": 800},
+        {"href": "http://example.org/cover-small.jpg", "type": "image/jpeg", "height": 700, "width": 400},
+        {"href": "http://example.org/cover.svg", "type": "image/svg+xml"}
       ]
     }
   ]
