@@ -1,4 +1,4 @@
-# OPDS 2.0
+# OPDS Catalog 2.0
 
 Open Publication Distribution System (OPDS) 2.0 is an extension of the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest), 
 with a focus on aggregating publications together in order to facilitate their distribution.
@@ -9,16 +9,33 @@ This document is a draft of the 2.0 version of the OPDS Catalog specification.
 
 ## Collection Roles
 
+OPDS 2.0 introduces five new collection roles to the Readium Web Publication Manifest model.
+
+While none of them are a prerequisite, an OPDS 2.0 feed must contain at least:
+
+- one `navigation` collection
+- and/or one `publications` collection
+- and/or one `groups` collection
+
+While previous versions of the OPDS specification were limited to the single collection model of Atom, OPDS 2.0 directly embraces the ability for an OPDS feed to contain as many collections as required.
+
 | Role  | Semantics | Compact? | Required? | Reference |
 | ----- | --------- | -------- | --------- | --------- |
 | navigation  | An ordered list of links meant to browse a catalog in depth.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
-| publication  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| publications  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 | images  | A list of resources that can be displayed as the image representation of a publication.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
 | facets  | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 | groups  | Structural element in a catalog meant to group publications together.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 
 ### The `navigation` role
 
+A `navigation` collection is meant to provide links that an end user can follow in order to browse a catalog. 
+
+Each Link Object must contain a `title`.
+
+While a `navigation` link can point to any number of format, it is recommended to either link to other OPDS 2.0 feeds (`application/opds+json`) or to HTML (`text/html`).
+
+Catalog providers should also attempt to provide a meaningful link relation for each Link Object in a `navigation` collection.
 
 ```
 {
@@ -31,8 +48,18 @@ This document is a draft of the 2.0 version of the OPDS Catalog specification.
   ],
   
   "navigation": [
-    {"href": "/new", "title": "New Publications", "type": "application/opds+json"},
-    {"href": "/popular", "title": "Popular Publications", "type": "application/opds+json"}
+    {
+      "href": "/new", 
+      "title": "New Publications", 
+      "type": "application/opds+json", 
+      "rel": "http://opds-spec.org/sort/new"
+    },
+    {
+      "href": "/popular", 
+      "title": "Popular Publications", 
+      "type": "application/opds+json", 
+      "rel": "http://opds-spec.org/sort/popular"
+    }
   ]
 }
 ```
