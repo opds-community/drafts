@@ -92,3 +92,32 @@ This document is a draft of the 2.0 version of the OPDS Catalog specification.
   ]
 }
 ```
+
+## Search
+
+A catalog can indicate that search is available by providing a Link Object in `links` where the relationship is set to "search":
+
+```
+{
+  "rel": "search",
+  "href": "search{?query}", 
+  "type": "application/opds+json", 
+  "templated": true
+}
+```
+
+Search is always expressed using a URI template with at least one query parameter: "query". This query parameter enables basic keyword search.
+
+In addition to basic keyword search, an OPDS catalog can allow advanced search on any metadata element defined in the [Default Context Document](https://github.com/readium/webpub-manifest/tree/master/contexts/default).
+
+For example the following Link Object allows keyword search as well as restricting search on the "title" or "author" of a publication:
+
+
+```
+{
+  "rel": "search",
+  "href": "search{?query,title,author}", 
+  "type": "application/opds+json", 
+  "templated": true
+}
+```
