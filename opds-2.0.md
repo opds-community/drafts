@@ -37,7 +37,9 @@ While a `navigation` link can point to any number of format, it is recommended t
 
 Catalog providers should also attempt to provide a meaningful link relation for each Link Object in a `navigation` collection.
 
-```
+**Example**
+
+```json
 {
   "metadata": {
     "title": "Example for navigation"
@@ -66,7 +68,7 @@ Catalog providers should also attempt to provide a meaningful link relation for 
 
 ### The `publications` role
 
-```
+```json
 {
   "metadata": {
     "title": "Example listing publications"
@@ -100,7 +102,7 @@ Catalog providers should also attempt to provide a meaningful link relation for 
 
 ### The `facets` role
 
-```
+```json
 {
   "metadata": {
     "title": "Example for facets"
@@ -130,7 +132,7 @@ Catalog providers should also attempt to provide a meaningful link relation for 
 
 A catalog can indicate that search is available by providing a Link Object in `links` where the relationship is set to "search":
 
-```
+```json
 {
   "rel": "search",
   "href": "search{?query}", 
@@ -146,11 +148,47 @@ In addition to basic keyword search, an OPDS catalog can allow advanced search o
 For example the following Link Object allows keyword search as well as restricting search on the "title" or "author" of a publication:
 
 
-```
+```json
 {
   "rel": "search",
   "href": "search{?query,title,author}", 
   "type": "application/opds+json", 
   "templated": true
+}
+```
+
+## Pagination
+
+An OPDS Catalog can contain a very large number of publications. While such catalogs are usually broken down using navigation, facets and groups, a single sub-collection could still contain thousands of publications.
+
+To handle that issue, OPDS 2.0 supports pagination based on `metadata` and `links`.
+
+In `metadata` a feed can contain:
+- `numberOfItems` to indicate the total number of items available
+- `itemsPerPage` to indicate the number of items on a given page
+- `currentPage` to indicate the current page
+
+In `links` the following relations can be used:
+- `next` to indicate the next page
+- `previous` to indicate the previous page
+- `first` to indicate the first page
+- `last` to indicate the last page
+
+**Example**
+
+```json
+{
+  "metadata": {
+    "title": "Paginated feed",
+    "numberOfItems": 5678,
+    "itemsPerPage": 50,
+    "currentPage": 2
+  },
+  "links": [
+    {"rel": "self", "href": "/?page=2", "type": "application/opds+json"},
+    {"rel": ["first", "previous"], "href": "/?page=1", "type": "application/opds+json"},
+    {"rel": "next", "href": "/?page=3", "type": "application/opds+json"},
+    {"rel": "last", "href": "/?page=114", "type": "application/opds+json"}
+  ]
 }
 ```
