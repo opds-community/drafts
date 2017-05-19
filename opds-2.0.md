@@ -23,9 +23,9 @@ While previous versions of the OPDS specification were limited to the single col
 | ----- | --------- | -------- | --------- | --------- |
 | [navigation](#navigation)  | An ordered list of links meant to browse a catalog in depth.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
 | [publications](#publications)  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
-| images  | A list of resources that can be displayed as the image representation of a publication.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
+| [images](#the-images-role)  | Visual representations for a publication.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
 | [facets](#facets)   | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
-| [groups](#groups)   | Structural element in a catalog meant to group publications together.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [groups](#groups)   | Structural element in a catalog meant to contain `navigation` or `publications` collections.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 
 ## Navigation
 
@@ -178,6 +178,17 @@ Each publication listed in an OPDS feed must contain an `images` collection.
 
 ## Groups
 
+When an OPDS catalog feed needs to contain more than one `navigation` or `publications` collection, it needs to rely on the `groups` role.
+
+Groups are meant to contain:
+
+- either a single `navigation` collection
+- or a single `publications` collection
+
+Each group must provide a `title` in its metadata.
+
+**Example 1: Repeating navigation using groups**
+
 ```json
 {
   "metadata": {
@@ -206,6 +217,67 @@ Each publication listed in an OPDS feed must contain an `images` collection.
   ]
 }
 ```
+
+In addition, groups may also provide:
+
+- a `self` link where the client can access the full collection
+- `numberOfItems` in its metadata to indicate the total number of publications available for that collection
+
+A group may for example contain a `publications` collection with 5 publications embedded, but indicate in `numberOfItems` that there are 50 publications in total and provide a link to that full collection.
+
+**Example 2: Mixing navigation & publications**
+
+```json
+{
+  "metadata": {
+    "title": "Example for groups"
+  },
+  
+  "links": [
+    {"rel": "self", "href": "http://example.com/grouped", "type": "application/opds+json"}
+  ],
+  
+  "groups": [
+    {
+      "metadata": {"title": "Main Menu"},
+      "navigation": [
+        {"href": "/new", "title": "New Publications", "type": "application/opds+json", "rel": "http://opds-spec.org/sort/new"},
+        {"href": "/popular", "title": "Popular Publications", "type": "application/opds+json", "rel": "http://opds-spec.org/sort/popular"}
+      ]
+    },
+    {
+      "metadata": {
+        "title": "Featured Books"
+        "numberOfItems": 20
+      },
+      "links": [
+        {"rel": "self", "href": "/featured", "type": "application/opds+json"}
+      ],
+      "publications": [
+        {
+          "metadata": {
+            "@type": "http://schema.org/Book",
+            "title": "Moby-Dick",
+            "author": "Herman Melville",
+            "identifier": "urn:isbn:978031600000X",
+            "language": "en",
+            "modified": "2015-09-29T17:00:00Z"
+          },
+          "links": [
+            {"rel": "self", "href": "http://example.org/manifest.json", "type": "application/webpub+json"}
+          ],
+          "images": [
+            {"href": "http://example.org/cover.jpg", "type": "image/jpeg", "height": 1400, "width": 800},
+            {"href": "http://example.org/cover-small.jpg", "type": "image/jpeg", "height": 700, "width": 400},
+            {"href": "http://example.org/cover.svg", "type": "image/svg+xml"}
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
 
 ## Search
 
