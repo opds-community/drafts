@@ -247,7 +247,7 @@ A group may for example contain a `publications` collection with 5 publications 
     },
     {
       "metadata": {
-        "title": "Featured Books"
+        "title": "Featured Books",
         "numberOfItems": 20
       },
       "links": [
