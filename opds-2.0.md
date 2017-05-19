@@ -21,13 +21,13 @@ While previous versions of the OPDS specification were limited to the single col
 
 | Role  | Semantics | Compact? | Required? | Reference |
 | ----- | --------- | -------- | --------- | --------- |
-| navigation  | An ordered list of links meant to browse a catalog in depth.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
-| publications  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [navigation](#navigation)  | An ordered list of links meant to browse a catalog in depth.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
+| [publications](#publications)  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 | images  | A list of resources that can be displayed as the image representation of a publication.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
-| facets  | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
-| groups  | Structural element in a catalog meant to group publications together.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [facets](#facets)   | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [groups](#groups)   | Structural element in a catalog meant to group publications together.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 
-### The `navigation` role
+## Navigation
 
 A `navigation` collection is meant to provide links that an end user can follow in order to browse a catalog. 
 
@@ -66,7 +66,7 @@ Catalog providers should also attempt to provide a meaningful link relation for 
 }
 ```
 
-### The `publications` role
+## Publications
 
 ```json
 {
@@ -100,7 +100,7 @@ Catalog providers should also attempt to provide a meaningful link relation for 
 }
 ```
 
-### The `facets` role
+## Facets
 
 ```json
 {
@@ -122,6 +122,37 @@ Catalog providers should also attempt to provide a meaningful link relation for 
         {"href": "/fr", "type": "application/opds+json", "title": "French", "properties": {"numberOfItems": 10}},
         {"href": "/en", "type": "application/opds+json", "title": "English", "properties": {"numberOfItems": 40}},
         {"href": "/de", "type": "application/opds+json", "title": "German", "properties": {"numberOfItems": 6}}
+      ]
+    }
+  ]
+}
+```
+
+## Groups
+
+```json
+{
+  "metadata": {
+    "title": "Example for groups"
+  },
+  
+  "links": [
+    {"rel": "self", "href": "http://example.com/grouped", "type": "application/opds+json"}
+  ],
+  
+  "groups": [
+    {
+      "metadata": {"title": "Main Menu"},
+      "navigation": [
+        {"href": "/new", "title": "New Publications", "type": "application/opds+json", "rel": "http://opds-spec.org/sort/new"},
+        {"href": "/popular", "title": "Popular Publications", "type": "application/opds+json", "rel": "http://opds-spec.org/sort/popular"}
+      ]
+    },
+    {
+      "metadata": {"title": "Formats"},
+      "navigation": [
+        {"href": "/ebooks", "title": "EBooks", "type": "application/opds+json", "rel": "subsection"},
+        {"href": "/audiobooks", "title": "Audiobooks", "type": "application/opds+json", "rel": "subsection"}
       ]
     }
   ]
