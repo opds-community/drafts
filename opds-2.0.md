@@ -1,6 +1,6 @@
 # OPDS Catalog 2.0
 
-Open Publication Distribution System (OPDS) 2.0 is an extension of the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest), 
+Open Publication Distribution System (OPDS) 2.0 is based on [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model, 
 with a focus on aggregating publications together in order to facilitate their distribution.
 
 ## Status of this Document
@@ -68,6 +68,18 @@ Catalog providers should also attempt to provide a meaningful link relation for 
 
 ## Publications
 
+A `publications` collection is meant to list publications in an OPDS feed.
+
+Publications can either be:
+
+- Web Publications with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
+- any other publication format, as long as the publication has at least one acquisition link
+
+All publications listed in such a collection must provide a `self` link that will be used by OPDS clients to identify, reference and access publications.
+
+
+**Example**
+
 ```json
 {
   "metadata": {
@@ -81,6 +93,7 @@ Catalog providers should also attempt to provide a meaningful link relation for 
   "publications": [
     {
       "metadata": {
+        "@type": "http://schema.org/Book",
         "title": "Moby-Dick",
         "author": "Herman Melville",
         "identifier": "urn:isbn:978031600000X",
@@ -98,6 +111,41 @@ Catalog providers should also attempt to provide a meaningful link relation for 
     }
   ]
 }
+```
+
+### The `images` role
+
+While previous versions of OPDS relied on link relations to identify visual representations, OPDS 2.0 introduces a dedicated collection role for that purpose.
+
+This new collection role is mostly meant to support responsive images across all types of devices.
+
+Link Objects in `images` can include any number of image format, resolution or aspect ratio.
+
+The only requirement is to include at least one image resource in the following formats: `image/jpeg`, `image/png` or `image/gif`.
+
+Each publication listed in an OPDS feed must contain an `images` collection.
+
+**Example**
+
+```json
+"images": [
+  {
+    "href": "http://example.org/cover.jpg", 
+    "type": "image/jpeg", 
+    "height": 1400, 
+    "width": 800
+  },
+  {
+    "href": "http://example.org/cover-small.jpg", 
+    "type": "image/jpeg", 
+    "height": 700, 
+    "width": 400
+  },
+  {
+    "href": "http://example.org/cover.svg", 
+    "type": "image/svg+xml"
+  }
+]
 ```
 
 ## Facets
@@ -195,11 +243,13 @@ An OPDS Catalog can contain a very large number of publications. While such cata
 To handle that issue, OPDS 2.0 supports pagination based on `metadata` and `links`.
 
 In `metadata` a feed can contain:
+
 - `numberOfItems` to indicate the total number of items available
 - `itemsPerPage` to indicate the number of items on a given page
 - `currentPage` to indicate the current page
 
 In `links` the following relations can be used:
+
 - `next` to indicate the next page
 - `previous` to indicate the previous page
 - `first` to indicate the first page
