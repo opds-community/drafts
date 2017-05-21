@@ -7,17 +7,35 @@ with a focus on aggregating publications together in order to facilitate their d
 
 This document is a draft of the 2.0 version of the OPDS Catalog specification.
 
+## Abstract Model
+
+OPDS 2.0 is based on the same abstract model as the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest).
+
+Compared to previous versions of the OPDS specification:
+
+- the model allows multiple collections to be contained in a single feed
+- the Link Object model is more powerful than the `link` element in Atom, it supports URI templates and multiple relationships
+- metadata are expressed in JSON but an RDF graph can be extracted using a JSON-LD context
+- the core metadata vocabulary is tied to schema.org instead of Dublin Core
+
+In the Readium Web Publication Manifest model, everything has to be a collection:
+
+- a collection is identified by its role
+- a collection contains both `metadata` and `links`
+- specific collection roles that only contain `links` are called compact collections and use a compact syntax (array of Link Objects)
+
+An OPDS 2.0 Catalog Feed is a collection too, with the following requirement:
+
+- it must contain at least one collection identified by the following roles: `navigation`, `publications` or `groups`
+- it must contain a `title` in its `metadata`
+- it must contain a reference to itself using a `self` link in `links`
+
+OPDS 2.0 feeds are identified using the following media type: `application/opds+json`
+
 ## Collection Roles
 
 OPDS 2.0 introduces five new collection roles to the Readium Web Publication Manifest model.
 
-While none of them are a prerequisite, an OPDS 2.0 feed must contain at least:
-
-- one `navigation` collection
-- and/or one `publications` collection
-- and/or one `groups` collection
-
-While previous versions of the OPDS specification were limited to the single collection model of Atom, OPDS 2.0 directly embraces the ability for an OPDS feed to contain as many collections as required.
 
 | Role  | Semantics | Compact? | Required? | Reference |
 | ----- | --------- | -------- | --------- | --------- |
@@ -149,6 +167,8 @@ Each publication listed in an OPDS feed must contain an `images` collection.
 ```
 
 ## Facets
+
+Facets are meant to allow a user to explore a large collection of publications by either changing the order or obtaining a sub-set.
 
 ```json
 {
@@ -314,18 +334,24 @@ An OPDS Catalog can contain a very large number of publications. While such cata
 
 To handle that issue, OPDS 2.0 supports pagination based on `metadata` and `links`.
 
-In `metadata` a feed can contain:
+In `metadata` a feed can contain the following elements:
 
-- `numberOfItems` to indicate the total number of items available
-- `itemsPerPage` to indicate the number of items on a given page
-- `currentPage` to indicate the current page
+| Key  | Value | Format |
+| ----- | ----- | ------ | 
+| numberOfItems  | Indicates the total number of items in a collection.  | Integer |
+| itemsPerPage  | Indicates the number of items displayed per page for the current collection.  | Integer |
+| currentPage  | Indicates the current page number.  | Integer |
+
 
 In `links` the following relations can be used:
 
-- `next` to indicate the next page
-- `previous` to indicate the previous page
-- `first` to indicate the first page
-- `last` to indicate the last page
+| Relationship  | Definition | Reference |
+| ------------- | ---------- | --------- | 
+| next  | Refers to the next resource in a ordered series of resources.  | [HTML4](https://www.w3.org/TR/html4/types.html#type-links) |
+| previous  | Refers to the previous resource in an ordered series of resources. Synonym for "prev".  | [HTML4](https://www.w3.org/TR/html4/types.html#type-links) |
+| first  | An IRI that refers to the furthest preceding resource in a series of resources.  | [RFC5988](https://tools.ietf.org/html/rfc5988) |
+| last  | An IRI that refers to the furthest following resource in a series of resources. | [RFC5988](https://tools.ietf.org/html/rfc5988) |
+
 
 **Example**
 
