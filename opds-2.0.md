@@ -21,10 +21,10 @@ Compared to previous versions of the OPDS specification:
 In the Readium Web Publication Manifest model, everything has to be a collection:
 
 - a collection is identified by its role
-- a collection contains both `metadata` and `links`
+- a collection contains both `metadata` and `links`, along with sub-collections
 - specific collection roles that only contain `links` are called compact collections and use a compact syntax (array of Link Objects)
 
-An OPDS 2.0 Catalog Feed is a collection too, with the following requirement:
+An OPDS 2.0 Catalog Feed is a collection too, with the following requirements:
 
 - it must contain at least one collection identified by the following roles: `navigation`, `publications` or `groups`
 - it must contain a `title` in its `metadata`
@@ -336,8 +336,8 @@ To handle that issue, OPDS 2.0 supports pagination based on `metadata` and `link
 
 In `metadata` a feed can contain the following elements:
 
-| Key  | Value | Format |
-| ----- | ----- | ------ | 
+| Key  | Definition | Format |
+| ---- | ---------- | ------ | 
 | numberOfItems  | Indicates the total number of items in a collection.  | Integer |
 | itemsPerPage  | Indicates the number of items displayed per page for the current collection.  | Integer |
 | currentPage  | Indicates the current page number.  | Integer |
@@ -369,5 +369,71 @@ In `links` the following relations can be used:
     {"rel": "next", "href": "/?page=3", "type": "application/opds+json"},
     {"rel": "last", "href": "/?page=114", "type": "application/opds+json"}
   ]
+}
+```
+
+## Acquisition Links
+
+In OPDS 2.0, the concept of an Acquision Link is not as central as in OPDS 1.x since publications can also be accessed through a manifest.
+
+That said, for publications that are strictly accessible through a download or require specific interactions, the concept remains.
+
+OPDS 2.0 allows the following relationships to indicate that a publication can be acquired:
+
+| Relationship  | Definition | Reference |
+| ------------- | ---------- | --------- | 
+| http://opds-spec.org/acquisition  | Fallback acquisition relationship when no other relationship is a good fit to express the nature of the transaction.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| http://opds-spec.org/acquisition/open-access  | Indicates that a publication is freely accessible without any requirement, including authentication.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| http://opds-spec.org/acquisition/borrow  | Indicates that a publication can be borrowed for a limited period of time.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| http://opds-spec.org/acquisition/buy  | Indicates that a publication can be purchased for a given price. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| http://opds-spec.org/acquisition/sample  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| http://opds-spec.org/acquisition/subscribe  | Indicates that a publication be subscribed to, usually as part of a purchase and for a limited period of time. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+
+An OPDS 2.0 catalog should only use "http://opds-spec.org/acquisition" when none of the other link relationships are suitable to express the interaction.
+
+In addition to link relationships, OPDS 2.0 also defined a number of properties to express relevant information for these interactions:
+
+| Key  | Definition | Format |
+| ---- | ---------- | ------ | 
+| price  | Provides the acquisition price in a given currency.  | Object |
+| indirectAcquisition  | Provides the expected download format for a publication, after an acquisition through an intermediate resource.  | Object |
+
+The `price` is expressed as an JSON object that contains the following keys:
+
+| Key  | Definition | Format |
+| ---- | ---------- | ------ | 
+| currency  | Provides the currency for a specific price.  | ISO 4217 currency code |
+| value  | Provides the decimal value for a specific price.  | Float |
+
+**Example**
+
+```json
+{
+  "href": "/buy",
+  "rel": "http://opds-spec.org/acquisition/buy",
+  "type": "application/epub+zip",
+  "properties": {
+    "price": {
+      "currency": "USD",
+      "value": 4.99
+    }
+  }
+}
+```
+
+**Example**
+
+```json
+{
+  "href": "/buy",
+  "rel": "http://opds-spec.org/acquisition/buy",
+  "type": "text/html",
+  "properties": {
+    "price": {
+      "currency": "USD",
+      "value": 4.99
+    },
+    "indirectAcquisition": {"type": "application/epub+zip"}
+  }
 }
 ```
