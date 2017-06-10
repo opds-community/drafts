@@ -1,5 +1,5 @@
 # opds-revision
-Shared workspace for OPDS 1.2.
+Shared workspace for OPDS 1.2 and OPDS 2.0.
 
 If you're looking for the current version of the spec, visit: http://opds-spec.org/specs/opds-catalog-1-1
 
