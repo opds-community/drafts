@@ -684,14 +684,17 @@ OPDS Catalogs may only provide certain Publications through an Indirect Acquisit
 
 **Examples**
 
-```
 The simplest case is a Publication available in one format:
 
+```
 <link rel="http://opds-spec.org/acquisition" 
       type="video/mp4v-es" 
       href="/content/free/4561.mp4"/>
+```
+
 If the Publication was available in multiple formats as unique Resources, they would simply be listed:
 
+```
 <link rel="http://opds-spec.org/acquisition/borrow" 
       href="/content/borrow/4561.mobi"
       type="application/x-mobipocket-ebook" />
@@ -699,23 +702,32 @@ If the Publication was available in multiple formats as unique Resources, they w
 <link rel="http://opds-spec.org/acquisition/borrow" 
       href="/content/borrow/4561.epub"
       type="application/epub+zip" />
-If the Publication requires payment, at least one "opds:price" element is required:
+```      
 
+If the Publication requires payment, at least one `opds:price` element is required:
+
+```
 <link rel="http://opds-spec.org/acquisition/buy"
       href="/product/song1.mp3"
       type="audio/mpeg">
   <opds:price currencycode="USD">1.99</opds:price> 
 </link>
-If the same Publication requires a payment through an HTML page, then an "opds:indirectAcquisition" element is required to describe the content type of the final Publication Representation:
+```
 
+If the same Publication requires a payment through an HTML page, then an `opds:indirectAcquisition` element is required to describe the content type of the final Publication Representation:
+
+```
 <link rel="http://opds-spec.org/acquisition/buy"
       href="/product/1"
       type="text/html">
   <opds:price currencycode="USD">1.99</opds:price>
   <opds:indirectAcquisition type="audio/mpeg" />
 </link>
-Multiple "opds:indirectAcquisition" elements can also be used as child elements of an Acquisition Link or another "opds:indirectAcquisition" when this is necessary (a bundle would be a good example):
+```
 
+Multiple `opds:indirectAcquisition` elements can also be used as child elements of an Acquisition Link or another `opds:indirectAcquisition` when this is necessary (a bundle would be a good example):
+
+```
 <link type="text/html" 
       rel="http://opds-spec.org/acquisition/buy" 
       href="/item/1111/buy/">
