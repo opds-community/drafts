@@ -7,7 +7,7 @@ with a focus on aggregating publications together in order to facilitate their d
 
 This document is a draft of the 2.0 version of the OPDS Catalog specification.
 
-## Abstract Model
+## Overview
 
 OPDS 2.0 is based on the same abstract model as the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest).
 
@@ -72,7 +72,7 @@ Catalog providers should also attempt to provide a meaningful link relation for 
       "href": "/new", 
       "title": "New Publications", 
       "type": "application/opds+json", 
-      "rel": "http://opds-spec.org/sort/new"
+      "rel": "current"
     },
     {
       "href": "/popular", 
@@ -407,8 +407,8 @@ In addition to link relationships, OPDS 2.0 also defined a number of properties 
 
 | Key  | Definition | Format |
 | ---- | ---------- | ------ | 
-| price  | Provides the acquisition price in a given currency.  | Object |
-| indirectAcquisition  | Provides the expected download format for a publication, after an acquisition through an intermediate resource.  | Object |
+| price  | Provides the acquisition price in a given currency.  | Price Object |
+| indirectAcquisition  | Provides the expected download format for a publication, after an acquisition through an intermediate resource.  | Acquisition Object |
 
 The `price` is expressed as an JSON object that contains the following keys:
 
@@ -451,3 +451,7 @@ The `price` is expressed as an JSON object that contains the following keys:
   }
 }
 ```
+
+## Live Demo
+
+A public demo is available for the [Go version of the Readium-2 streamer](https://github.com/readium/r2-streamer-go) at the following URI: https://readium2.feedbooks.net/publications.json
