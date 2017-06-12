@@ -90,10 +90,12 @@ A `publications` collection is meant to list publications in an OPDS feed.
 
 Publications can either be:
 
-- Web Publications with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
-- any other publication format, as long as the publication has at least one acquisition link
+- a [Readium Web Publication](https://github.com/readium/webpub-manifest) with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
+- any other publication format, as long as the publication has at least one [Acquisition Link](#acquisition-links)
 
 All publications listed in such a collection must provide a `self` link that will be used by OPDS clients to identify, reference and access publications.
+
+> TODO: we'll probably need to define a new type of publication type for OPDS 2.0, based on a sub-set of Readium Web Publication (by removing the requirement for a spine).
 
 
 **Example**
@@ -168,7 +170,18 @@ Each publication listed in an OPDS feed must contain an `images` collection.
 
 ## Facets
 
-Facets are meant to allow a user to explore a large collection of publications by either changing the order or obtaining a sub-set.
+Facets are meant to allow a user to explore a large collection of publications by either changing the order or obtaining a sub-set for the current feed.
+
+The `facets` role is meant to indicate that a collection contains a facet group. Each facet group:
+
+* must contain a `title` in its `metadata`
+* must contain at least two or more Link Objects in `links`
+* may contain `numberOfItems` in the `properties` of a Link Object to hint at the number of publications available for a given facet
+
+> TODO: define link relations for the active and default facets.
+
+
+**Example**
 
 ```json
 {
@@ -183,8 +196,7 @@ Facets are meant to allow a user to explore a large collection of publications b
   "facets": [
     {
       "metadata": {
-        "title": "Language", 
-        "numberOfItems": 56
+        "title": "Language"
       },
       "links": [
         {"href": "/fr", "type": "application/opds+json", "title": "French", "properties": {"numberOfItems": 10}},
@@ -420,6 +432,8 @@ The `price` is expressed as an JSON object that contains the following keys:
   }
 }
 ```
+
+> TODO: Define how `indirectAcquisition` work in `properties`.
 
 **Example**
 
