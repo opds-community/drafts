@@ -398,7 +398,7 @@ In `links` the following relations can be used:
 "metadata": {
   "@type": "http://schema.org/EBook",
   "identifier": "urn:isbn:9780000000002",
-  "title": "A Journey into the Center of the Earth"
+  "title": "A Journey into the Center of the Earth",
   "author": {
     "name": "Jules Verne",
     "identifier": "http://isni.org/isni/0000000121400562",
