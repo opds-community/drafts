@@ -14,7 +14,7 @@ OPDS 2.0 is based on the same abstract model as the [Readium Web Publication Man
 Compared to previous versions of the OPDS specification:
 
 - the model allows multiple collections to be contained in a single feed
-- the Link Object model is more powerful than the `link` element in Atom, it supports URI templates and multiple relationships
+- the Link Object model is more powerful than the `link` element in Atom, it supports URI templates and multiple relations
 - metadata are expressed in JSON but an RDF graph can be extracted using a JSON-LD context
 - the core metadata vocabulary is tied to schema.org instead of Dublin Core
 
@@ -32,7 +32,7 @@ An OPDS 2.0 Catalog Feed is a collection too, with the following requirements:
 
 OPDS 2.0 feeds are identified using the following media type: `application/opds+json`
 
-## Collection Roles
+## 1. Collections
 
 OPDS 2.0 introduces five new collection roles to the Readium Web Publication Manifest model.
 
@@ -45,7 +45,7 @@ OPDS 2.0 introduces five new collection roles to the Readium Web Publication Man
 | [facets](#facets)   | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 | [groups](#groups)   | Structural element in a catalog meant to contain `navigation` or `publications` collections.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 
-## Navigation
+### 1.1. Navigation
 
 A `navigation` collection is meant to provide links that an end user can follow in order to browse a catalog. 
 
@@ -84,7 +84,7 @@ Catalog providers should also attempt to provide a meaningful link relation for 
 }
 ```
 
-## Publications
+### 1.2. Publications
 
 A `publications` collection is meant to list publications in an OPDS feed.
 
@@ -133,7 +133,7 @@ All publications listed in such a collection must provide a `self` link that wil
 }
 ```
 
-### The `images` role
+### 1.3. Images
 
 While previous versions of OPDS relied on link relations to identify visual representations, OPDS 2.0 introduces a dedicated collection role for that purpose.
 
@@ -168,7 +168,7 @@ Each publication listed in an OPDS feed must contain an `images` collection.
 ]
 ```
 
-## Facets
+### 1.4. Facets
 
 Facets are meant to allow a user to explore a large collection of publications by either changing the order or obtaining a sub-set for the current feed.
 
@@ -208,7 +208,7 @@ The `facets` role is meant to indicate that a collection contains a facet group.
 }
 ```
 
-## Groups
+### 1.5. Groups
 
 When an OPDS catalog feed needs to contain more than one `navigation` or `publications` collection, it needs to rely on the `groups` role.
 
@@ -311,9 +311,9 @@ A group may for example contain a `publications` collection with 5 publications 
 ```
 
 
-## Search
+## 2. Search
 
-A catalog can indicate that search is available by providing a Link Object in `links` where the relationship is set to "search":
+A catalog can indicate that search is available by providing a Link Object in `links` where the relation is set to "search":
 
 ```json
 {
@@ -340,7 +340,7 @@ For example the following Link Object allows keyword search as well as restricti
 }
 ```
 
-## Pagination
+## 3. Pagination
 
 An OPDS Catalog can contain a very large number of publications. While such catalogs are usually broken down using navigation, facets and groups, a single sub-collection could still contain thousands of publications.
 
@@ -357,7 +357,7 @@ In `metadata` a feed can contain the following elements:
 
 In `links` the following relations can be used:
 
-| Relationship  | Definition | Reference |
+| Relation  | Definition | Reference |
 | ------------- | ---------- | --------- | 
 | next  | Refers to the next resource in a ordered series of resources.  | [HTML4](https://www.w3.org/TR/html4/types.html#type-links) |
 | previous  | Refers to the previous resource in an ordered series of resources. Synonym for "prev".  | [HTML4](https://www.w3.org/TR/html4/types.html#type-links) |
@@ -365,7 +365,7 @@ In `links` the following relations can be used:
 | last  | An IRI that refers to the furthest following resource in a series of resources. | [RFC5988](https://tools.ietf.org/html/rfc5988) |
 
 
-**Example**
+**Example: Basic pagination**
 
 ```json
 {
@@ -384,40 +384,81 @@ In `links` the following relations can be used:
 }
 ```
 
-## Acquisition Links
+## 4. Publications
+
+### 4.x. OPDS Publications
+
+> TODO: define a subset for Readium Web Publications with a dedicated media type and less constraints.
+
+### 4.x. Metadata
+
+**Example: Publication metadata enhanced with links**
+
+```json
+"metadata": {
+  "@type": "http://schema.org/EBook",
+  "identifier": "urn:isbn:9780000000002",
+  "title": "A Journey into the Center of the Earth"
+  "author": {
+    "name": "Jules Verne",
+    "identifier": "http://isni.org/isni/0000000121400562",
+    "sort_as": "Verne, Jules",
+    "links": [
+      {"href": "/author/0000000121400562", "type": "application/opds+json"}
+    ]
+  },
+  "translator": "Frederick Amadeus Malleson",
+  "language": "en",
+  "publisher": "SciFi Publishing Inc.",
+  "modified": "2016-02-22T11:31:38Z",
+  "description": "The story involves German professor Otto Lidenbrock who believes there are volcanic tubes going toward the centre of the Earth. He, his nephew Axel, and their guide Hans descend into the Icelandic volcano Snæfellsjökull, encountering many adventures, including prehistoric animals and natural hazards, before eventually coming to the surface again in southern Italy, at the Stromboli volcano.",
+  "belongs_to": {
+    "series": {
+      "name": "The Extraordinary Voyages",
+      "position": 3,
+      "links": [
+        {"href": "/series/167", "type": "application/opds+json"}
+      ]
+    },
+    "collection": "SciFi Classics"
+  }
+}
+```
+
+### 4.x. Acquisition Links
 
 In OPDS 2.0, the concept of an Acquision Link is not as central as in OPDS 1.x since publications can also be accessed through a manifest.
 
 That said, for publications that are strictly accessible through a download or require specific interactions, the concept remains.
 
-OPDS 2.0 allows the following relationships to indicate that a publication can be acquired:
+OPDS 2.0 allows the following relations to indicate that a publication can be acquired:
 
-| Relationship  | Definition | Reference |
+| Relation  | Definition | Reference |
 | ------------- | ---------- | --------- | 
-| http://opds-spec.org/acquisition  | Fallback acquisition relationship when no other relationship is a good fit to express the nature of the transaction.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| http://opds-spec.org/acquisition  | Fallback acquisition relation when no other relation is a good fit to express the nature of the transaction.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 | http://opds-spec.org/acquisition/open-access  | Indicates that a publication is freely accessible without any requirement, including authentication.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 | http://opds-spec.org/acquisition/borrow  | Indicates that a publication can be borrowed for a limited period of time.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 | http://opds-spec.org/acquisition/buy  | Indicates that a publication can be purchased for a given price. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 | http://opds-spec.org/acquisition/sample  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 | http://opds-spec.org/acquisition/subscribe  | Indicates that a publication be subscribed to, usually as part of a purchase and for a limited period of time. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 
-An OPDS 2.0 catalog should only use "http://opds-spec.org/acquisition" when none of the other link relationships are suitable to express the interaction.
+An OPDS 2.0 catalog should only use "http://opds-spec.org/acquisition" when none of the other link relations are suitable to express the interaction.
 
-In addition to link relationships, OPDS 2.0 also defined a number of properties to express relevant information for these interactions:
+In addition to link relations, OPDS 2.0 also defined a number of properties to express relevant information for these interactions:
 
 | Key  | Definition | Format |
 | ---- | ---------- | ------ | 
 | price  | Provides the acquisition price in a given currency.  | Price Object |
-| indirectAcquisition  | Provides the expected download format for a publication, after an acquisition through an intermediate resource.  | Acquisition Object |
+| indirectAcquisition  | Provides the expected download format for a publication, after an acquisition through an intermediate resource.  | Array of Acquisition Objects |
 
-The `price` is expressed as an JSON object that contains the following keys:
+The Price Object can contain the following keys:
 
 | Key  | Definition | Format |
 | ---- | ---------- | ------ | 
 | currency  | Provides the currency for a specific price.  | ISO 4217 currency code |
 | value  | Provides the decimal value for a specific price.  | Float |
 
-**Example**
+**Example 1: Simple paid acquisition**
 
 ```json
 {
@@ -433,9 +474,14 @@ The `price` is expressed as an JSON object that contains the following keys:
 }
 ```
 
-> TODO: Define how `indirectAcquisition` work in `properties`.
+The Acquisition Object can contain the following keys:
 
-**Example**
+| Key  | Definition | Format |
+| ---- | ---------- | ------ | 
+| type  | Indicates the media type in which the publication can be indirectly acquired.  | MIME Media Type|
+| child  | Contains an additional level of indirection if necessary.  | Array of Acquisition Objects |
+
+**Example 2: Indirect Acquisition through an HTML document**
 
 ```json
 {
@@ -447,7 +493,7 @@ The `price` is expressed as an JSON object that contains the following keys:
       "currency": "USD",
       "value": 4.99
     },
-    "indirectAcquisition": {"type": "application/epub+zip"}
+    "indirectAcquisition": [{"type": "application/epub+zip"}]
   }
 }
 ```
