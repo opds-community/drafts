@@ -39,11 +39,11 @@ OPDS 2.0 introduces five new collection roles to the Readium Web Publication Man
 
 | Role  | Semantics | Compact? | Required? | Reference |
 | ----- | --------- | -------- | --------- | --------- |
-| [navigation](#navigation)  | An ordered list of links meant to browse a catalog in depth.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
-| [publications](#publications)  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
-| [images](#the-images-role)  | Visual representations for a publication.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
-| [facets](#facets)   | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
-| [groups](#groups)   | Structural element in a catalog meant to contain `navigation` or `publications` collections.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [navigation](#11-navigation)  | An ordered list of links meant to browse a catalog in depth.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
+| [publications](#12-publications)  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [images](#13-images)  | Visual representations for a publication.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
+| [facets](#14-facets)   | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [groups](#15-groups)   | Structural element in a catalog meant to contain `navigation` or `publications` collections.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 
 ### 1.1. Navigation
 
@@ -91,7 +91,7 @@ A `publications` collection is meant to list publications in an OPDS feed.
 Publications can either be:
 
 - a [Readium Web Publication](https://github.com/readium/webpub-manifest) with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
-- any other publication format, as long as the publication has at least one [Acquisition Link](#acquisition-links)
+- an [OPDS Publication](#41-opds-publication)
 
 All publications listed in such a collection must provide a `self` link that will be used by OPDS clients to identify, reference and access publications.
 
@@ -386,11 +386,26 @@ In `links` the following relations can be used:
 
 ## 4. Publications
 
-### 4.x. OPDS Publications
+### 4.1. OPDS Publication
 
-> TODO: define a subset for Readium Web Publications with a dedicated media type and less constraints.
+An OPDS Publication is essentially a Readium Web Publication without the requirement to include a `spine` collection.
 
-### 4.x. Metadata
+An OPDS Publication can be identified by the following media type: `application/opds-publication+json`
+
+An OPDS Publication must contain at least one [Acquisition Link](#43-acquisition-link).
+
+### 4.2. Metadata
+
+Metadata expression in OPDS 2.0 is based on the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model and [its default context](https://github.com/readium/webpub-manifest/tree/master/contexts/default).
+
+OPDS 2.0 introduces a slight extension to this model by allowing support for links at a metadata level in the following elements: 
+
+* all contributor elements: `author`, `translator`, `editor`, `artist`, `illustrator`, `letterer`, `penciler`, `colorist`, `inker` and `narrator`
+* `publisher`
+* `series`
+* `collection`
+
+The `links` element is used for that purpose with an array of Link Objects.
 
 **Example: Publication metadata enhanced with links**
 
@@ -425,7 +440,7 @@ In `links` the following relations can be used:
 }
 ```
 
-### 4.x. Acquisition Links
+### 4.3. Acquisition Links
 
 In OPDS 2.0, the concept of an Acquision Link is not as central as in OPDS 1.x since publications can also be accessed through a manifest.
 
