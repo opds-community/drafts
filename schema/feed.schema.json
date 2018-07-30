@@ -74,5 +74,16 @@
       }
     }
   },
-  "required": ["metadata", "links"]
+  "required": ["metadata", "links"],
+  "anyOf": [
+    {
+      "required": ["publications"]
+    },
+    {
+      "required": ["navigation"]
+    },
+    {
+      "required": ["groups"]
+    }
+  ]
 }
