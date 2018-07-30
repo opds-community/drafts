@@ -1,11 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "http://opds-community.github.io/workspace/schema/feed.schema.json",
+  "id": "https://opds-community.github.io/workspace/schema/feed.schema.json",
   "title": "OPDS Publication",
   "properties": {
     "metadata": {
       "type": "object",
-      "$ref": "http://opds-community.github.io/workspace/schema/feed-metadata.schema.json"
+      "$ref": "https://opds-community.github.io/workspace/schema/feed-metadata.schema.json"
     },
     "links": {
       "type": "array",
@@ -16,7 +16,7 @@
     "publications": {
       "type": "array",
       "items": {
-        "$ref": "http://opds-community.github.io/workspace/schema/publication.schema.json"
+        "$ref": "https://opds-community.github.io/workspace/schema/publication.schema.json"
       }
     },
     "navigation": {
@@ -32,7 +32,7 @@
         "properties": {
           "metadata": {
             "type": "object",
-            "$ref": "http://opds-community.github.io/workspace/schema/feed-metadata.schema.json"
+            "$ref": "https://opds-community.github.io/workspace/schema/feed-metadata.schema.json"
           },
           "links": {
             "type": "array",
@@ -50,7 +50,7 @@
         "properties": {
           "metadata": {
             "type": "object",
-            "$ref": "http://opds-community.github.io/workspace/schema/feed-metadata.schema.json"
+            "$ref": "https://opds-community.github.io/workspace/schema/feed-metadata.schema.json"
           },
           "links": {
             "type": "array",
@@ -61,7 +61,7 @@
           "publications": {
             "type": "array",
             "items": {
-              "$ref": "http://opds-community.github.io/workspace/schema/publication.schema.json"
+              "$ref": "https://opds-community.github.io/workspace/schema/publication.schema.json"
             }
           },
           "navigation": {
