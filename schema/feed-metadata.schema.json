@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "id": "http://readium.org/webpub-manifest/schema/feed-metadata.schema.json",
+  "title": "OPDS Metadata",
+  "properties": {
+    "identifier": {
+      "type": "string",
+      "format": "uri"
+    },
+    "@type": {
+      "type": "string",
+      "format": "uri"
+    },
+    "title": {
+      "type": ["string", "array", "object"]
+    },
+    "subtitle": {
+      "type": ["string", "array", "object"]
+    },
+    "modified": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "type": "string"
+    },
+    "itemsPerPage": {
+      "type": "integer",
+      "exclusiveMinimum": 0
+    },
+    "currentPage": {
+      "type": "integer",
+      "exclusiveMinimum": 0
+    },
+    "numberOfItems": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": ["title"]
+}

@@ -390,9 +390,9 @@ In `links` the following relations can be used:
 
 An OPDS Publication is essentially a Readium Web Publication without the requirement to include a `spine` collection.
 
-An OPDS Publication can be identified by the following media type: `application/opds-publication+json`
+It can be identified by the following media type: `application/opds-publication+json`
 
-An OPDS Publication must contain at least one [Acquisition Link](#43-acquisition-link).
+It must contain at least one [Acquisition Link](#43-acquisition-link).
 
 ### 4.2. Metadata
 
