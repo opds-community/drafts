@@ -2,9 +2,9 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "id": "https://opds-community.github.io/workspace/schema/publication.schema.json",
   "title": "OPDS Publication",
+  "type": "object",
   "properties": {
     "metadata": {
-      "type": "object",
       "$ref": "http://readium.org/webpub-manifest/schema/metadata.schema.json"
     },
     "links": {
@@ -20,5 +20,33 @@
       }
     }
   },
-  "required": ["metadata", "links", "images"]
+  "required": ["metadata", "links", "images"],
+  "allOf": [
+    {
+      "description": "A publication must contain at least one acquisition link.",
+      "properties": {
+        "links": {
+          "contains": {
+            "properties": {
+              "rel": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
+                  },
+                  {
+                    "type": "array",
+                    "contains": {
+                      "type": "string",
+                      "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

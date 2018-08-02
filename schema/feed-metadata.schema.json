@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "id": "https://readium.org/webpub-manifest/schema/feed-metadata.schema.json",
   "title": "OPDS Metadata",
+  "type": "object",
   "properties": {
     "identifier": {
       "type": "string",
