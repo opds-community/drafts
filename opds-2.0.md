@@ -95,9 +95,6 @@ Publications can either be:
 
 All publications listed in such a collection must provide a `self` link that will be used by OPDS clients to identify, reference and access publications.
 
-> TODO: we'll probably need to define a new type of publication type for OPDS 2.0, based on a sub-set of Readium Web Publication (by removing the requirement for a spine).
-
-
 **Example**
 
 ```json
@@ -175,10 +172,9 @@ Facets are meant to allow a user to explore a large collection of publications b
 The `facets` role is meant to indicate that a collection contains a facet group. Each facet group:
 
 * must contain a `title` in its `metadata`
-* must contain at least two or more Link Objects in `links`
+* should contain at least two or more Link Objects in `links`
 * may contain `numberOfItems` in the `properties` of a Link Object to hint at the number of publications available for a given facet
-
-> TODO: define link relations for the active and default facets.
+* may use `self` in the `rel` of a Link Object to indicate which facet is currently active
 
 
 **Example**
@@ -310,7 +306,6 @@ A group may for example contain a `publications` collection with 5 publications 
 }
 ```
 
-
 ## 2. Search
 
 A catalog can indicate that search is available by providing a Link Object in `links` where the relation is set to "search":
@@ -329,7 +324,6 @@ Search is always expressed using a URI template with at least one query paramete
 In addition to basic keyword search, an OPDS catalog can allow advanced search on any metadata element defined in the [Default Context Document](https://github.com/readium/webpub-manifest/tree/master/contexts/default).
 
 For example the following Link Object allows keyword search as well as restricting search on the "title" or "author" of a publication:
-
 
 ```json
 {
@@ -513,6 +507,6 @@ The Acquisition Object can contain the following keys:
 }
 ```
 
-## Live Demo
+## Appendix A. JSON Schema
 
-A public demo is available for the [Go version of the Readium-2 streamer](https://github.com/readium/r2-streamer-go) at the following URI: https://readium2.feedbooks.net/publications.json
+A JSON Schema for an OPDS 2.0 Feed is available at https://opds-community.github.io/workspace/schema/feed.schema.json
