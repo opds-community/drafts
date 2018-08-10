@@ -557,4 +557,9 @@ The Acquisition Object can contain the following keys:
 
 ## Appendix A. JSON Schema
 
-A JSON Schema for an OPDS 2.0 Feed is available at [https://drafts.opds.io/schema/feed.schema.json](https://drafts.opds.io/schema/feed.schema.json)
+A JSON Schema for an OPDS 2.0 Feed is available under version control at [https://github.com/opds-community/drafts/tree/master/schema](https://github.com/opds-community/drafts/tree/master/schema)
+
+For the purpose of validating an OPDS 2.0 catalog, use the following JSON Schema resources:
+
+* OPDS 2.0 Feed: [https://drafts.opds.io/schema/feed.schema.json](https://drafts.opds.io/schema/feed.schema.json)
+* OPDS 2.0 Publication: [https://drafts.opds.io/schema/publication.schema.json](https://drafts.opds.io/schema/publication.schema.json)
