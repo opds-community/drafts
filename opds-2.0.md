@@ -1,11 +1,46 @@
 # OPDS Catalog 2.0
 
-Open Publication Distribution System (OPDS) 2.0 is based on [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model, 
+Open Publication Distribution System (OPDS) 2.0 is based on the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model and JSON-LD, 
 with a focus on aggregating publications together in order to facilitate their distribution.
+
+**This version:**
+
+* [https://drafts.opds.io/opds-2.0](https://drafts.opds.io/opds-2.0)
+
+**Previous version:**
+
+* [https://specs.opds.io/opds-1.1.html](https://specs.opds.io/opds-1.1.html)
+
+**Editors:**
+
+* Hadrien Gardeur ([Feedbooks](http://www.feedbooks.com))
+
+**Participate:**
+
+* [GitHub opds-community/drafts](https://github.com/opds-community/drafts)
+* [File an issue](https://github.com/opds-community/drafts/issues)
+
 
 ## Status of this Document
 
 This document is a draft of the 2.0 version of the OPDS Catalog specification.
+
+## Table of Contents
+
+* [Overview](#overview)
+* [1. Collections](#1-collections)
+  * [1.1. Navigation](#11-navigation)
+  * [1.2. Publications](#12-publications)
+  * [1.3. Images](#13-images)
+  * [1.4. Facets](#14-facets)
+  * [1.5. Groups](#15-groups)
+* [2. Search](#2-search)
+* [3. Pagination](#3-pagination)
+* [4. Publications](#4-publications)
+  * [4.1. OPDS Publication](#41-opds-publication)
+  * [4.2. Metadata](#42-metadata)
+  * [4.3. Acquisition Links](#43-acquisition-links)
+* [Appendix A. JSON Schema](#appendix-a-json-schema)
 
 ## Overview
 
@@ -411,7 +446,7 @@ The `links` element is used for that purpose with an array of Link Objects.
   "author": {
     "name": "Jules Verne",
     "identifier": "http://isni.org/isni/0000000121400562",
-    "sort_as": "Verne, Jules",
+    "sortAs": "Verne, Jules",
     "links": [
       {"href": "/author/0000000121400562", "type": "application/opds+json"}
     ]
@@ -421,7 +456,7 @@ The `links` element is used for that purpose with an array of Link Objects.
   "publisher": "SciFi Publishing Inc.",
   "modified": "2016-02-22T11:31:38Z",
   "description": "The story involves German professor Otto Lidenbrock who believes there are volcanic tubes going toward the centre of the Earth. He, his nephew Axel, and their guide Hans descend into the Icelandic volcano Snæfellsjökull, encountering many adventures, including prehistoric animals and natural hazards, before eventually coming to the surface again in southern Italy, at the Stromboli volcano.",
-  "belongs_to": {
+  "belongsTo": {
     "series": {
       "name": "The Extraordinary Voyages",
       "position": 3,
@@ -449,6 +484,7 @@ OPDS 2.0 allows the following relations to indicate that a publication can be ac
 | http://opds-spec.org/acquisition/borrow  | Indicates that a publication can be borrowed for a limited period of time.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 | http://opds-spec.org/acquisition/buy  | Indicates that a publication can be purchased for a given price. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 | http://opds-spec.org/acquisition/sample  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| preview  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [RFC6903](https://tools.ietf.org/html/rfc6903#section-3) |
 | http://opds-spec.org/acquisition/subscribe  | Indicates that a publication be subscribed to, usually as part of a purchase and for a limited period of time. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 
 An OPDS 2.0 catalog should only use "http://opds-spec.org/acquisition" when none of the other link relations are suitable to express the interaction.
