@@ -1,3 +1,13 @@
+[![OPDS Logo](https://opds.io/img/logo.png)](https://opds.io)
+
+<style>
+.rfc {
+    color: #d55;
+    font-variant: small-caps;
+    font-style: normal;
+}
+</style>
+
 # OPDS Catalog 2.0
 
 Open Publication Distribution System (OPDS) 2.0 is based on the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model and JSON-LD, 
@@ -61,9 +71,9 @@ In the Readium Web Publication Manifest model, everything has to be a collection
 
 An OPDS 2.0 Catalog Feed is a collection too, with the following requirements:
 
-- it must contain at least one collection identified by the following roles: `navigation`, `publications` or `groups`
-- it must contain a `title` in its `metadata`
-- it must contain a reference to itself using a `self` link in `links`
+- it <em class="rfc">must</em> contain at least one collection identified by the following roles: `navigation`, `publications` or `groups`
+- it <em class="rfc">must</em> contain a `title` in its `metadata`
+- it <em class="rfc">must</em> contain a reference to itself using a `self` link in `links`
 
 OPDS 2.0 feeds are identified using the following media type: `application/opds+json`
 
@@ -84,11 +94,11 @@ OPDS 2.0 introduces five new collection roles to the Readium Web Publication Man
 
 A `navigation` collection is meant to provide links that an end user can follow in order to browse a catalog. 
 
-Each Link Object must contain a `title`.
+Each Link Object <em class="rfc">must</em> contain a `title`.
 
-While a `navigation` link can point to any number of format, it is recommended to either link to other OPDS 2.0 feeds (`application/opds+json`) or to HTML (`text/html`).
+While a `navigation` link <em class="rfc">may</em> point to any number of format, it is <em class="rfc">recommended</em> to either link to other OPDS 2.0 feeds (`application/opds+json`) or to HTML (`text/html`).
 
-Catalog providers should also attempt to provide a meaningful link relation for each Link Object in a `navigation` collection.
+Catalog providers <em class="rfc">should</em> also attempt to provide a meaningful link relation for each Link Object in a `navigation` collection.
 
 **Example**
 
@@ -128,7 +138,7 @@ Publications can either be:
 - a [Readium Web Publication](https://github.com/readium/webpub-manifest) with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
 - an [OPDS Publication](#41-opds-publication)
 
-All publications listed in such a collection must provide a `self` link that will be used by OPDS clients to identify, reference and access publications.
+All publications listed in such a collection <em class="rfc">must</em> provide a `self` link that will be used by OPDS clients to identify, reference and access publications.
 
 **Example**
 
@@ -171,11 +181,11 @@ While previous versions of OPDS relied on link relations to identify visual repr
 
 This new collection role is mostly meant to support responsive images across all types of devices.
 
-Link Objects in `images` can include any number of image format, resolution or aspect ratio.
+Link Objects in `images` <em class="rfc">may</em> include any number of image format, resolution or aspect ratio.
 
-The only requirement is to include at least one image resource in the following formats: `image/jpeg`, `image/png` or `image/gif`.
+At least one image resource <em class="rfc">must</em> use one of the following formats: `image/jpeg`, `image/png` or `image/gif`.
 
-Each publication listed in an OPDS feed must contain an `images` collection.
+Each publication listed in an OPDS feed <em class="rfc">must</em> contain an `images` collection.
 
 **Example**
 
@@ -206,10 +216,10 @@ Facets are meant to allow a user to explore a large collection of publications b
 
 The `facets` role is meant to indicate that a collection contains a facet group. Each facet group:
 
-* must contain a `title` in its `metadata`
-* should contain at least two or more Link Objects in `links`
-* may contain `numberOfItems` in the `properties` of a Link Object to hint at the number of publications available for a given facet
-* may use `self` in the `rel` of a Link Object to indicate which facet is currently active
+* <em class="rfc">must</em> contain a `title` in its `metadata`
+* <em class="rfc">should</em> contain at least two or more Link Objects in `links`
+* <em class="rfc">may</em> contain `numberOfItems` in the `properties` of a Link Object to hint at the number of publications available for a given facet
+* <em class="rfc">may</em> use `self` in the `rel` of a Link Object to indicate which facet is currently active
 
 
 **Example**
@@ -248,7 +258,12 @@ Groups are meant to contain:
 - either a single `navigation` collection
 - or a single `publications` collection
 
-Each group must provide a `title` in its metadata.
+Each group <em class="rfc">must</em> provide a `title` in its metadata.
+
+In addition, each group <em class="rfc">may</em> also provide:
+
+- a `self` link where the client can access the full collection
+- `numberOfItems` in its metadata to indicate the total number of publications available for that collection
 
 **Example 1: Repeating navigation using groups**
 
@@ -281,14 +296,9 @@ Each group must provide a `title` in its metadata.
 }
 ```
 
-In addition, groups may also provide:
-
-- a `self` link where the client can access the full collection
-- `numberOfItems` in its metadata to indicate the total number of publications available for that collection
-
-A group may for example contain a `publications` collection with 5 publications embedded, but indicate in `numberOfItems` that there are 50 publications in total and provide a link to that full collection.
-
 **Example 2: Mixing navigation & publications**
+
+_A group may for example contain a `publications` collection with 5 publications embedded, but indicate in `numberOfItems` that there are 50 publications in total and provide a link to that full collection._
 
 ```json
 {
@@ -343,6 +353,8 @@ A group may for example contain a `publications` collection with 5 publications 
 
 ## 2. Search
 
+Each catalog <em class="rfc">may</em> provide the ability to search.
+
 A catalog can indicate that search is available by providing a Link Object in `links` where the relation is set to "search":
 
 ```json
@@ -356,7 +368,7 @@ A catalog can indicate that search is available by providing a Link Object in `l
 
 Search is always expressed using a URI template with at least one query parameter: "query". This query parameter enables basic keyword search.
 
-In addition to basic keyword search, an OPDS catalog can allow advanced search on any metadata element defined in the [Default Context Document](https://github.com/readium/webpub-manifest/tree/master/contexts/default).
+In addition to basic keyword search, an OPDS catalog <em class="rfc">may</em> allow advanced search on any metadata element defined in the [Default Context Document](https://github.com/readium/webpub-manifest/tree/master/contexts/default).
 
 For example the following Link Object allows keyword search as well as restricting search on the "title" or "author" of a publication:
 
@@ -417,17 +429,17 @@ In `links` the following relations can be used:
 
 ### 4.1. OPDS Publication
 
-An OPDS Publication is essentially a Readium Web Publication without the requirement to include a `spine` collection.
+An OPDS Publication is essentially a Readium Web Publication without the requirement to include a `spine` collection:
 
-It can be identified by the following media type: `application/opds-publication+json`
-
-It must contain at least one [Acquisition Link](#43-acquisition-link).
+* it <em class="rfc">must</em> be identified by the following media type: `application/opds-publication+json`
+* it <em class="rfc">must</em> contain at least one [Acquisition Link](#43-acquisition-link)
+* it <em class="rfc">should</em> contain a `self` link
 
 ### 4.2. Metadata
 
 Metadata expression in OPDS 2.0 is based on the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model and [its default context](https://github.com/readium/webpub-manifest/tree/master/contexts/default).
 
-OPDS 2.0 introduces a slight extension to this model by allowing support for links at a metadata level in the following elements: 
+OPDS 2.0 introduces a slight extension to this model by allowing <em class="rfc">optional</em> links at a metadata level in the following elements: 
 
 * all contributor elements: `author`, `translator`, `editor`, `artist`, `illustrator`, `letterer`, `penciler`, `colorist`, `inker` and `narrator`
 * `publisher`
@@ -487,9 +499,9 @@ OPDS 2.0 allows the following relations to indicate that a publication can be ac
 | preview  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [RFC6903](https://tools.ietf.org/html/rfc6903#section-3) |
 | http://opds-spec.org/acquisition/subscribe  | Indicates that a publication be subscribed to, usually as part of a purchase and for a limited period of time. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 
-An OPDS 2.0 catalog should only use "http://opds-spec.org/acquisition" when none of the other link relations are suitable to express the interaction.
+An OPDS 2.0 catalog <em class="rfc">should not</em> use "http://opds-spec.org/acquisition" when another link relation is suitable to express the interaction.
 
-In addition to link relations, OPDS 2.0 also defined a number of properties to express relevant information for these interactions:
+In addition to link relations, OPDS 2.0 also defines a number of properties to express relevant information for these interactions:
 
 | Key  | Definition | Format |
 | ---- | ---------- | ------ | 
@@ -502,6 +514,13 @@ The Price Object can contain the following keys:
 | ---- | ---------- | ------ | 
 | currency  | Provides the currency for a specific price.  | ISO 4217 currency code |
 | value  | Provides the decimal value for a specific price.  | Float |
+
+The Acquisition Object can contain the following keys:
+
+| Key  | Definition | Format |
+| ---- | ---------- | ------ | 
+| type  | Indicates the media type in which the publication can be indirectly acquired.  | MIME Media Type|
+| child  | Contains an additional level of indirection if necessary.  | Array of Acquisition Objects |
 
 **Example 1: Simple paid acquisition**
 
@@ -518,13 +537,6 @@ The Price Object can contain the following keys:
   }
 }
 ```
-
-The Acquisition Object can contain the following keys:
-
-| Key  | Definition | Format |
-| ---- | ---------- | ------ | 
-| type  | Indicates the media type in which the publication can be indirectly acquired.  | MIME Media Type|
-| child  | Contains an additional level of indirection if necessary.  | Array of Acquisition Objects |
 
 **Example 2: Indirect Acquisition through an HTML document**
 

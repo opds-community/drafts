@@ -1,3 +1,13 @@
+[![OPDS Logo](https://opds.io/img/logo.png)](https://opds.io)
+
+<style>
+.rfc {
+    color: #d55;
+    font-variant: small-caps;
+    font-style: normal;
+}
+</style>
+
 # OPDS Catalog 1.2
 
 The Open Publication Distribution System (OPDS) Catalog format is a syndication format for electronic 
@@ -5,6 +15,24 @@ publications based on Atom and HTTP. OPDS Catalogs enable the aggregation, distr
 and acquisition of electronic publications. 
 
 OPDS Catalogs use existing or emergent open standards and conventions, with a priority on simplicity.
+
+**This version:**
+
+* [https://drafts.opds.io/opds-1.2](https://drafts.opds.io/opds-1.2)
+
+**Previous version:**
+
+* [https://specs.opds.io/opds-1.1.html](https://specs.opds.io/opds-1.1.html)
+
+**Editors:**
+
+* Hadrien Gardeur ([Feedbooks](http://www.feedbooks.com))
+* Leonard Richardson ([NYPL](https://www.nypl.org/))
+
+**Participate:**
+
+* [GitHub opds-community/drafts](https://github.com/opds-community/drafts)
+* [File an issue](https://github.com/opds-community/drafts/issues)
 
 ## Status of this Document
 
@@ -149,7 +177,7 @@ OPDS Catalogs may be aggregated and combined into larger OPDS Catalogs.
 
 ### 1.3. Conformance Statements
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119].
+The key words <em class="rfc">MUST</em>, <em class="rfc">MUST NOT</em>, <em class="rfc">REQUIRED</em>, <em class="rfc">SHALL</em>, <em class="rfc">SHALL NOT</em>, <em class="rfc">SHOULD</em>, <em class="rfc">SHOULD NOT</em>, <em class="rfc">RECOMMENDED</em>, <em class="rfc">MAY</em>, and <em class="rfc">OPTIONAL</em> in this document are to be interpreted as described in [[RFC2119](https://tools.ietf.org/html/rfc2119)].
 
 ### 1.4. RELAX NG Schema
 
@@ -1164,3 +1192,5 @@ undefinedAttribute =
     "981" | "984" | "985" | "986" | "990" | "997" | "998" | "999"
   )
 ```
+
+This schema is also maintained in version control: [https://github.com/opds-community/specs/blob/master/schema/1.1/opds.rnc](https://github.com/opds-community/specs/blob/master/schema/1.1/opds.rnc)

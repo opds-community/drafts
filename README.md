@@ -1,4 +1,4 @@
-# [![OPDS Logo](https://opds.io/img/logo.png)](https://opds.io)
+[![OPDS Logo](https://opds.io/img/logo.png)](https://opds.io)
 
 ## Current Drafts
 
