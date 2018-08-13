@@ -1002,7 +1002,7 @@ Many OPDS Catalog clients operate in mobile environments, which may impose stric
 - [[REC-xml](http://www.w3.org/TR/2006/REC-xml-20060816)] Yergeau, F., Paoli, J., Bray, T., Sperberg-McQueen?, C., and E. Maler, "Extensible Markup Language (XML) 1.0 (Fourth Edition)", World Wide Web Consortium Recommendation REC-xml-20060816, August 2006.
 - [[RFC2119](https://tools.ietf.org/html/rfc2119)] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.
 - [[RFC2246](https://tools.ietf.org/html/rfc2246)] Dierks, T. and C. Allen, "The TLS Protocol Version 1.0", RFC 2246, January 1999.
-- [[RFC2397](https://tools.ietf.org/html/rfc2616)] Masinter, L., "The 'data' URL scheme", RFC 2397, August 1998.
+- [[RFC2397](https://tools.ietf.org/html/rfc2397)] Masinter, L., "The 'data' URL scheme", RFC 2397, August 1998.
 - [[RFC2616](https://tools.ietf.org/html/rfc2616)] Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext Transfer Protocol — HTTP/1.1", RFC 2616, June 1999.
 - [[RFC2617](https://tools.ietf.org/html/rfc2617)] Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, "HTTP Authentication: Basic and Digest Access Authentication", RFC 2617, June 1999.
 - [[RFC2818](https://tools.ietf.org/html/rfc2818)] Rescorla, E., "HTTP Over TLS", RFC 2818, May 2000.
