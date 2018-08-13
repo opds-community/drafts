@@ -102,7 +102,7 @@ This document is a draft of the 1.2 version of the OPDS Catalog specification.
 ### 1.1. Introduction
 
 The Open Publication Distribution System (OPDS) Catalog format is a syndication format for electronic publications 
-based on Atom [[RFC4287](https://tools.ietf.org/html/rfc4287)] and HTTP [RFC2616]. OPDS Catalogs enable available electronic publications to be:
+based on Atom [[RFC4287](https://tools.ietf.org/html/rfc4287)] and HTTP [[RFC2616](https://tools.ietf.org/html/rfc2616)]. OPDS Catalogs enable available electronic publications to be:
 
 * discovered, using optional search or a range of optional browsing techniques
 * acquired, using direct downloads, lending, or vending
@@ -136,7 +136,7 @@ OPDS Catalogs may be aggregated and combined into larger OPDS Catalogs.
   <dd>A subset or an alternate order for an Acquisition Feed. In an OPDS Catalog, a Facet is represented as an atom:link in an Acquisition Feed.</dd>
         
   <dt>IRI</dt>
-  <dd>An Internationalized Resource Identifier as defined in [RFC3987].</dd>
+  <dd>An Internationalized Resource Identifier as defined in [<a href="https://tools.ietf.org/html/rfc3987">RFC3987</a>].</dd>
 
   <dt>Navigation Feed</dt>
   <dd>An Atom Feed whose Atom Entries are not OPDS Catalog Entries but instead links to other Navigation Feeds, Acquisition Feeds, or other Resources to establish a hierarchical, browsable presentation of the OPDS Catalog.</dd> 
@@ -166,13 +166,13 @@ OPDS Catalogs may be aggregated and combined into larger OPDS Catalogs.
   <dd>Refers to the <code>rel</code> attribute value of an atom:link element.</dd>
 
   <dt>Representation</dt>
-  <dd>An entity included with a request or response as defined in [RFC2616].</dd>
+  <dd>An entity included with a request or response as defined in [<a href="https://tools.ietf.org/html/rfc2616">RFC2616</a>].</dd>
 
   <dt>Resource</dt>
-  <dd>A network-accessible data object or service identified by an IRI, as defined in [RFC2616]. See [REC-webarch] for further discussion on Resources.</dd>
+  <dd>A network-accessible data object or service identified by an IRI, as defined in [<a href="https://tools.ietf.org/html/rfc2616">RFC2616</a>]. See [<a href="http://www.w3.org/TR/2004/REC-webarch-20041215">REC-webarch</a>] for further discussion on Resources.</dd>
 
   <dt>URI</dt>
-  <dd>A Uniform Resource Identifier as defined in [RFC3986]. In this specification, the phrase "the URI of a document" is shorthand for "a URI which, when dereferenced, is expected to produce that document as a representation".</dd>
+  <dd>A Uniform Resource Identifier as defined in [<a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>]. In this specification, the phrase "the URI of a document" is shorthand for "a URI which, when dereferenced, is expected to produce that document as a representation".</dd>
 </dl>
 
 ### 1.3. Conformance Statements
@@ -181,7 +181,7 @@ The key words <em class="rfc">must</em>, <em class="rfc">must not</em>, <em clas
 
 ### 1.4. RELAX NG Schema
 
-Some sections of this specification are illustrated with fragments of a non-normative RELAX NG Compact schema [RNC]. However, the text of this specification provides the definition of conformance. Complete schemas appear in Appendix B.
+Some sections of this specification are illustrated with fragments of a non-normative RELAX NG Compact schema [[RNC](http://www.oasis-open.org/committees/relax-ng/compact-20021121.html)]. However, the text of this specification provides the definition of conformance. Complete schemas appear in Appendix B.
 
 
 ## 2. OPDS Catalog Feed Documents
@@ -375,7 +375,7 @@ An Acquisition Feed listing OPDS Catalog Entries from the "Unpopular Publication
 
 OPDS Catalog Feed Documents, especially Acquisition Feeds, may contain large numbers of Atom Entries.
 
-A client such as a web spider or web browser might be overwhelmed if the response to a GET contained every Atom Entry in an Acquisition Feed — in turn the server might also waste bandwidth and processing time on generating a response that cannot be handled. For this reason, servers MAY respond to Acquisition Feed GET requests with a paginated response: an OPDS Catalog Feed Document containing a partial list of the Acquisition Feed's member Atom Entries and a link to the next partial Acquisition Feed, if it exists, as defined in Section 3 of [RFC5005].
+A client such as a web spider or web browser might be overwhelmed if the response to a GET contained every Atom Entry in an Acquisition Feed — in turn the server might also waste bandwidth and processing time on generating a response that cannot be handled. For this reason, servers MAY respond to Acquisition Feed GET requests with a paginated response: an OPDS Catalog Feed Document containing a partial list of the Acquisition Feed's member Atom Entries and a link to the next partial Acquisition Feed, if it exists, as defined in Section 3 of [[RFC5005](https://tools.ietf.org/html/rfc5005)].
 
 OPDS Catalog providers <em class="rfc">should</em> use Partial Catalog Entries in all Acquisition Feeds except Complete Acquisition Feeds, which are intended for crawling and are referenced using the `http://opds-spec.org/crawlable` relation.
 
@@ -389,9 +389,9 @@ This representation is called a Complete Acquisition Feed and each OPDS Catalog 
 
 If available, each OPDS Catalog Feed Document in the OPDS Catalog <em class="rfc">should</em> contain an atom:link element with a relation of "http://opds-spec.org/crawlable" that references the Complete Acquisition Feed Resource.
 
-A Complete Acquisition Feed <em class="rfc">must</em> include a fh:complete element from [RFC5005] unless pagination is required. See Section 2 of [RFC5005] for the specification of the fh:complete element.
+A Complete Acquisition Feed <em class="rfc">must</em> include a fh:complete element from [[RFC5005](https://tools.ietf.org/html/rfc5005)] unless pagination is required. See Section 2 of [[RFC5005](https://tools.ietf.org/html/rfc5005)] for the specification of the fh:complete element.
 
-OPDS Catalog providers <em class="rfc">should</em> use a compressed Content-Encoding when transmitting Complete Acquisition Feeds over HTTP. See Section 14.11 of [RFC2616] for more on compression.
+OPDS Catalog providers <em class="rfc">should</em> use a compressed Content-Encoding when transmitting Complete Acquisition Feeds over HTTP. See Section 14.11 of [[RFC2616](https://tools.ietf.org/html/rfc2616)] for more on compression.
 
 OPDS Catalog providers <em class="rfc">must</em> include Complete Catalog Entries when serializing a Complete Acquisition Feed.
 
@@ -407,9 +407,9 @@ The following child elements are refined by this specification:
 
 ## 3. Search
 
-An OPDS Catalog <em class="rfc">may</em> provide a search facility through an [OpenSearch] description document. 
+An OPDS Catalog <em class="rfc">may</em> provide a search facility through an [[OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1)] description document. 
 
-Links to [OpenSearch] description documents <em class="rfc">must</em> use the `search` relation value and the `application/opensearchdescription+xml` media type as defined in the "Autodiscovery" section of the [OpenSearch] specification.
+Links to [[OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1)] description documents <em class="rfc">must</em> use the `search` relation value and the `application/opensearchdescription+xml` media type as defined in the "Autodiscovery" section of the [[OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1)] specification.
 
 ```xml
 <link rel="search"
@@ -417,7 +417,7 @@ Links to [OpenSearch] description documents <em class="rfc">must</em> use the `s
       type="application/opensearchdescription+xml"/>
 ```
 
-In an [OpenSearch] description document, the search interface <em class="rfc">must</em> use the media type associated to OPDS Catalogs:
+In an [[OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1)] description document, the search interface <em class="rfc">must</em> use the media type associated to OPDS Catalogs:
 
 ```xml
 <Url type="application/atom+xml;profile=opds-catalog;kind=acquisition"
@@ -431,12 +431,12 @@ An OPDS Catalog <em class="rfc">may</em> also provide more advanced possibilitie
 - atom:title
 
 
-OPDS Catalog Feed Documents <em class="rfc">may</em> include elements from the [OpenSearch] namespace such as `opensearch:totalResults` or `opensearch:itemsPerPage` in [OpenSearch] responses.
+OPDS Catalog Feed Documents <em class="rfc">may</em> include elements from the [[OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1)] namespace such as `opensearch:totalResults` or `opensearch:itemsPerPage` in [[OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1)] responses.
 
 
 **Open Search Description Document Example**
 
-In order to provide a search endpoint that supports both basic (keyword based) and advanced search, an OPDS Catalog could provide the following template in its [OpenSearch] Description document:
+In order to provide a search endpoint that supports both basic (keyword based) and advanced search, an OPDS Catalog could provide the following template in its [[OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1)] Description document:
 
 ```xml
 <Url type="application/atom+xml;profile=opds-catalog"
@@ -513,7 +513,7 @@ In a group of Facets, an OPDS Catalog provider <em class="rfc">must not</em> mar
 
 The OPDS Catalog provider <em class="rfc">may</em> provide an additional hint about the number of items expected in the Acquisition Feed, if an OPDS client follows a link.
 
-The `thr:count` attribute, extracted from [RFC4685] <em class="rfc">may</em> be added to a Facet in order to provide this information.
+The `thr:count` attribute, extracted from [[RFC4685](https://tools.ietf.org/html/rfc4685)] <em class="rfc">may</em> be added to a Facet in order to provide this information.
 
 
 ## 5. OPDS Catalog Entry Documents
@@ -526,7 +526,7 @@ Each OPDS Catalog Entry Document <em class="rfc">must</em> include at least one 
 
 #### 5.1.1. Relationship Between Atom and Dublin Core Metadata
 
-OPDS Catalog providers are encouraged to include metadata from the Dublin Core Metadata Initiative (DCMI) Metadata Terms [DCTERMS] whenever appropriate. However, these elements are not required. Some of the elements defined in [DCTERMS] overlap in meaning with similar elements defined by Atom in [[RFC4287](https://tools.ietf.org/html/rfc4287)]. In general, OPDS Catalog Entries prefer the Atom elements over the [DCTERMS] elements and the following rules should be used by OPDS Catalog providers when choosing elements:
+OPDS Catalog providers are encouraged to include metadata from the Dublin Core Metadata Initiative (DCMI) Metadata Terms [[DCTERMS](http://dublincore.org/documents/dcmi-terms/)] whenever appropriate. However, these elements are not required. Some of the elements defined in [[DCTERMS](http://dublincore.org/documents/dcmi-terms/)] overlap in meaning with similar elements defined by Atom in [[RFC4287](https://tools.ietf.org/html/rfc4287)]. In general, OPDS Catalog Entries prefer the Atom elements over the [[DCTERMS](http://dublincore.org/documents/dcmi-terms/)] elements and the following rules should be used by OPDS Catalog providers when choosing elements:
 
 - OPDS Catalog Entries <em class="rfc">must</em> be identified by an `atom:id`. One or more `dc:identifier` elements <em class="rfc">should</em> be used to identify the represented Publication, if appropriate metadata is available, and MUST NOT identify the OPDS Catalog Entry.
 - OPDS Catalog Entries <em class="rfc">must</em> include an `atom:updated` element indicating when the OPDS Catalog Entry was last updated. A `dc:issued` element <em class="rfc">should</em> be used to indicate the first publication date of the Publication and <em class="rfc">must not</em> represent any date related to the OPDS Catalog Entry.
@@ -669,7 +669,7 @@ atomSummary =
 
 OPDS Catalog Entry Documents <em class="rfc">should</em> include links to related Resources. This specification defines new relations for linking from OPDS Catalog Entry Documents. They are defined in the Sections Acquisition Relations and Artwork Relations.
 
-OPDS Catalog providers are encouraged to use relations from [RFC5988] inside OPDS Catalog Entry Documents where appropriate.
+OPDS Catalog providers are encouraged to use relations from [[RFC5988](https://tools.ietf.org/html/rfc5988)] inside OPDS Catalog Entry Documents where appropriate.
 
 #### 5.2.1. Acquisition Relations
 
@@ -697,13 +697,13 @@ Additional `atom:link` elements <em class="rfc">may</em> also include resources 
 
 While either image Resource is optional and may be included independently, OPDS Catalog providers are encouraged to provide both these relations and Resources whenever possible.
 
-Some OPDS Catalog providers MAY choose to provide `http://opds-spec.org/image` thumbnail image Resources using the `data` URL scheme from [RFC2397].
+Some OPDS Catalog providers MAY choose to provide `http://opds-spec.org/image` thumbnail image Resources using the `data` URL scheme from [[RFC2397](https://tools.ietf.org/html/rfc2397)].
 
 ### 5.3. Acquiring Publications
 
 The goal of OPDS Catalogs is to make Publications both discoverable and straightforward to acquire on a range of devices and platforms. To support that goal, this specification strives to provide a framework for describing how a Publication may be acquired while not attempting to constrain this very complex topic. Commonly-used acquisition scenarios may be specified in an update to this specification.
 
-All Acquisition Links <em class="rfc">must</em> include a `type` attribute that advises clients on the media type of the representation that is expected to be returned when the value of the href attribute is dereferenced. As with Atom, the value of the type attribute <em class="rfc">must</em> conform to the syntax of a MIME media type [MIMEREG].
+All Acquisition Links <em class="rfc">must</em> include a `type` attribute that advises clients on the media type of the representation that is expected to be returned when the value of the href attribute is dereferenced. As with Atom, the value of the type attribute <em class="rfc">must</em> conform to the syntax of a MIME media type [[MIMEREG](https://tools.ietf.org/html/rfc4288)].
 
 Publications in a format using Digital Rights Management <em class="rfc">should</em> use a different value for the type attribute of the Acquisition Link than the same format without Digital Rights Management.
 
@@ -833,13 +833,13 @@ opdsPrice =
   }
 ```
       
-In the `opds:price` element, the value of the `currencycode` attribute <em class="rfc">must</em> be an active code from [ISO4217] representing a currency. It defines the currency used for the content of the `opds:price` element.
+In the `opds:price` element, the value of the `currencycode` attribute <em class="rfc">must</em> be an active code from [[ISO4217](http://www.iso.org/iso/en/prods-services/popstds/currencycodeslist.html)] representing a currency. It defines the currency used for the content of the `opds:price` element.
 
 #### The `opds:indirectAcquisition` Element
 
 In some cases, the OPDS Catalog provider <em class="rfc">may</em> require the client to acquire an intermediate Resource before acquiring the final Publication. This can be the case for example with containers (archive formats, multimedia containers for various formats) or when a payment is required (need to go through a series of HTML pages to handle the transaction).
 
-The `opds:indirectAcquisition` element represents these secondary media types [MIMEREG] that the client can expect to acquire if they follow the Acquisition Link.
+The `opds:indirectAcquisition` element represents these secondary media types [[MIMEREG](https://tools.ietf.org/html/rfc4288)] that the client can expect to acquire if they follow the Acquisition Link.
 
 These `opds:indirectAcquisition` elements <em class="rfc">may</em> be arbitrarily nested to represent several levels of indirection.
 
@@ -859,12 +859,12 @@ OPDS Catalog Feed Documents <em class="rfc">should</em> include links to other a
 
 These relations <em class="rfc">may</em> be used by clients to provide additional or alternative navigation, both in a Navigation Feed or an Acquisition Feed.
 
-The following relations are derived from [RFC5988], with some clarification:
+The following relations are derived from [[RFC5988](https://tools.ietf.org/html/rfc5988)], with some clarification:
 
 - `start`: The OPDS Catalog Root.
 - `subsection`: An OPDS Feed not better described by a more specific relation.
 
-When creating an OPDS Catalog with Navigation and Acquisition Feeds, OPDS Catalog providers are encouraged to use the relations defined in this specification and [RFC5988]. If no appropriate relation is found, the Feeds <em class="rfc">should</em> use a descriptive `atom:title` element and the `atom:link` elements <em class="rfc">should</em> use a descriptive `title` attribute.
+When creating an OPDS Catalog with Navigation and Acquisition Feeds, OPDS Catalog providers are encouraged to use the relations defined in this specification and [[RFC5988](https://tools.ietf.org/html/rfc5988)]. If no appropriate relation is found, the Feeds <em class="rfc">should</em> use a descriptive `atom:title` element and the `atom:link` elements <em class="rfc">should</em> use a descriptive `title` attribute.
 
 ### 6.1. Relations for Previously Acquired Content
 
@@ -900,7 +900,7 @@ This specification also defines a relation to describe an Acquisition Feed of re
 
 OPDS Catalogs may be referenced in HTML/XHTML pages, HTTP headers, or using other techniques. These links may reference both OPDS Catalog Entries or Feeds. Links to OPDS Catalog Entry Document Resources <em class="rfc">must</em> use a type attribute of `application/atom+xml;type=entry;profile=opds-catalog`. Links to OPDS Catalog Feed Document Resources <em class="rfc">must</em> use a type attribute of `application/atom+xml;profile=opds-catalog`.
 
-The most common mechanism for encouraging the auto-discovery of OPDS Catalogs is to link from an HTML document to the OPDS Catalog Root Resource, using the auto-discovery pattern popularized by the syndicated feed community [AUTODISCOVERY].
+The most common mechanism for encouraging the auto-discovery of OPDS Catalogs is to link from an HTML document to the OPDS Catalog Root Resource, using the auto-discovery pattern popularized by the syndicated feed community [[AUTODISCOVERY](http://www.rssboard.org/rss-autodiscovery)].
 
 Multiple links to OPDS Catalog Resources <em class="rfc">may</em> be expressed in a single HTML document.
 
@@ -918,7 +918,7 @@ An example of two links inside an HTML page about the same Publication:
       title="Example OPDS Entry" />
 ```
 
-Auto-discovery links `MAY` also be expressed using HTTP headers as defined in [RFC5988].
+Auto-discovery links `MAY` also be expressed using HTTP headers as defined in [[RFC5988](https://tools.ietf.org/html/rfc5988)].
 
 ### 7. Aggregating OPDS Catalogs
 
@@ -935,7 +935,7 @@ OPDS Catalog Entries and OPDS Catalog Feeds.
 #### 7.1.2. The OPDS Catalog Profile Parameter
 
 Relations to OPDS Catalog Feed Document and OPDS Catalog Entry Document Resources <em class="rfc">must</em> use a `profile` parameter 
-following Section 4.3 of [RFC4288] with the value `opds-catalog`. 
+following Section 4.3 of [[RFC4288](https://tools.ietf.org/html/rfc4288)] with the value `opds-catalog`. 
 This profile parameter provides clients with an advisory hint that the Resource should be a component of an OPDS Catalog.
 
 The complete media type for a relation to an OPDS Catalog Entry Document Resource <em class="rfc">must</em> be:
@@ -945,7 +945,7 @@ The complete media type for a relation to an OPDS Catalog Entry Document Resourc
 #### 7.1.3. The OPDS Kind Parameter
 
 In addition to the new "profile" parameter, this specification also introduces a new `kind` parameter following Section 4.3 
-of [RFC4288] with the value `acquisition` or `navigation`. 
+of [[RFC4288](https://tools.ietf.org/html/rfc4288)] with the value `acquisition` or `navigation`. 
 This `kind` parameter provides clients with an advisory hint whether the Resource should be an Acquisition Feed or a 
 Navigation Feed.
 
@@ -961,23 +961,23 @@ The complete media type for a relation to a Navigation Feed <em class="rfc">must
 
 ### 7.2. Security Considerations
 
-OPDS Catalogs are Atom documents delivered over HTTP and thus subject to the security considerations found in Section 15 of [RFC2616] and Section 5 of [[RFC4287](https://tools.ietf.org/html/rfc4287)].
+OPDS Catalogs are Atom documents delivered over HTTP and thus subject to the security considerations found in Section 15 of [[RFC2616](https://tools.ietf.org/html/rfc2616)] and Section 5 of [[RFC4287](https://tools.ietf.org/html/rfc4287)].
 
 #### 7.2.1. Securing a Catalog
 
-OPDS Catalogs are delivered over HTTP. Authentication requirements for HTTP are covered in Section 11 of [RFC2616].
+OPDS Catalogs are delivered over HTTP. Authentication requirements for HTTP are covered in Section 11 of [[RFC2616](https://tools.ietf.org/html/rfc2616)].
 
-The type of authentication required for any OPDS Catalog is a decision to be made by the OPDS Catalog provider. OPDS Catalog clients are likely to face authentication schemes that vary across OPDS Catalogs. At a minimum, client and server implementations <em class="rfc">must</em> be capable of being configured to use HTTP Basic Authentication [RFC2617] in conjunction with a connection made with TLS 1.0 [RFC2246] or a subsequent standards-track version of TLS supporting the conventions for using HTTP over TLS described in [RFC2818]. It is <em class="rfc">recommended</em> that OPDS Catalog clients be implemented in such a way that new authentication schemes can be deployed.
+The type of authentication required for any OPDS Catalog is a decision to be made by the OPDS Catalog provider. OPDS Catalog clients are likely to face authentication schemes that vary across OPDS Catalogs. At a minimum, client and server implementations <em class="rfc">must</em> be capable of being configured to use HTTP Basic Authentication [[RFC2617](https://tools.ietf.org/html/rfc2617)] in conjunction with a connection made with TLS 1.0 [[RFC2246](https://tools.ietf.org/html/rfc2246)] or a subsequent standards-track version of TLS supporting the conventions for using HTTP over TLS described in [[RFC2818](https://tools.ietf.org/html/rfc2818)]. It is <em class="rfc">recommended</em> that OPDS Catalog clients be implemented in such a way that new authentication schemes can be deployed.
 
-Because this protocol uses HTTP response status codes as the primary means of reporting the result of a request, OPDS Catalog providers are advised to respond to unauthorized or unauthenticated requests using an appropriate 4xx HTTP response code (e.g., 401 "Unauthorized" or 403 "Forbidden") in accordance with [RFC2617].
+Because this protocol uses HTTP response status codes as the primary means of reporting the result of a request, OPDS Catalog providers are advised to respond to unauthorized or unauthenticated requests using an appropriate 4xx HTTP response code (e.g., 401 "Unauthorized" or 403 "Forbidden") in accordance with [[RFC2617](https://tools.ietf.org/html/rfc2617)].
 
 #### 7.2.2 Linked Resources
 
-OPDS Catalogs can contain XML External Entities as defined in Section 4.2.2 of [REC-xml]. OPDS Catalog implementations are not required to load external entities. External entities are subject to the same security concerns as any network operation and can alter the semantics of an OPDS Catalog Feed Document or OPDS Catalog Entry Document. The same issues exist for Resources linked to by elements such as atom:link and atom:content.
+OPDS Catalogs can contain XML External Entities as defined in Section 4.2.2 of [[REC-xml](http://www.w3.org/TR/2006/REC-xml-20060816)]. OPDS Catalog implementations are not required to load external entities. External entities are subject to the same security concerns as any network operation and can alter the semantics of an OPDS Catalog Feed Document or OPDS Catalog Entry Document. The same issues exist for Resources linked to by elements such as atom:link and atom:content.
 
 #### 7.2.3 URIs and IRIs
 
-OPDS Catalog implementations handle URIs and IRIs. See Section 7 of [RFC3986] and Section 8 of [RFC3987] for security considerations related to their handling and use.
+OPDS Catalog implementations handle URIs and IRIs. See Section 7 of [[RFC3986](https://tools.ietf.org/html/rfc3986)] and Section 8 of [[RFC3987](https://tools.ietf.org/html/rfc3987)] for security considerations related to their handling and use.
 
 #### 7.2.4 Code Injection and Cross Site Scripting
 
@@ -989,39 +989,37 @@ Additional information about XHTML and HTML content safety can be found in Secti
 
 ### 7.3. Bandwidth and Processing Considerations
 
-Many OPDS Catalog clients operate in mobile environments, which may impose strict limitations on bandwidth and processing resources. OPDS Catalog publishers are strongly encouraged to publish their OPDS Catalogs using compression and caching techniques and the partial feeds described in the Section Listing Acquisition Feeds. Implementers are encouraged to investigate and use alternative mechanisms regarded as equivalently good or better at the time of deployment. See [CACHING] for more on caching techniques.
+Many OPDS Catalog clients operate in mobile environments, which may impose strict limitations on bandwidth and processing resources. OPDS Catalog publishers are strongly encouraged to publish their OPDS Catalogs using compression and caching techniques and the partial feeds described in the Section Listing Acquisition Feeds. Implementers are encouraged to investigate and use alternative mechanisms regarded as equivalently good or better at the time of deployment. See [[CACHING](http://www.mnot.net/cache_docs/)] for more on caching techniques.
 
 ## 8. References
 
 ### 8.1. Normative References
 
-- [DCTERMS] DCMI Usage Board, "DCMI Metadata Terms", January 2008, http://dublincore.org/documents/dcmi-terms/.
-- [ISO4217] "ISO 4217 currency and funds name and code elements", International Standard ISO 4217, http://www.iso.org/iso/en/prods-services/popstds/currencycodeslist.html.
-- [MIMEREG] Freed, N. and J. Klensin, "Media Type Specifications and Registration Procedures", BCP 13, RFC 4288, December 2005.
-- [OpenSearch] Clinton D., "Open Search 1.1 Draft 4", http://www.opensearch.org/Specifications/OpenSearch/1.1.
-- [REC-xml] Yergeau, F., Paoli, J., Bray, T., Sperberg-McQueen?, C., and E. Maler, "Extensible Markup Language (XML) 1.0 (Fourth Edition)", World Wide Web Consortium Recommendation REC-xml-20060816, August 2006, http://www.w3.org/TR/2006/REC-xml-20060816.
-- [REC-xml-infoset] Cowan, J. and R. Tobin, "XML Information Set (Second Edition)", World Wide Web Consortium Recommendation REC-xml-infoset-20040204, February 2004, http://www.w3.org/TR/2004/REC-xml-infoset-20040204.
-- [REC-xml-names] Hollander, D., Bray, T., Tobin, R., and A. Layman, "Namespaces in XML 1.0 (Second Edition)", World Wide Web Consortium Recommendation REC-xml-names-20060816, August 2006, http://www.w3.org/TR/2006/REC-xml-names-20060816.
-- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.
-- [RFC2246] Dierks, T. and C. Allen, "The TLS Protocol Version 1.0", RFC 2246, January 1999.
-- [RFC2397] Masinter, L., "The 'data' URL scheme", RFC 2397, August 1998.
-- [RFC2616] Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext Transfer Protocol — HTTP/1.1", RFC 2616, June 1999.
-- [RFC2617] Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, "HTTP Authentication: Basic and Digest Access Authentication", RFC 2617, June 1999.
-- [RFC2818] Rescorla, E., "HTTP Over TLS", RFC 2818, May 2000.
-- [RFC3986] Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, January 2005.
-- [RFC3987] Duerst, M. and M. Suignard, "Internationalized Resource Identifiers (IRIs)", RFC 3987, January 2005.
+- [[DCTERMS](http://dublincore.org/documents/dcmi-terms/)] DCMI Usage Board, "DCMI Metadata Terms", January 2008.
+- [[ISO4217](http://www.iso.org/iso/en/prods-services/popstds/currencycodeslist.html)] "ISO 4217 currency and funds name and code elements", International Standard ISO 4217.
+- [[MIMEREG](https://tools.ietf.org/html/rfc4288)] Freed, N. and J. Klensin, "Media Type Specifications and Registration Procedures", BCP 13, RFC 4288, December 2005.
+- [[OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1)] Clinton D., "Open Search 1.1 Draft 4".
+- [[REC-xml](http://www.w3.org/TR/2006/REC-xml-20060816)] Yergeau, F., Paoli, J., Bray, T., Sperberg-McQueen?, C., and E. Maler, "Extensible Markup Language (XML) 1.0 (Fourth Edition)", World Wide Web Consortium Recommendation REC-xml-20060816, August 2006.
+- [[RFC2119](https://tools.ietf.org/html/rfc2119)] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.
+- [[RFC2246](https://tools.ietf.org/html/rfc2246)] Dierks, T. and C. Allen, "The TLS Protocol Version 1.0", RFC 2246, January 1999.
+- [[[RFC2397](https://tools.ietf.org/html/rfc2616)](https://tools.ietf.org/html/rfc2397)] Masinter, L., "The 'data' URL scheme", RFC 2397, August 1998.
+- [[RFC2616](https://tools.ietf.org/html/rfc2616)] Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext Transfer Protocol — HTTP/1.1", RFC 2616, June 1999.
+- [[RFC2617](https://tools.ietf.org/html/rfc2617)] Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, "HTTP Authentication: Basic and Digest Access Authentication", RFC 2617, June 1999.
+- [[RFC2818](https://tools.ietf.org/html/rfc2818)] Rescorla, E., "HTTP Over TLS", RFC 2818, May 2000.
+- [[RFC3986](https://tools.ietf.org/html/rfc3986)] Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, January 2005.
+- [[RFC3987](https://tools.ietf.org/html/rfc3987)] Duerst, M. and M. Suignard, "Internationalized Resource Identifiers (IRIs)", RFC 3987, January 2005.
 - [[RFC4287](https://tools.ietf.org/html/rfc4287)] Nottingham, M. and R. Sayre, "The Atom Syndication Format", RFC 4287, December 2005.
-- [RFC4288] Freed, N. and J. Klensin, "Media Type Specifications and Registration Procedures", RFC 4288, December 2005.
-- [RFC4685] Snell, J., "Atom Threading Extensions", RFC 4685, September 2006.
-- [RFC5005] Nottingham, M., "Feed Paging and Archiving", RFC 5005, September 2007.
-- [RFC5988] Nottingham, M., "Web Linking", RFC5988, October 2010.
+- [[RFC4288](https://tools.ietf.org/html/rfc4288)] Freed, N. and J. Klensin, "Media Type Specifications and Registration Procedures", RFC 4288, December 2005.
+- [[RFC4685](https://tools.ietf.org/html/rfc4685)] Snell, J., "Atom Threading Extensions", RFC 4685, September 2006.
+- [[RFC5005](https://tools.ietf.org/html/rfc5005)] Nottingham, M., "Feed Paging and Archiving", RFC 5005, September 2007.
+- [[RFC5988](https://tools.ietf.org/html/rfc5988)] Nottingham, M., "Web Linking", RFC5988, October 2010.
 
 ### 8.2. Informative References
 
-- [AUTODISCOVERY] Cadenhead, R., Holderness, J., Morin, R., "RSS Autodiscovery", November 2006, http://www.rssboard.org/rss-autodiscovery.
-- [CACHING] Nottingham, M., "Caching Tutorial", 1998, http://www.mnot.net/cache_docs/.
-- [REC-webarch] Walsh, N. and I. Jacobs, "Architecture of the World Wide Web, Volume One", W3C REC REC-webarch-20041215, December 2004, http://www.w3.org/TR/2004/REC-webarch-20041215.
-- [RNC] Clark, J., "RELAX NG Compact Syntax", December 2001, http://www.oasis-open.org/committees/relax-ng/compact-20021121.html.
+- [[AUTODISCOVERY](http://www.rssboard.org/rss-autodiscovery)] Cadenhead, R., Holderness, J., Morin, R., "RSS Autodiscovery", November 2006.
+- [[CACHING](http://www.mnot.net/cache_docs/)] Nottingham, M., "Caching Tutorial", 1998.
+- [[REC-webarch](http://www.w3.org/TR/2004/REC-webarch-20041215)] Walsh, N. and I. Jacobs, "Architecture of the World Wide Web, Volume One", W3C REC REC-webarch-20041215, December 2004.
+- [[RNC](http://www.oasis-open.org/committees/relax-ng/compact-20021121.html)] Clark, J., "RELAX NG Compact Syntax", December 2001.
 
 ## Appendix A. Contributors
 
