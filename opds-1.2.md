@@ -177,7 +177,7 @@ OPDS Catalogs may be aggregated and combined into larger OPDS Catalogs.
 
 ### 1.3. Conformance Statements
 
-The key words <em class="rfc">MUST</em>, <em class="rfc">MUST NOT</em>, <em class="rfc">REQUIRED</em>, <em class="rfc">SHALL</em>, <em class="rfc">SHALL NOT</em>, <em class="rfc">SHOULD</em>, <em class="rfc">SHOULD NOT</em>, <em class="rfc">RECOMMENDED</em>, <em class="rfc">MAY</em>, and <em class="rfc">OPTIONAL</em> in this document are to be interpreted as described in [[RFC2119](https://tools.ietf.org/html/rfc2119)].
+The key words <em class="rfc">must</em>, <em class="rfc">must not</em>, <em class="rfc">required</em>, <em class="rfc">shall</em>, <em class="rfc">shall not</em>, <em class="rfc">should</em>, <em class="rfc">should not</em>, <em class="rfc">recommended</em>, <em class="rfc">may</em>, and <em class="rfc">optional</em> in this document are to be interpreted as described in [[RFC2119](https://tools.ietf.org/html/rfc2119)].
 
 ### 1.4. RELAX NG Schema
 
@@ -191,25 +191,25 @@ OPDS Catalog Feed Documents are Atom [RFC4287] Feeds. They serve two purposes:
 - To create a browsable hierarchy of other OPDS Catalog Feed Documents and other Resources. These OPDS Catalog Feed Documents are referred to as Navigation Feeds.
 - To collect a set of OPDS Catalog Entries. These OPDS Catalog Feed Documents are referred to as Acquisition Feeds.
 
-While Navigation Feeds do provide a suggested hierarchy from the OPDS Catalog publisher, OPDS Catalog Feed Documents MAY contain other relations that allow for other methods of consumption and display. See the Section OPDS Catalog Relations for more detail.
+While Navigation Feeds do provide a suggested hierarchy from the OPDS Catalog publisher, OPDS Catalog Feed Documents <em class="rfc">may</em> contain other relations that allow for other methods of consumption and display. See the Section OPDS Catalog Relations for more detail.
 
-Every OPDS Catalog Feed Document MUST either be an Acquisition Feed or a Navigation Feed. An Acquisition Feed can be identified by the presence of Acquisition Links in each Atom Entry.
+Every OPDS Catalog Feed Document <em class="rfc">must</em> either be an Acquisition Feed or a Navigation Feed. An Acquisition Feed can be identified by the presence of Acquisition Links in each Atom Entry.
 
 ### 2.1. OPDS Catalog Root
 
-The OPDS Catalog Root is the top-level OPDS Catalog Feed Document. It is either a single Acquisition Feed in the simple case or the start of a set of Navigation Feeds. Every OPDS Catalog MUST have one and only one OPDS Catalog Root.
+The OPDS Catalog Root is the top-level OPDS Catalog Feed Document. It is either a single Acquisition Feed in the simple case or the start of a set of Navigation Feeds. Every OPDS Catalog <em class="rfc">must</em> have one and only one OPDS Catalog Root.
 
-External links to the OPDS Catalog Resource SHOULD use the IRI of the OPDS Catalog Root.
+External links to the OPDS Catalog Resource <em class="rfc">should</em> use the IRI of the OPDS Catalog Root.
 
-Each OPDS Catalog Feed Document SHOULD contain an `atom:link` element with a link relation of "start", which references the OPDS Catalog Root Resource.
+Each OPDS Catalog Feed Document <em class="rfc">should</em> contain an `atom:link` element with a link relation of "start", which references the OPDS Catalog Root Resource.
 
 ### 2.2. Navigation Feeds
 
-A Navigation Feed is an OPDS Catalog Feed Document whose Atom Entries serve to create a suggested hierarchy for presentation and browsing. A Navigation Feed MUST NOT contain OPDS Catalog Entries but instead contains Atom Entries that link to other Navigation or Acquisition Feeds or other Resources. Each Atom Entry's `atom:content` element SHOULD include a brief description of the linked Resource.
+A Navigation Feed is an OPDS Catalog Feed Document whose Atom Entries serve to create a suggested hierarchy for presentation and browsing. A Navigation Feed <em class="rfc">must not</em> contain OPDS Catalog Entries but instead contains Atom Entries that link to other Navigation or Acquisition Feeds or other Resources. 
 
-Links to Navigation Feeds MUST use the "type" attribute `application/atom+xml;profile=opds-catalog;kind=navigation`. 
+Links to Navigation Feeds <em class="rfc">must</em> use the "type" attribute `application/atom+xml;profile=opds-catalog;kind=navigation`. 
 
-OPDS Catalog providers SHOULD choose the best relation for each Navigation Feed based on the relations in the section OPDS Catalog Relations. The relation "subsection" SHOULD be used if no other relation is more appropriate.
+OPDS Catalog providers <em class="rfc">should</em> choose the best relation for each Navigation Feed based on the relations in the section OPDS Catalog Relations. The relation "subsection" <em class="rfc">should</em> be used if no other relation is more appropriate.
 
 **Example**
 
@@ -266,7 +266,7 @@ An OPDS Catalog Root that is the top of a set of Navigation Feeds references thr
 
 An Acquisition Feed is an OPDS Catalog Feed Document that collects OPDS Catalog Entries into a single, ordered set. The simplest complete OPDS Catalog would be a single Acquisition Feed listing all of the available OPDS Catalog Entries from that provider. In more complex OPDS Catalogs, Acquisition Feeds are used to present and organize sets of related OPDS Catalog Entries for browsing and discovery by clients and aggregators.
 
-Links to Acquisition Feeds MUST use the "type" attribute `application/atom+xml;profile=opds-catalog;kind=acquisition`.
+Links to Acquisition Feeds <em class="rfc">must</em> use the `type` attribute `application/atom+xml;profile=opds-catalog;kind=acquisition`.
 
 **Example**
 
@@ -377,23 +377,23 @@ OPDS Catalog Feed Documents, especially Acquisition Feeds, may contain large num
 
 A client such as a web spider or web browser might be overwhelmed if the response to a GET contained every Atom Entry in an Acquisition Feed — in turn the server might also waste bandwidth and processing time on generating a response that cannot be handled. For this reason, servers MAY respond to Acquisition Feed GET requests with a paginated response: an OPDS Catalog Feed Document containing a partial list of the Acquisition Feed's member Atom Entries and a link to the next partial Acquisition Feed, if it exists, as defined in Section 3 of [RFC5005].
 
-OPDS Catalog providers SHOULD use Partial Catalog Entries in all Acquisition Feeds except Complete Acquisition Feeds, which are intended for crawling and are referenced using the http://opds-spec.org/crawlable relation.
+OPDS Catalog providers <em class="rfc">should</em> use Partial Catalog Entries in all Acquisition Feeds except Complete Acquisition Feeds, which are intended for crawling and are referenced using the `http://opds-spec.org/crawlable` relation.
 
-Clients MUST NOT assume that an OPDS Catalog Entry returned in the Acquisition Feed is a full representation of an OPDS Catalog Entry Resource, as described in the Section Partial and Complete Entries.
+Clients <em class="rfc">must not</em> assume that an OPDS Catalog Entry returned in the Acquisition Feed is a full representation of an OPDS Catalog Entry Resource, as described in the Section Partial and Complete Entries.
 
 ### 2.5. Complete Acquisition Feeds
 
-An OPDS Catalog provider MAY provide a single, consolidated Acquisition Feed that includes the complete representation of every unique OPDS Catalog Entry Document in an OPDS Catalog in an atom:feed to facilitate crawling and aggregation. Complete Acquisition Feeds SHOULD NOT be paginated unless they are extremely large.
+An OPDS Catalog provider <em class="rfc">may</em> provide a single, consolidated Acquisition Feed that includes the complete representation of every unique OPDS Catalog Entry Document in an OPDS Catalog in an atom:feed to facilitate crawling and aggregation. Complete Acquisition Feeds <em class="rfc">should not</em> be paginated unless they are extremely large.
 
-This representation is called a Complete Acquisition Feed and each OPDS Catalog Entry MUST be ordered by atom:updated, with the most recently updated Atom Entries coming first in the document order.
+This representation is called a Complete Acquisition Feed and each OPDS Catalog Entry <em class="rfc">must</em> be ordered by atom:updated, with the most recently updated Atom Entries coming first in the document order.
 
-If available, each OPDS Catalog Feed Document in the OPDS Catalog SHOULD contain an atom:link element with a relation of "http://opds-spec.org/crawlable" that references the Complete Acquisition Feed Resource.
+If available, each OPDS Catalog Feed Document in the OPDS Catalog <em class="rfc">should</em> contain an atom:link element with a relation of "http://opds-spec.org/crawlable" that references the Complete Acquisition Feed Resource.
 
-A Complete Acquisition Feed MUST include a fh:complete element from [RFC5005] unless pagination is required. See Section 2 of [RFC5005] for the specification of the fh:complete element.
+A Complete Acquisition Feed <em class="rfc">must</em> include a fh:complete element from [RFC5005] unless pagination is required. See Section 2 of [RFC5005] for the specification of the fh:complete element.
 
-OPDS Catalog providers SHOULD use a compressed Content-Encoding when transmitting Complete Acquisition Feeds over HTTP. See Section 14.11 of [RFC2616] for more on compression.
+OPDS Catalog providers <em class="rfc">should</em> use a compressed Content-Encoding when transmitting Complete Acquisition Feeds over HTTP. See Section 14.11 of [RFC2616] for more on compression.
 
-OPDS Catalog providers MUST include Complete Catalog Entries when serializing a Complete Acquisition Feed.
+OPDS Catalog providers <em class="rfc">must</em> include Complete Catalog Entries when serializing a Complete Acquisition Feed.
 
 ### 2.6. Element Definitions
 
@@ -403,13 +403,13 @@ The `atom:feed` element is the document (i.e., top-level) element of an OPDS Cat
 
 The following child elements are refined by this specification:
 
-- OPDS Catalog Feed Documents SHOULD contain one `atom:link` element with a "rel" attribute value of "self". This is the preferred URI for retrieving the `atom:feed` representing this OPDS Catalog Feed Document.
+- OPDS Catalog Feed Documents <em class="rfc">should</em> contain one `atom:link` element with a "rel" attribute value of "self". This is the preferred URI for retrieving the `atom:feed` representing this OPDS Catalog Feed Document.
 
 ## 3. Search
 
-An OPDS Catalog MAY provide a search facility through an [OpenSearch] description document. 
+An OPDS Catalog <em class="rfc">may</em> provide a search facility through an [OpenSearch] description document. 
 
-Links to [OpenSearch] description documents MUST use the "search" relation value and the `application/opensearchdescription+xml` media type as defined in the "Autodiscovery" section of the [OpenSearch] specification.
+Links to [OpenSearch] description documents <em class="rfc">must</em> use the "search" relation value and the `application/opensearchdescription+xml` media type as defined in the "Autodiscovery" section of the [OpenSearch] specification.
 
 ```xml
 <link rel="search"
@@ -417,21 +417,21 @@ Links to [OpenSearch] description documents MUST use the "search" relation value
       type="application/opensearchdescription+xml"/>
 ```
 
-In an [OpenSearch] description document, the search interface MUST use the media type associated to OPDS Catalogs:
+In an [OpenSearch] description document, the search interface <em class="rfc">must</em> use the media type associated to OPDS Catalogs:
 
 ```xml
 <Url type="application/atom+xml;profile=opds-catalog;kind=acquisition"
      template="http://example.com/search?q={searchTerms}" />
 ```
 
-An OPDS Catalog MAY also provide more advanced possibilities for its search endpoint, using one or more fully qualified parameters from the Atom namespace such as:
+An OPDS Catalog <em class="rfc">may</em> also provide more advanced possibilities for its search endpoint, using one or more fully qualified parameters from the Atom namespace such as:
 
 - atom:author
 - atom:contributor
 - atom:title
 
 
-OPDS Catalog Feed Documents MAY include elements from the [OpenSearch] namespace such as `opensearch:totalResults` or `opensearch:itemsPerPage` in [OpenSearch] responses.
+OPDS Catalog Feed Documents <em class="rfc">may</em> include elements from the [OpenSearch] namespace such as `opensearch:totalResults` or `opensearch:itemsPerPage` in [OpenSearch] responses.
 
 
 **Open Search Description Document Example**
@@ -455,9 +455,9 @@ With such a template, an OPDS Client could for example support the following sea
 
 An Acquisition Feed MAY offer multiple links to reorder the Publications listed in the feed or limit them to a subset. This specification defines one new relation to identify such links as Facets:
 
-- "http://opds-spec.org/facet": An Acquisition Feed with a subset or an alternate order of the Publications listed.
+- `http://opds-spec.org/facet`: An Acquisition Feed with a subset or an alternate order of the Publications listed.
 
-Links using this relation MUST only appear in Acquisition Feeds.
+Links using this relation <em class="rfc">must</em> only appear in Acquisition Feeds.
 
 **Example**
 
@@ -495,32 +495,32 @@ Links using this relation MUST only appear in Acquisition Feeds.
 
 #### The `opds:facetGroup` Attribute
 
-Facets CAN be grouped together by the OPDS Catalog provider using an `opds:facetGroup` attribute. The value of this attribute is the name of the group.
+Facets <em class="rfc">may</em> be grouped together by the OPDS Catalog provider using an `opds:facetGroup` attribute. The value of this attribute is the name of the group.
 
-A Facet MUST NOT appear in more than a single group.
+A Facet <em class="rfc">must not</em> appear in more than a single group.
 
 #### The `opds:activeFacet` Attribute
 
 A Facet is considered active, if the attribute associated to the Facet is already being used to filter Publications in the current Acquisition Feed.
 
-The OPDS Catalog provider SHOULD indicate that a Facet is active using the `opds:activeFacet` attribute set to "true".
+The OPDS Catalog provider <em class="rfc">should</em> indicate that a Facet is active using the `opds:activeFacet` attribute set to `true`.
 
-If the Facet is not active, the `opds:activeFacet` attribute SHOULD NOT appear in the link.
+If the Facet is not active, the `opds:activeFacet` attribute <em class="rfc">should not</em> appear in the link.
 
-In a group of Facets, an OPDS Catalog provider MUST NOT mark more than one Facet as active.
+In a group of Facets, an OPDS Catalog provider <em class="rfc">must not</em> mark more than one Facet as active.
 
 #### The `thr:count` Attribute
 
-The OPDS Catalog provider MAY provide an additional hint about the number of items expected in the Acquisition Feed, if an OPDS client follows a link.
+The OPDS Catalog provider <em class="rfc">may</em> provide an additional hint about the number of items expected in the Acquisition Feed, if an OPDS client follows a link.
 
-The `thr:count` attribute, extracted from [RFC4685] MAY be added to a Facet in order to provide this information.
+The `thr:count` attribute, extracted from [RFC4685] <em class="rfc">may</em> be added to a Facet in order to provide this information.
 
 
 ## 5. OPDS Catalog Entry Documents
 
 OPDS Catalog Entry Documents are Atom [RFC4287] Entry documents that provide a complete representation of the metadata and data associated with an available Publication.
 
-Each OPDS Catalog Entry Document MUST include at least one Acquisition Link.
+Each OPDS Catalog Entry Document <em class="rfc">must</em> include at least one Acquisition Link.
 
 ### 5.1. Metadata
 
@@ -528,29 +528,29 @@ Each OPDS Catalog Entry Document MUST include at least one Acquisition Link.
 
 OPDS Catalog providers are encouraged to include metadata from the Dublin Core Metadata Initiative (DCMI) Metadata Terms [DCTERMS] whenever appropriate. However, these elements are not required. Some of the elements defined in [DCTERMS] overlap in meaning with similar elements defined by Atom in [RFC4287]. In general, OPDS Catalog Entries prefer the Atom elements over the [DCTERMS] elements and the following rules should be used by OPDS Catalog providers when choosing elements:
 
-- OPDS Catalog Entries MUST be identified by an `atom:id`. One or more `dc:identifier` elements SHOULD be used to identify the represented Publication, if appropriate metadata is available, and MUST NOT identify the OPDS Catalog Entry.
-- OPDS Catalog Entries MUST include an `atom:updated` element indicating when the OPDS Catalog Entry was last updated. A `dc:issued` element SHOULD be used to indicate the first publication date of the Publication and MUST NOT represent any date related to the OPDS Catalog Entry.
-- OPDS Catalog Entries MUST include an `atom:title` representing the Publication's title and MUST NOT use `dc:title`.
-- OPDS Catalog Entries SHOULD use `atom:author` to represent the Publication's creators and SHOULD NOT use `dc:creator`.
-- OPDS Catalog Entries SHOULD use `atom:category` to represent the Publication's category, keywords, key phrases, or classification codes and SHOULD NOT use `dc:subject`.
-- OPDS Catalog Entries SHOULD use `atom:rights` to represent rights held in and over the Publication and SHOULD NOT use `dc:rights`.
-- OPDS Catalog Entries SHOULD use `atom:summary` and/or `atom:content` to describe the Publication SHOULD NOT use `dc:description` or `dc:abstract`.
-- OPDS Catalog Entries MAY use `atom:contributor` to represent contributors to the Publication beside its creators.
-- OPDS Catalog Entries MAY use `atom:published` to indicate when the OPDS Catalog Entry was first accessible.
+- OPDS Catalog Entries <em class="rfc">must</em> be identified by an `atom:id`. One or more `dc:identifier` elements <em class="rfc">should</em> be used to identify the represented Publication, if appropriate metadata is available, and MUST NOT identify the OPDS Catalog Entry.
+- OPDS Catalog Entries <em class="rfc">must</em> include an `atom:updated` element indicating when the OPDS Catalog Entry was last updated. A `dc:issued` element <em class="rfc">should</em> be used to indicate the first publication date of the Publication and <em class="rfc">must not</em> represent any date related to the OPDS Catalog Entry.
+- OPDS Catalog Entries <em class="rfc">must</em> include an `atom:title` representing the Publication's title and <em class="rfc">must not</em> use `dc:title`.
+- OPDS Catalog Entries <em class="rfc">should</em> use `atom:author` to represent the Publication's creators and <em class="rfc">should not</em> use `dc:creator`.
+- OPDS Catalog Entries <em class="rfc">should</em> use `atom:category` to represent the Publication's category, keywords, key phrases, or classification codes and <em class="rfc">should not</em> use `dc:subject`.
+- OPDS Catalog Entries <em class="rfc">should</em> use `atom:rights` to represent rights held in and over the Publication and <em class="rfc">should not</em> use `dc:rights`.
+- OPDS Catalog Entries <em class="rfc">should</em> use `atom:summary` and/or `atom:content` to describe the Publication <em class="rfc">should not</em> use `dc:description` or `dc:abstract`.
+- OPDS Catalog Entries <em class="rfc">may</em> use `atom:contributor` to represent contributors to the Publication beside its creators.
+- OPDS Catalog Entries <em class="rfc">may</em> use `atom:published` to indicate when the OPDS Catalog Entry was first accessible.
 
 All metadata elements required by Atom are required in OPDS Catalog Entries and Feeds.
 
-Following Atom [RFC4287] Section 4.2.6, the content of an `atom:id` identifying an OPDS Catalog Entry MUST NOT change when the OPDS Catalog Entry is "relocated, migrated, syndicated, republished, exported, or imported" and "MUST be created in a way that assures uniqueness."
+Following Atom [RFC4287] Section 4.2.6, the content of an `atom:id` identifying an OPDS Catalog Entry <em class="rfc">must not</em> change when the OPDS Catalog Entry is "relocated, migrated, syndicated, republished, exported, or imported" and "<em class="rfc">must</em> be created in a way that assures uniqueness."
 
 #### 5.1.2. Partial and Complete Catalog Entries
 
 An OPDS Catalog Entry may be represented as either a Partial or Complete Catalog Entry. Partial Catalog Entries include only critical metadata elements to reduce the size of OPDS Catalog documents for bandwidth- and resource-limited clients and link to their alternate representation as a Complete Catalog Entries, which include all metadata elements.
 
-A Partial Catalog Entry MUST include an "alternate" link relation referencing the Complete Catalog Entry Resource and that atom:link MUST use the "type" attribute `application/atom+xml;type=entry;profile=opds-catalog`.
+A Partial Catalog Entry <em class="rfc">must</em> include an `alternate` link relation referencing the Complete Catalog Entry Resource and that `atom:link` <em class="rfc">must</em> use the `type` attribute `application/atom+xml;type=entry;profile=opds-catalog`.
 
-Any OPDS Catalog Entry without a link to a Complete Catalog Entry MUST include all metadata elements.
+Any OPDS Catalog Entry without a link to a Complete Catalog Entry <em class="rfc">must</em> include all metadata elements.
 
-Partial Catalog Entries SHOULD include the following metadata elements, if available:
+Partial Catalog Entries <em class="rfc">should</em> include the following metadata elements, if available:
 
 - `atom:category`
 - `atom:contributor`
@@ -648,13 +648,13 @@ The Complete Catalog Entry for the same Publication:
 
 #### 5.1.3. Summary and Content
 
-OPDS Catalog Entries use `atom:content` and `atom:summary` elements to describe a Publication. This is a distinction from Atom [RFC4287], which uses "atom:content" for the "content of the entry." Instead, OPDS Catalog Entries reference an electronic document with the Publication's content using Acquisition Links. OPDS Catalog Entries SHOULD include either `atom:summary` or `atom:content` elements or both to provide a description, summary, abstract, or excerpt of the Publication.
+OPDS Catalog Entries use `atom:content` and `atom:summary` elements to describe a Publication. This is a distinction from Atom [RFC4287], which uses `atom:content` for the "content of the entry." Instead, OPDS Catalog Entries reference an electronic document with the Publication's content using Acquisition Links. OPDS Catalog Entries <em class="rfc">should</em> include either `atom:summary` or `atom:content` elements or both to provide a description, summary, abstract, or excerpt of the Publication.
 
-An `atom:summary` element in an OPDS Catalog Entry MUST use a "type" attribute of "text" and the content MUST NOT contain child elements. The content of an `atom:summary` element SHOULD NOT duplicate the content of `atom:title` or `atom:content`. Such text is intended to be presented to humans in a readable fashion. The restriction of the content of `atom:summary` and the "type" attribute is a restriction of Atom [RFC4287].
+An `atom:summary` element in an OPDS Catalog Entry <em class="rfc">must</em> use a `type` attribute of `text` and the content <em class="rfc">must not</em> contain child elements. The content of an `atom:summary` element <em class="rfc">should not</em> duplicate the content of `atom:title` or `atom:content`. Such text is intended to be presented to humans in a readable fashion. The restriction of the content of `atom:summary` and the `type` attribute is a restriction of Atom [RFC4287].
 
-An `atom:content` element in an OPDS Catalog Entry either contains or links to a description, summary, abstract, or excerpt of the Publication. The behavior for "atomOutOfLineContent" and the "src" attribute are defined in Section 4.1.3 of [RFC4287].
+An `atom:content` element in an OPDS Catalog Entry either contains or links to a description, summary, abstract, or excerpt of the Publication. The behavior for `atomOutOfLineContent` and the `src` attribute are defined in Section 4.1.3 of [RFC4287].
 
-If an OPDS Catalog Entry includes both `atom:content` and `atom:summary`, the `atom:content` SHOULD NOT be included in the Partial Catalog Entry. Both elements SHOULD be included in the Complete Catalog Entry.
+If an OPDS Catalog Entry includes both `atom:content` and `atom:summary`, the `atom:content` <em class="rfc">should not</em> be included in the Partial Catalog Entry. Both elements <em class="rfc">should</em> be included in the Complete Catalog Entry.
 
 ```
 atomSummary = 
@@ -667,7 +667,7 @@ atomSummary =
 
 ### 5.2. Catalog Entry Relations
 
-OPDS Catalog Entry Documents SHOULD include links to related Resources. This specification defines new relations for linking from OPDS Catalog Entry Documents. They are defined in the Sections Acquisition Relations and Artwork Relations.
+OPDS Catalog Entry Documents <em class="rfc">should</em> include links to related Resources. This specification defines new relations for linking from OPDS Catalog Entry Documents. They are defined in the Sections Acquisition Relations and Artwork Relations.
 
 OPDS Catalog providers are encouraged to use relations from [RFC5988] inside OPDS Catalog Entry Documents where appropriate.
 
@@ -675,40 +675,41 @@ OPDS Catalog providers are encouraged to use relations from [RFC5988] inside OPD
 
 Acquisition relations describe the extent of the content referred to by an Acquisition Link or the manner in which that Resource may be acquired. This specification defines six Acquisition Relations, which all begin with "http://opds-spec.org/acquisition":
 
-- "http://opds-spec.org/acquisition": A generic relation that indicates that the complete representation of the content Resource may be retrieved.
-- "http://opds-spec.org/acquisition/open-access": Indicates that the complete representation of the Resource can be retrieved without any requirement, which includes payment and registration.
-- "http://opds-spec.org/acquisition/borrow": Indicates that the complete representation of the content Resource may be retrieved as part of a lending transaction.
-- "http://opds-spec.org/acquisition/buy": Indicates that the complete representation of the content Resource may be retrieved as part of a purchase.
-- "http://opds-spec.org/acquisition/sample": Indicates that a subset of the content Resource may be retrieved.
-- "http://opds-spec.org/acquisition/subscribe": Indicates that the complete representation of the content Resource may be retrieved as part of a subscription.
+- `http://opds-spec.org/acquisition`: A generic relation that indicates that the complete representation of the content Resource may be retrieved.
+- `http://opds-spec.org/acquisition/open-access`: Indicates that the complete representation of the Resource can be retrieved without any requirement, which includes payment and registration.
+- `http://opds-spec.org/acquisition/borrow`: Indicates that the complete representation of the content Resource may be retrieved as part of a lending transaction.
+- `http://opds-spec.org/acquisition/buy`: Indicates that the complete representation of the content Resource may be retrieved as part of a purchase.
+- `http://opds-spec.org/acquisition/sample` or `preview`: Indicates that a subset of the content Resource may be retrieved.
+- `http://opds-spec.org/acquisition/subscribe`: Indicates that the complete representation of the content Resource may be retrieved as part of a subscription.
 
 #### 5.2.2. Artwork Relations
 
-OPDS Catalog Entries MAY include `atom:link` elements to images that provide a visual representation of the Publication. For many Publications, these images will be the Publication's artwork. This specification defines two Artwork Relations, which begin with "http://opds-spec.org/image":
+OPDS Catalog Entries <em class="rfc">may</em> include `atom:link` elements to images that provide a visual representation of the Publication. For many Publications, these images will be the Publication's artwork. This specification defines two Artwork Relations, which begin with `http://opds-spec.org/image`:
 
-- "http://opds-spec.org/image": a graphical Resource associated to the OPDS Catalog Entry
-- "http://opds-spec.org/image/thumbnail": a reduced-size version of a graphical Resource associated to the OPS Catalog Entry
-Image resources related by http://opds-spec.org/image/thumbnail SHOULD be suitable for presentation at a small size.
+- `http://opds-spec.org/image`: a graphical Resource associated to the OPDS Catalog Entry
+- `http://opds-spec.org/image/thumbnail`: a reduced-size version of a graphical Resource associated to the OPS Catalog Entry
 
-The `atom:link` elements with these relations SHOULD include at least one link with a type attribute of "image/gif", "image/jpeg", or "image/png" and the image Resources MUST be in GIF, JPEG, or PNG format.
+Image resources related by `http://opds-spec.org/image/thumbnail` <em class="rfc">should</em> be suitable for presentation at a small size.
 
-Additional `atom:link` elements MAY also include resources using a vector-based format.
+The `atom:link` elements with these relations <em class="rfc">should</em> include at least one link with a type attribute of `image/gif`, `image/jpeg`, or `image/png` and the image Resources <em class="rfc">must</em> be in GIF, JPEG, or PNG format.
+
+Additional `atom:link` elements <em class="rfc">may</em> also include resources using a vector-based format.
 
 While either image Resource is optional and may be included independently, OPDS Catalog providers are encouraged to provide both these relations and Resources whenever possible.
 
-Some OPDS Catalog providers MAY choose to provide http://opds-spec.org/image/thumbnail image Resources using the "data" URL scheme from [RFC2397]. scheme if they support Artwork relations.
+Some OPDS Catalog providers MAY choose to provide `http://opds-spec.org/image` thumbnail image Resources using the `data` URL scheme from [RFC2397].
 
 ### 5.3. Acquiring Publications
 
 The goal of OPDS Catalogs is to make Publications both discoverable and straightforward to acquire on a range of devices and platforms. To support that goal, this specification strives to provide a framework for describing how a Publication may be acquired while not attempting to constrain this very complex topic. Commonly-used acquisition scenarios may be specified in an update to this specification.
 
-All Acquisition Links MUST include a "type" attribute that advises clients on the media type of the representation that is expected to be returned when the value of the href attribute is dereferenced. As with Atom, the value of the type attribute MUST conform to the syntax of a MIME media type [MIMEREG].
+All Acquisition Links MUST include a `type` attribute that advises clients on the media type of the representation that is expected to be returned when the value of the href attribute is dereferenced. As with Atom, the value of the type attribute MUST conform to the syntax of a MIME media type [MIMEREG].
 
-Publications in a format using Digital Rights Management SHOULD use a different value for the type attribute of the Acquisition Link than the same format without Digital Rights Management.
+Publications in a format using Digital Rights Management <em class="rfc">should</em> use a different value for the type attribute of the Acquisition Link than the same format without Digital Rights Management.
 
 OPDS Catalog clients may only support a subset of all possible Publication media types. These clients will need to filter both the type attribute of Acquisition Links.
 
-OPDS Catalogs may only provide certain Publications through an Indirect Acquisition, either through a container or a different Acquisition workflow. In such cases, it is up to the clients to filter these publications based on both the "opds:indirectAcquisition" and "atom:link" type attributes.
+OPDS Catalogs may only provide certain Publications through an Indirect Acquisition, either through a container or a different Acquisition workflow. In such cases, it is up to the clients to filter these publications based on both the `opds:indirectAcquisition` and `atom:link` type attributes.
 
 **Examples**
 
@@ -776,7 +777,7 @@ The `atom:entry` element is the document (i.e., top-level) element of an OPDS Ca
 
 The following child elements are refined by this specification:
 
-- OPDS Catalog Entry Documents MUST contain at least one Acquisition Link, an atom:link element with a rel attribute that begins with "http://opds-spec.org/acquisition".
+- OPDS Catalog Entry Documents <em class="rfc">must</em> contain at least one Acquisition Link, an atom:link element with a rel attribute that begins with `http://opds-spec.org/acquisition`.
 
 
 #### The `atom:link` Element
@@ -814,14 +815,14 @@ atomLink =
   
 The following child elements are defined by this specification:
 
-- `atom:link` elements with a rel attribute value set to "http://opds-spec.org/acquisition/buy" MUST contain at least one `opds:price` element.
-- `atom:link` elements with a rel attribute set to "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/subscribe", or "http://opds-spec.org/acquisition/sample" MAY contain one or more `opds:price` elements.
+- `atom:link` elements with a rel attribute value set to `http://opds-spec.org/acquisition/buy` <em class="rfc">must</em> contain at least one `opds:price` element.
+- `atom:link` elements with a rel attribute set to `http://opds-spec.org/acquisition/borrow`, `http://opds-spec.org/acquisition/subscribe`, or `http://opds-spec.org/acquisition/sample` <em class="rfc">may</em> contain one or more `opds:price` elements.
 
 #### The `opds:price` Element
 
 The `opds:price` element represents the acquisition price in a particular currency of an individual Publication in a particular format from a particular provider. This element can appear as a child of the `atom:link` element (in OPDS Catalog Entry Documents).
 
-The content of `opds:price` is text describing a currency value. A currency sign MUST NOT be included.
+The content of `opds:price` is text describing a currency value. A currency sign <em class="rfc">must not</em> be included.
 
 ```
 opdsPrice = 
@@ -832,15 +833,15 @@ opdsPrice =
   }
 ```
       
-In the `opds:price` element, the value of the "currencycode" attribute MUST be an active code from [ISO4217] representing a currency. It defines the currency used for the content of `the opds:price` element.
+In the `opds:price` element, the value of the `currencycode` attribute <em class="rfc">must</em> be an active code from [ISO4217] representing a currency. It defines the currency used for the content of the `opds:price` element.
 
 #### The `opds:indirectAcquisition` Element
 
-In some cases, the OPDS Catalog provider MAY require the client to acquire an intermediate Resource before acquiring the final Publication. This can be the case for example with containers (archive formats, multimedia containers for various formats) or when a payment is required (need to go through a series of HTML pages to handle the transaction).
+In some cases, the OPDS Catalog provider <em class="rfc">may</em> require the client to acquire an intermediate Resource before acquiring the final Publication. This can be the case for example with containers (archive formats, multimedia containers for various formats) or when a payment is required (need to go through a series of HTML pages to handle the transaction).
 
 The `opds:indirectAcquisition` element represents these secondary media types [MIMEREG] that the client can expect to acquire if they follow the Acquisition Link.
 
-These `opds:indirectAcquisition` elements CAN be arbitrarily nested to represent several levels of indirection.
+These `opds:indirectAcquisition` elements <em class="rfc">may</em> be arbitrarily nested to represent several levels of indirection.
 
 ```
 opdsIndirectAcquisition = 
@@ -860,48 +861,48 @@ These relations MAY be used by clients to provide additional or alternative navi
 
 The following relations are derived from [RFC5988], with some clarification:
 
-- "start": The OPDS Catalog Root.
-- "subsection": A Navigation Feed not better described by a more specific relation.
+- `start`: The OPDS Catalog Root.
+- `subsection`: An OPDS Feed not better described by a more specific relation.
 
-When creating an OPDS Catalog with Navigation and Acquisition Feeds, OPDS Catalog providers are encouraged to use the relations defined in this specification and [RFC5988]. If no appropriate relation is found, the Feeds SHOULD use a descriptive `atom:title` element and the `atom:link` elements SHOULD use a descriptive "title" attribute.
+When creating an OPDS Catalog with Navigation and Acquisition Feeds, OPDS Catalog providers are encouraged to use the relations defined in this specification and [RFC5988]. If no appropriate relation is found, the Feeds <em class="rfc">should</em> use a descriptive `atom:title` element and the `atom:link` elements <em class="rfc">should</em> use a descriptive `title` attribute.
 
 ### 6.1. Relations for Previously Acquired Content
 
-An OPDS catalog MAY track content that was previously acquired by the user. This specification defines two new relations to identify Acquisition Feeds listing such resources:
+An OPDS catalog <em class="rfc">may</em> track content that was previously acquired by the user. This specification defines two new relations to identify Acquisition Feeds listing such resources:
 
-- "http://opds-spec.org/shelf": A Resource that includes a user's existing set of Acquired Content, which MAY be represented as an OPDS Catalog.
-- "http://opds-spec.org/subscriptions": A Resource that includes a user's set of subscriptions, which MAY be represented as an OPDS Catalog.
-An OPDS client MAY use these links to automatically sync content to the user's local shelf or check for periodical content updates.
+- `http://opds-spec.org/shelf`: A Resource that includes a user's existing set of Acquired Content, which <em class="rfc">may</em> be represented as an OPDS Catalog.
+- `http://opds-spec.org/subscriptions`: A Resource that includes a user's set of subscriptions, which MAY be represented as an OPDS Catalog.
+An OPDS client <em class="rfc">may</em> use these links to automatically sync content to the user's local shelf or check for periodical content updates.
 
 ### 6.2. Sorting Relations
 
-This specification defines two new relations, which begin with "http://opds-spec.org/sort", to describe how an Acquisition Feed is sorted. These relations SHOULD be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
+This specification defines two new relations, which begin with `http://opds-spec.org/sort`, to describe how an Acquisition Feed is sorted. These relations SHOULD be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
 
-- "http://opds-spec.org/sort/new": An Acquisition Feed with newly released OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog based on the publication date of the Publication.
-- "http://opds-spec.org/sort/popular": An Acquisition Feed with popular OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog based on a numerical ranking criteria.
-Acquisition Feeds using the "http://opds-spec.org/sort/new" relation SHOULD be ordered with the most recent items first. Acquisition Feeds using the "http://opds-spec.org/sort/popular" relation SHOULD be ordered with the most popular items first.
+- `http://opds-spec.org/sort/new`: An Acquisition Feed with newly released OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog based on the publication date of the Publication.
+- `http://opds-spec.org/sort/popular`: An Acquisition Feed with popular OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog based on a numerical ranking criteria.
+Acquisition Feeds using the "http://opds-spec.org/sort/new" relation <em class="rfc">should</em> be ordered with the most recent items first. Acquisition Feeds using the "http://opds-spec.org/sort/popular" relation <em class="rfc">should</em> be ordered with the most popular items first.
 
 ### 6.3. Featured Relation
 
-This specification also defines a relation to describe an Acquisition Feed of featured items. This relation SHOULD be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
+This specification also defines a relation to describe an Acquisition Feed of featured items. This relation <em class="rfc">should</em> be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
 
-- "http://opds-spec.org/featured": An Acquisition Feed with featured OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected for promotion by the OPDS Catalog provider. No order is implied.
+- `http://opds-spec.org/featured`: An Acquisition Feed with featured OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected for promotion by the OPDS Catalog provider. No order is implied.
 
 ### 6.4. Recommendations
 
-This specification also defines a relation to describe an Acquisition Feed of recommended items. Since recommendations can be customized for the user, such feed may require some kind of prior authentication. This relation SHOULD be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
+This specification also defines a relation to describe an Acquisition Feed of recommended items. Since recommendations can be customized for the user, such feed may require some kind of prior authentication. This relation <em class="rfc">should</em> be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
 
-- "http://opds-spec.org/recommended": An Acquisition Feed with recommended OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected specifically for the user. Acquisition Feeds using the "http://opds-spec.org/recommended" relation SHOULD be ordered with the most recommended items first.
+- `http://opds-spec.org/recommended`: An Acquisition Feed with recommended OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected specifically for the user. Acquisition Feeds using the `http://opds-spec.org/recommended` relation <em class="rfc">should</em> be ordered with the most recommended items first.
 
 ## 7. Other Considerations
 
 ### 7. Discovering OPDS Catalogs
 
-OPDS Catalogs may be referenced in HTML/XHTML pages, HTTP headers, or using other techniques. These links may reference both OPDS Catalog Entries or Feeds. Links to OPDS Catalog Entry Document Resources MUST use a type attribute of "application/atom+xml;type=entry;profile=opds-catalog". Links to OPDS Catalog Feed Document Resources MUST use a type attribute of "application/atom+xml;profile=opds-catalog".
+OPDS Catalogs may be referenced in HTML/XHTML pages, HTTP headers, or using other techniques. These links may reference both OPDS Catalog Entries or Feeds. Links to OPDS Catalog Entry Document Resources <em class="rfc">must</em> use a type attribute of `application/atom+xml;type=entry;profile=opds-catalog`. Links to OPDS Catalog Feed Document Resources <em class="rfc">must</em> use a type attribute of `application/atom+xml;profile=opds-catalog`.
 
 The most common mechanism for encouraging the auto-discovery of OPDS Catalogs is to link from an HTML document to the OPDS Catalog Root Resource, using the auto-discovery pattern popularized by the syndicated feed community [AUTODISCOVERY].
 
-Multiple links to OPDS Catalog Resources MAY be expressed in a single HTML document.
+Multiple links to OPDS Catalog Resources <em class="rfc">may</em> be expressed in a single HTML document.
 
 An example of two links inside an HTML page about the same Publication:
 
@@ -917,46 +918,44 @@ An example of two links inside an HTML page about the same Publication:
       title="Example OPDS Entry" />
 ```
 
-Auto-discovery links MAY also be expressed using HTTP headers as defined in [RFC5988].
+Auto-discovery links `MAY` also be expressed using HTTP headers as defined in [RFC5988].
 
 ### 7. Aggregating OPDS Catalogs
 
-OPDS Catalogs may be aggregated using the same techniques as Atom Feeds. Aggregators SHOULD use the atom:source element from Section 4.2.11 of [RFC4287] to include information about the original OPDS Catalog.
+OPDS Catalogs may be aggregated using the same techniques as Atom Feeds. Aggregators <em class="rfc">should</em> use the atom:source element from Section 4.2.11 of [RFC4287] to include information about the original OPDS Catalog.
 
 ### 7.1 Media Type Considerations
 
 #### 7.1.1. The Atom Format Type Parameter
 
 The Atom Publishing Protocol [RFC5023] defines the Atom Format Type Parameter.
-Publishers of OPDS Catalogs SHOULD use the type parameter to help clients distinguish between relations to 
+Publishers of OPDS Catalogs <em class="rfc">should</em> use the `type` parameter to help clients distinguish between relations to 
 OPDS Catalog Entries and OPDS Catalog Feeds.
 
 #### 7.1.2. The OPDS Catalog Profile Parameter
 
-Relations to OPDS Catalog Feed Document and OPDS Catalog Entry Document Resources MUST use a "profile" parameter 
-following Section 4.3 of [RFC4288] with the value "opds-catalog". 
+Relations to OPDS Catalog Feed Document and OPDS Catalog Entry Document Resources <em class="rfc">must</em> use a `profile` parameter 
+following Section 4.3 of [RFC4288] with the value `opds-catalog`. 
 This profile parameter provides clients with an advisory hint that the Resource should be a component of an OPDS Catalog.
 
-The complete media type for a relation to an OPDS Catalog Entry Document Resource MUST be:
+The complete media type for a relation to an OPDS Catalog Entry Document Resource <em class="rfc">must</em> be:
 
 `application/atom+xml;type=entry;profile=opds-catalog`
 
 #### 7.1.3. The OPDS Kind Parameter
 
-In addition to the new "profile" parameter, this specification also introduces a new "kind" parameter following Section 4.3 
-of [RFC4288] with the value "acquisition" or "navigation". 
-This "kind" parameter provides clients with an advisory hint whether the Resource should be an Acquisition Feed or a 
+In addition to the new "profile" parameter, this specification also introduces a new `kind` parameter following Section 4.3 
+of [RFC4288] with the value `acquisition` or `navigation`. 
+This `kind` parameter provides clients with an advisory hint whether the Resource should be an Acquisition Feed or a 
 Navigation Feed.
 
-This value is intended to make it easier for OPDS clients to display basic contextual information about the feed without 
-requiring that those clients dereference, parse, and analyze linked resources. That said, the client MUST NOT 
-assume this parameter to provide completely accurate information about the nature of the feed. 
+This value is intended to make it easier for OPDS clients to display basic contextual information about the feed without  requiring that those clients dereference, parse, and analyze linked resources. That said, the client <em class="rfc">must not</em> assume this parameter to provide completely accurate information about the nature of the feed. 
 
-The complete media type for a relation to an Acquisition Feed MUST be:
+The complete media type for a relation to an Acquisition Feed <em class="rfc">must</em> be:
 
 `application/atom+xml;profile=opds-catalog;kind=acquisition`
 
-The complete media type for a relation to a Navigation Feed MUST be:
+The complete media type for a relation to a Navigation Feed <em class="rfc">must</em> be:
 
 `application/atom+xml;profile=opds-catalog;kind=navigation`
 
@@ -968,7 +967,7 @@ OPDS Catalogs are Atom documents delivered over HTTP and thus subject to the sec
 
 OPDS Catalogs are delivered over HTTP. Authentication requirements for HTTP are covered in Section 11 of [RFC2616].
 
-The type of authentication required for any OPDS Catalog is a decision to be made by the OPDS Catalog provider. OPDS Catalog clients are likely to face authentication schemes that vary across OPDS Catalogs. At a minimum, client and server implementations MUST be capable of being configured to use HTTP Basic Authentication [RFC2617] in conjunction with a connection made with TLS 1.0 [RFC2246] or a subsequent standards-track version of TLS supporting the conventions for using HTTP over TLS described in [RFC2818]. It is RECOMMENDED that OPDS Catalog clients be implemented in such a way that new authentication schemes can be deployed.
+The type of authentication required for any OPDS Catalog is a decision to be made by the OPDS Catalog provider. OPDS Catalog clients are likely to face authentication schemes that vary across OPDS Catalogs. At a minimum, client and server implementations <em class="rfc">must</em> be capable of being configured to use HTTP Basic Authentication [RFC2617] in conjunction with a connection made with TLS 1.0 [RFC2246] or a subsequent standards-track version of TLS supporting the conventions for using HTTP over TLS described in [RFC2818]. It is <em class="rfc">recommended</em> that OPDS Catalog clients be implemented in such a way that new authentication schemes can be deployed.
 
 Because this protocol uses HTTP response status codes as the primary means of reporting the result of a request, OPDS Catalog providers are advised to respond to unauthorized or unauthenticated requests using an appropriate 4xx HTTP response code (e.g., 401 "Unauthorized" or 403 "Forbidden") in accordance with [RFC2617].
 
@@ -1027,8 +1026,6 @@ Many OPDS Catalog clients operate in mobile environments, which may impose stric
 ## Appendix A. Contributors
 
 The content and concepts within this specification are a product of the OPDS Community.
-
-The two editors for this revision of the specification are Hadrien Gardeur and Leonard Richardson.
 
 ## Appendix B. RELAX NG Compact Schema
 
