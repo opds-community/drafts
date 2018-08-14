@@ -127,7 +127,7 @@ OPDS Catalogs may be aggregated and combined into larger OPDS Catalogs.
   <dd>An Atom Feed whose Atom Entries are exclusively OPDS Catalog Entries.</dd>
 
   <dt>Acquisition Link</dt>
-  <dd>An atom:link element with a relation that begins with `http://opds-spec.org/acquisition` and refers to the Resource which holds the content of the described Publication or the Resource through which it may be acquired for any OPDS Catalog Entry. See the Sections Acquisition Relations and Acquiring Publications. They are serialized as OPDS Catalog Feed Documents.</dd>
+  <dd>An atom:link element with a relation that begins with <code>http://opds-spec.org/acquisition</code> and refers to the Resource which holds the content of the described Publication or the Resource through which it may be acquired for any OPDS Catalog Entry. Check the following sections for more detail: <a href="#521-acquisition-relations">Acquisition Relations</a> and <a href="#53-acquiring-publications">Acquiring Publications</a>.</dd>
 
   <dt>Complete Catalog Entry</dt>
   <dd>An OPDS Catalog Entry that includes all known metadata about the described Publication and is referenced by a Partial Catalog Entry.</dd>
@@ -181,7 +181,7 @@ The key words <em class="rfc">must</em>, <em class="rfc">must not</em>, <em clas
 
 ### 1.4. RELAX NG Schema
 
-Some sections of this specification are illustrated with fragments of a non-normative RELAX NG Compact schema [[RNC](http://www.oasis-open.org/committees/relax-ng/compact-20021121.html)]. However, the text of this specification provides the definition of conformance. Complete schemas appear in Appendix B.
+Some sections of this specification are illustrated with fragments of a non-normative RELAX NG Compact schema [[RNC](http://www.oasis-open.org/committees/relax-ng/compact-20021121.html)]. However, the text of this specification provides the definition of conformance. Complete schemas appear in [Appendix B](#appendix-b-relax-ng-compact-schema).
 
 
 ## 2. OPDS Catalog Feed Documents
@@ -191,7 +191,7 @@ OPDS Catalog Feed Documents are Atom [[RFC4287](https://tools.ietf.org/html/rfc4
 - To create a browsable hierarchy of other OPDS Catalog Feed Documents and other Resources. These OPDS Catalog Feed Documents are referred to as Navigation Feeds.
 - To collect a set of OPDS Catalog Entries. These OPDS Catalog Feed Documents are referred to as Acquisition Feeds.
 
-While Navigation Feeds do provide a suggested hierarchy from the OPDS Catalog publisher, OPDS Catalog Feed Documents <em class="rfc">may</em> contain other relations that allow for other methods of consumption and display. See the Section OPDS Catalog Relations for more detail.
+While Navigation Feeds do provide a suggested hierarchy from the OPDS Catalog publisher, OPDS Catalog Feed Documents <em class="rfc">may</em> contain [other relations](#6-additional-link-relations) that allow for other methods of consumption and display. 
 
 Every OPDS Catalog Feed Document <em class="rfc">must</em> either be an Acquisition Feed or a Navigation Feed. An Acquisition Feed can be identified by the presence of Acquisition Links in each Atom Entry.
 
@@ -387,9 +387,9 @@ An OPDS Catalog provider <em class="rfc">may</em> provide a single, consolidated
 
 This representation is called a Complete Acquisition Feed and each OPDS Catalog Entry <em class="rfc">must</em> be ordered by atom:updated, with the most recently updated Atom Entries coming first in the document order.
 
-If available, each OPDS Catalog Feed Document in the OPDS Catalog <em class="rfc">should</em> contain an atom:link element with a relation of "http://opds-spec.org/crawlable" that references the Complete Acquisition Feed Resource.
+If available, each OPDS Catalog Feed Document in the OPDS Catalog <em class="rfc">should</em> contain an atom:link element with a relation of `http://opds-spec.org/crawlable` that references the Complete Acquisition Feed Resource.
 
-A Complete Acquisition Feed <em class="rfc">must</em> include a fh:complete element from [[RFC5005](https://tools.ietf.org/html/rfc5005)] unless pagination is required. See Section 2 of [[RFC5005](https://tools.ietf.org/html/rfc5005)] for the specification of the fh:complete element.
+A Complete Acquisition Feed <em class="rfc">must</em> include a `fh:complete` element from [[RFC5005](https://tools.ietf.org/html/rfc5005)] unless pagination is required. See Section 2 of [[RFC5005](https://tools.ietf.org/html/rfc5005)] for the specification of the `fh:complete` element.
 
 OPDS Catalog providers <em class="rfc">should</em> use a compressed Content-Encoding when transmitting Complete Acquisition Feeds over HTTP. See Section 14.11 of [[RFC2616](https://tools.ietf.org/html/rfc2616)] for more on compression.
 
@@ -872,6 +872,7 @@ An OPDS catalog <em class="rfc">may</em> track content that was previously acqui
 
 - `http://opds-spec.org/shelf`: A Resource that includes a user's existing set of Acquired Content, which <em class="rfc">may</em> be represented as an OPDS Catalog.
 - `http://opds-spec.org/subscriptions`: A Resource that includes a user's set of subscriptions, which <em class="rfc">may</em> be represented as an OPDS Catalog.
+
 An OPDS client <em class="rfc">may</em> use these links to automatically sync content to the user's local shelf or check for periodical content updates.
 
 ### 6.2. Sorting Relations
@@ -880,7 +881,10 @@ This specification defines two new relations, which begin with `http://opds-spec
 
 - `http://opds-spec.org/sort/new`: An Acquisition Feed with newly released OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog based on the publication date of the Publication.
 - `http://opds-spec.org/sort/popular`: An Acquisition Feed with popular OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog based on a numerical ranking criteria.
-Acquisition Feeds using the `http://opds-spec.org/sort/new` relation <em class="rfc">should</em> be ordered with the most recent items first. Acquisition Feeds using the `http://opds-spec.org/sort/popular` relation <em class="rfc">should</em> be ordered with the most popular items first.
+
+Acquisition Feeds using the `http://opds-spec.org/sort/new` relation <em class="rfc">should</em> be ordered with the most recent items first. 
+
+Acquisition Feeds using the `http://opds-spec.org/sort/popular` relation <em class="rfc">should</em> be ordered with the most popular items first.
 
 ### 6.3. Featured Relation
 
@@ -892,7 +896,9 @@ This specification also defines a relation to describe an Acquisition Feed of fe
 
 This specification also defines a relation to describe an Acquisition Feed of recommended items. Since recommendations can be customized for the user, such feed may require some kind of prior authentication. This relation <em class="rfc">should</em> be used when creating Navigation Feeds and the OPDS Catalog Root, if applicable.
 
-- `http://opds-spec.org/recommended`: An Acquisition Feed with recommended OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected specifically for the user. Acquisition Feeds using the `http://opds-spec.org/recommended` relation <em class="rfc">should</em> be ordered with the most recommended items first.
+- `http://opds-spec.org/recommended`: An Acquisition Feed with recommended OPDS Catalog Entries. These Acquisition Feeds typically contain a subset of the OPDS Catalog Entries in an OPDS Catalog that have been selected specifically for the user. 
+
+Acquisition Feeds using the `http://opds-spec.org/recommended` relation <em class="rfc">should</em> be ordered with the most recommended items first.
 
 ## 7. Other Considerations
 
