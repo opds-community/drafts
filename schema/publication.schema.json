@@ -32,13 +32,13 @@
                 "anyOf": [
                   {
                     "type": "string",
-                    "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
+                    "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/acquisition/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
                   },
                   {
                     "type": "array",
                     "contains": {
                       "type": "string",
-                      "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
+                      "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/acquisition/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
                     }
                   }
                 ]
