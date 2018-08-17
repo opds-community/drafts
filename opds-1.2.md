@@ -904,7 +904,11 @@ Acquisition Feeds using the `http://opds-spec.org/recommended` relation <em clas
 
 ### 7. Discovering OPDS Catalogs
 
-OPDS Catalogs may be referenced in HTML/XHTML pages, HTTP headers, or using other techniques. These links may reference both OPDS Catalog Entries or Feeds. Links to OPDS Catalog Entry Document Resources <em class="rfc">must</em> use a type attribute of `application/atom+xml;type=entry;profile=opds-catalog`. Links to OPDS Catalog Feed Document Resources <em class="rfc">must</em> use a type attribute of `application/atom+xml;profile=opds-catalog`.
+OPDS Catalogs may be referenced in HTML/XHTML pages, HTTP headers, or using other techniques. These links may reference both OPDS Catalog Entries or Feeds. 
+
+Links to OPDS Catalog Entry Document Resources <em class="rfc">must</em> use a type attribute of `application/atom+xml;type=entry;profile=opds-catalog`. 
+
+Links to OPDS Catalog Feed Document Resources <em class="rfc">must</em> use a type attribute of `application/atom+xml;profile=opds-catalog`.
 
 The most common mechanism for encouraging the auto-discovery of OPDS Catalogs is to link from an HTML document to the OPDS Catalog Root Resource, using the auto-discovery pattern popularized by the syndicated feed community [[AUTODISCOVERY](http://www.rssboard.org/rss-autodiscovery)].
 
@@ -924,11 +928,13 @@ An example of two links inside an HTML page about the same Publication:
       title="Example OPDS Entry" />
 ```
 
-Auto-discovery links `MAY` also be expressed using HTTP headers as defined in [[RFC5988](https://tools.ietf.org/html/rfc5988)].
+Auto-discovery links <em class="rfc">may</em> also be expressed using HTTP headers as defined in [[RFC5988](https://tools.ietf.org/html/rfc5988)].
 
 ### 7. Aggregating OPDS Catalogs
 
-OPDS Catalogs may be aggregated using the same techniques as Atom Feeds. Aggregators <em class="rfc">should</em> use the atom:source element from Section 4.2.11 of [[RFC4287](https://tools.ietf.org/html/rfc4287)] to include information about the original OPDS Catalog.
+OPDS Catalogs <em class="rfc">may</em> be aggregated using the same techniques as Atom Feeds. 
+
+Aggregators <em class="rfc">should</em> use the atom:source element from Section 4.2.11 of [[RFC4287](https://tools.ietf.org/html/rfc4287)] to include information about the original OPDS Catalog.
 
 ### 7.1 Media Type Considerations
 
@@ -979,7 +985,7 @@ Because this protocol uses HTTP response status codes as the primary means of re
 
 #### 7.2.2 Linked Resources
 
-OPDS Catalogs can contain XML External Entities as defined in Section 4.2.2 of [[REC-xml](http://www.w3.org/TR/2006/REC-xml-20060816)]. OPDS Catalog implementations are not required to load external entities. External entities are subject to the same security concerns as any network operation and can alter the semantics of an OPDS Catalog Feed Document or OPDS Catalog Entry Document. The same issues exist for Resources linked to by elements such as atom:link and atom:content.
+OPDS Catalogs can contain XML External Entities as defined in Section 4.2.2 of [[REC-xml](http://www.w3.org/TR/2006/REC-xml-20060816)]. OPDS Catalog implementations are not required to load external entities. External entities are subject to the same security concerns as any network operation and can alter the semantics of an OPDS Catalog Feed Document or OPDS Catalog Entry Document. The same issues exist for Resources linked to by elements such as `atom:link` and `atom:content`.
 
 #### 7.2.3 URIs and IRIs
 
@@ -1157,11 +1163,10 @@ undefinedAttribute =
     }
    
    
-# Instead of allowing every possible 3-letter or 3-digit combination as a
-# currency code, here the permissible codes (as identified in ISO4217 as of
-# 2010-08-25) are enumerated. In 2012 or so, that standard may add, remove or
-# change some currency codes, thus requiring this schema to be updated. Note
-# that codes for metals and funds are not included.
+# Instead of allowing every possible 3-letter combination as a currency
+# code, here the permissible codes (as identified in ISO4217 as of
+# 2018-08-16) are enumerated. Code for metals and 3-digit equivalents are
+# excluded from this list.
   opdsPriceCurrencyCode =  (   
     "AED" | "AFN" | "ALL" | "AMD" | "ANG" | "AOA" | "ARS" | "AUD" | "AWG" | "AZN" | "BAM" | "BBD" | "BDT" | 
     "BGN" | "BHD" | "BIF" | "BMD" | "BND" | "BOB" | "BOV" | "BRL" | "BSD" | "BTN" | "BWP" | "BYN" | "BZD" | 
