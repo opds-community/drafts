@@ -40,6 +40,56 @@
       "items": {
         "$ref": "https://drafts.opds.io/schema/acquisition-object.schema.json"
       }
+    },
+    "holds": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "position": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "copies": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "available": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "availability": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["available", "unavailable", "reserved", "ready"]
+        },
+        "since": {
+          "type": "string",
+          "anyOf": [
+            {"format": "date"},
+            {"format": "date-time"}
+          ]
+        },
+        "until": {
+          "type": "string",
+          "anyOf": [
+            {"format": "date"},
+            {"format": "date-time"}
+          ]
+        }
+      },
+      "required": ["state"]
     }
   }
 }
