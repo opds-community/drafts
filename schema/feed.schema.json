@@ -10,7 +10,7 @@
     "links": {
       "type": "array",
       "items": {
-        "$ref": "http://readium.org/webpub-manifest/schema/link.schema.json"
+        "$ref": "https://drafts.opds.io/schema/link.schema.json"
       }
     },
     "publications": {
@@ -22,7 +22,7 @@
     "navigation": {
       "type": "array",
       "items": {
-        "$ref": "http://readium.org/webpub-manifest/schema/link.schema.json"
+        "$ref": "https://drafts.opds.io/schema/link.schema.json"
       }
     },
     "facets": {
@@ -36,7 +36,7 @@
           "links": {
             "type": "array",
             "items": {
-              "$ref": "http://readium.org/webpub-manifest/schema/link.schema.json"
+              "$ref": "https://drafts.opds.io/schema/link.schema.json"
             }
           }
         }
@@ -53,7 +53,7 @@
           "links": {
             "type": "array",
             "items": {
-              "$ref": "http://readium.org/webpub-manifest/schema/link.schema.json"
+              "$ref": "https://drafts.opds.io/schema/link.schema.json"
             }
           },
           "publications": {
@@ -65,7 +65,7 @@
           "navigation": {
             "type": "array",
             "items": {
-              "$ref": "http://readium.org/webpub-manifest/schema/link.schema.json"
+              "$ref": "https://drafts.opds.io/schema/link.schema.json"
             }
           }
         }
