@@ -17,7 +17,18 @@
       "type": "array",
       "items": {
         "$ref": "https://drafts.opds.io/schema/link.schema.json"
-      }
+      },
+      "minItems": 1,
+      "allOf": [
+        {
+          "description": "At least one image resource must use one of the following formats: image/jpeg, image/png or image/gif.",
+          "contains": {
+            "properties": {
+              "type": { "enum": ["image/jpeg", "image/png", "image/gif"] }
+            }
+          }
+        }
+      ]
     }
   },
   "required": ["metadata", "links", "images"],
