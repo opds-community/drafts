@@ -10,8 +10,23 @@
     "links": {
       "type": "array",
       "items": {
-        "$ref": "https://drafts.opds.io/schema/link.schema.json"
-      }
+        "$ref": "https://drafts.opds.io/schema/link.schema.json",
+      },
+      "allOf": [
+        {
+          "description": "A feed must contain a self link.",
+          "contains": {
+            "properties": {
+              "rel": {
+                "anyOf": [
+                  { "type": "string", "const": "self" },
+                  { "type": "array", "contains": { "const": "self" } }
+                ]
+              }
+            }
+          }
+        }
+      ]
     },
     "publications": {
       "type": "array",
@@ -23,7 +38,15 @@
       "type": "array",
       "items": {
         "$ref": "https://drafts.opds.io/schema/link.schema.json"
-      }
+      },
+      "allOf": [
+        {
+          "description": "Each Link Object in a navigation collection must contain a title",
+          "items": {
+            "required": ["title"]
+          }
+        }
+      ]
     },
     "facets": {
       "type": "array",
