@@ -12,21 +12,16 @@
       "items": {
         "$ref": "https://drafts.opds.io/schema/link.schema.json",
       },
-      "allOf": [
-        {
-          "description": "A feed must contain a self link.",
-          "contains": {
-            "properties": {
-              "rel": {
-                "anyOf": [
-                  { "type": "string", "const": "self" },
-                  { "type": "array", "contains": { "const": "self" } }
-                ]
-              }
-            }
+      "contains": {
+        "properties": {
+          "rel": {
+            "anyOf": [
+              { "type": "string", "const": "self" },
+              { "type": "array", "contains": { "const": "self" } }
+            ]
           }
         }
-      ]
+      }
     },
     "publications": {
       "type": "array",
