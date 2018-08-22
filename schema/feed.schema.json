@@ -1,16 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "id": "https://drafts.opds.io/schema/feed.schema.json",
+  "$id": "https://drafts.opds.io/schema/feed.schema.json",
   "title": "OPDS Feed",
   "type": "object",
   "properties": {
     "metadata": {
-      "$ref": "https://drafts.opds.io/schema/feed-metadata.schema.json"
+      "$ref": "feed-metadata.schema.json"
     },
     "links": {
       "type": "array",
       "items": {
-        "$ref": "https://drafts.opds.io/schema/link.schema.json",
+        "$ref": "link.schema.json",
       },
       "contains": {
         "properties": {
@@ -26,13 +26,13 @@
     "publications": {
       "type": "array",
       "items": {
-        "$ref": "https://drafts.opds.io/schema/publication.schema.json"
+        "$ref": "publication.schema.json"
       }
     },
     "navigation": {
       "type": "array",
       "items": {
-        "$ref": "https://drafts.opds.io/schema/link.schema.json"
+        "$ref": "link.schema.json"
       },
       "allOf": [
         {
@@ -49,12 +49,12 @@
         "type": "object",
         "properties": {
           "metadata": {
-            "$ref": "https://drafts.opds.io/schema/feed-metadata.schema.json"
+            "$ref": "feed-metadata.schema.json"
           },
           "links": {
             "type": "array",
             "items": {
-              "$ref": "https://drafts.opds.io/schema/link.schema.json"
+              "$ref": "link.schema.json"
             }
           }
         }
@@ -66,24 +66,24 @@
         "type": "object",
         "properties": {
           "metadata": {
-            "$ref": "https://drafts.opds.io/schema/feed-metadata.schema.json"
+            "$ref": "feed-metadata.schema.json"
           },
           "links": {
             "type": "array",
             "items": {
-              "$ref": "https://drafts.opds.io/schema/link.schema.json"
+              "$ref": "link.schema.json"
             }
           },
           "publications": {
             "type": "array",
             "items": {
-              "$ref": "https://drafts.opds.io/schema/publication.schema.json"
+              "$ref": "publication.schema.json"
             }
           },
           "navigation": {
             "type": "array",
             "items": {
-              "$ref": "https://drafts.opds.io/schema/link.schema.json"
+              "$ref": "link.schema.json"
             }
           }
         }
@@ -91,6 +91,9 @@
     }
   },
   "required": ["metadata", "links"],
+  "additionalProperties": {
+    "$ref": "http://readium.org/webpub-manifest/schema/subcollection.schema.json"
+  },
   "anyOf": [
     {
       "required": ["publications"]
