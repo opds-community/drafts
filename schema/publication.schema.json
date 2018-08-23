@@ -11,22 +11,7 @@
       "type": "array",
       "items": {
         "$ref": "link.schema.json"
-      },
-      "allOf": [
-        {
-          "description": "A publication must contain a self link.",
-          "contains": {
-            "properties": {
-              "rel": {
-                "anyOf": [
-                  { "type": "string", "const": "self" },
-                  { "type": "array", "contains": { "const": "self" } }
-                ]
-              }
-            }
-          }
-        }
-      ]
+      }
     },
     "images": {
       "type": "array",
