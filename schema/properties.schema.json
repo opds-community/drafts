@@ -5,10 +5,12 @@
   "type": "object",
   "properties": {
     "numberOfItems": {
+      "description": "Provide a hint about the expected number of items returned",
       "type": "integer",
       "minimum": 0
     },
     "price": {
+      "description": "The price of a publication is tied to its acquisition link",
       "type": "object",
       "properties": {
         "value": {
@@ -36,12 +38,14 @@
       "required": ["currency", "value"]
     },
     "indirectAcquisition": {
+      "description": "Indirect acquisition provides a hint for the expected media type that will be acquired after additional steps",
       "type": "array",
       "items": {
         "$ref": "acquisition-object.schema.json"
       }
     },
     "holds": {
+      "description": "Library-specific features when a specific book is unavailable but provides a hold list",
       "type": "object",
       "properties": {
         "total": {
@@ -55,6 +59,7 @@
       }
     },
     "copies": {
+      "description": "Library-specific feature that contains information about the copies that a library has acquired",
       "type": "object",
       "properties": {
         "total": {
@@ -68,6 +73,7 @@
       }
     },
     "availability": {
+      "description": "Indicated the availability of a given resource",
       "type": "object",
       "properties": {
         "state": {

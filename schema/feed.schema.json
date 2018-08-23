@@ -5,9 +5,11 @@
   "type": "object",
   "properties": {
     "metadata": {
+      "description": "Contains feed-level metadata such as title or number of items",
       "$ref": "feed-metadata.schema.json"
     },
     "links": {
+      "description": "Feed-level links such as search or pagination",
       "type": "array",
       "items": {
         "$ref": "link.schema.json",
@@ -24,12 +26,14 @@
       }
     },
     "publications": {
+      "description": "A list of publications that can be acquired",
       "type": "array",
       "items": {
         "$ref": "publication.schema.json"
       }
     },
     "navigation": {
+      "description": "Navigation for the catalog using links",
       "type": "array",
       "items": {
         "$ref": "link.schema.json"
@@ -44,6 +48,7 @@
       ]
     },
     "facets": {
+      "description": "Facets are meant to re-order or obtain a subset for the current list of publications",
       "type": "array",
       "items": {
         "type": "object",
@@ -61,6 +66,7 @@
       }
     },
     "groups": {
+      "description": "Groups provide a curated experience, grouping publications or navigation links together",
       "type": "array",
       "items": {
         "type": "object",

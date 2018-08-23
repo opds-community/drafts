@@ -138,8 +138,6 @@ Publications can either be:
 - a [Readium Web Publication](https://github.com/readium/webpub-manifest) with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
 - an [OPDS Publication](#41-opds-publication)
 
-All publications listed in such a collection <em class="rfc">must</em> provide a `self` link that will be used by OPDS clients to identify, reference and access publications.
-
 **Example**
 
 ```json

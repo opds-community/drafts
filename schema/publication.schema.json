@@ -11,9 +11,30 @@
       "type": "array",
       "items": {
         "$ref": "link.schema.json"
+      },
+      "contains": {
+        "description": "A publication must contain at least one acquisition link.",
+        "properties": {
+          "rel": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/acquisition/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
+              },
+              {
+                "type": "array",
+                "contains": {
+                  "type": "string",
+                  "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/acquisition/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
+                }
+              }
+            ]
+          }
+        }
       }
     },
     "images": {
+      "description": "Images are meant to be displayed to the user when browsing publications",
       "type": "array",
       "items": {
         "$ref": "link.schema.json"
@@ -31,33 +52,5 @@
       ]
     }
   },
-  "required": ["metadata", "links", "images"],
-  "allOf": [
-    {
-      "description": "A publication must contain at least one acquisition link.",
-      "properties": {
-        "links": {
-          "contains": {
-            "properties": {
-              "rel": {
-                "anyOf": [
-                  {
-                    "type": "string",
-                    "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/acquisition/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
-                  },
-                  {
-                    "type": "array",
-                    "contains": {
-                      "type": "string",
-                      "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/acquisition/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+  "required": ["metadata", "links", "images"]
 }
