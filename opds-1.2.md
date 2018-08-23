@@ -979,7 +979,7 @@ OPDS Catalogs are Atom documents delivered over HTTP and thus subject to the sec
 
 OPDS Catalogs are delivered over HTTP. Authentication requirements for HTTP are covered in Section 11 of [[RFC2616](https://tools.ietf.org/html/rfc2616)].
 
-The type of authentication required for any OPDS Catalog is a decision to be made by the OPDS Catalog provider. OPDS Catalog clients are likely to face authentication schemes that vary across OPDS Catalogs. At a minimum, client and server implementations <em class="rfc">must</em> be capable of being configured to use HTTP Basic Authentication [[RFC2617](https://tools.ietf.org/html/rfc2617)] in conjunction with a connection made with TLS 1.0 [[RFC2246](https://tools.ietf.org/html/rfc2246)] or a subsequent standards-track version of TLS supporting the conventions for using HTTP over TLS described in [[RFC2818](https://tools.ietf.org/html/rfc2818)]. It is <em class="rfc">recommended</em> that OPDS Catalog clients be implemented in such a way that new authentication schemes can be deployed.
+The type of authentication required for any OPDS Catalog is a decision to be made by the OPDS Catalog provider. OPDS Catalog clients are likely to face authentication schemes that vary across OPDS Catalogs. At a minimum, client and server implementations <em class="rfc">must</em> be capable of being configured to use HTTP Basic Authentication [[RFC2617](https://tools.ietf.org/html/rfc2617)] in conjunction with a connection made with TLS 1.3 [[RFC8446](https://tools.ietf.org/html/rfc8446)] or a subsequent standards-track version of TLS. It is <em class="rfc">recommended</em> that OPDS Catalog clients be implemented in such a way that new authentication schemes can be deployed.
 
 Because this protocol uses HTTP response status codes as the primary means of reporting the result of a request, OPDS Catalog providers are advised to respond to unauthorized or unauthenticated requests using an appropriate 4xx HTTP response code (e.g., 401 "Unauthorized" or 403 "Forbidden") in accordance with [[RFC2617](https://tools.ietf.org/html/rfc2617)].
 
@@ -1013,11 +1013,9 @@ Many OPDS Catalog clients operate in mobile environments, which may impose stric
 - [[OpenSearch](http://www.opensearch.org/Specifications/OpenSearch/1.1)] Clinton D., "Open Search 1.1 Draft 4".
 - [[REC-xml](http://www.w3.org/TR/2006/REC-xml-20060816)] Yergeau, F., Paoli, J., Bray, T., Sperberg-McQueen?, C., and E. Maler, "Extensible Markup Language (XML) 1.0 (Fourth Edition)", World Wide Web Consortium Recommendation REC-xml-20060816, August 2006.
 - [[RFC2119](https://tools.ietf.org/html/rfc2119)] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.
-- [[RFC2246](https://tools.ietf.org/html/rfc2246)] Dierks, T. and C. Allen, "The TLS Protocol Version 1.0", RFC 2246, January 1999.
 - [[RFC2397](https://tools.ietf.org/html/rfc2397)] Masinter, L., "The 'data' URL scheme", RFC 2397, August 1998.
 - [[RFC2616](https://tools.ietf.org/html/rfc2616)] Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext Transfer Protocol — HTTP/1.1", RFC 2616, June 1999.
 - [[RFC2617](https://tools.ietf.org/html/rfc2617)] Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S., Leach, P., Luotonen, A., and L. Stewart, "HTTP Authentication: Basic and Digest Access Authentication", RFC 2617, June 1999.
-- [[RFC2818](https://tools.ietf.org/html/rfc2818)] Rescorla, E., "HTTP Over TLS", RFC 2818, May 2000.
 - [[RFC3986](https://tools.ietf.org/html/rfc3986)] Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, January 2005.
 - [[RFC3987](https://tools.ietf.org/html/rfc3987)] Duerst, M. and M. Suignard, "Internationalized Resource Identifiers (IRIs)", RFC 3987, January 2005.
 - [[RFC4287](https://tools.ietf.org/html/rfc4287)] Nottingham, M. and R. Sayre, "The Atom Syndication Format", RFC 4287, December 2005.
@@ -1025,6 +1023,7 @@ Many OPDS Catalog clients operate in mobile environments, which may impose stric
 - [[RFC4685](https://tools.ietf.org/html/rfc4685)] Snell, J., "Atom Threading Extensions", RFC 4685, September 2006.
 - [[RFC5005](https://tools.ietf.org/html/rfc5005)] Nottingham, M., "Feed Paging and Archiving", RFC 5005, September 2007.
 - [[RFC5988](https://tools.ietf.org/html/rfc5988)] Nottingham, M., "Web Linking", RFC5988, October 2010.
+- [[RFC8446](https://tools.ietf.org/html/rfc2246)] Rescorla, E., "The Transport Layer Security (TLS) Protocol Version 1.3", RFC 8446, August 2018.
 
 ### 8.2. Informative References
 
