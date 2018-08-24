@@ -133,10 +133,12 @@ Catalog providers <em class="rfc">should</em> also attempt to provide a meaningf
 
 A `publications` collection is meant to list publications in an OPDS feed.
 
-Publications can either be:
+Publications <em class="rfc">must</em> either be:
 
 - a [Readium Web Publication](https://github.com/readium/webpub-manifest) with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
-- an [OPDS Publication](#41-opds-publication)
+- or an [OPDS Publication](#41-opds-publication)   
+
+Each publication listed in an OPDS feed <em class="rfc">must</em> contain an `images` collection.
 
 **Example**
 
@@ -183,8 +185,6 @@ Link Objects in `images` <em class="rfc">may</em> include any number of image fo
 
 At least one image resource <em class="rfc">must</em> use one of the following formats: `image/jpeg`, `image/png` or `image/gif`.
 
-Each publication listed in an OPDS feed <em class="rfc">must</em> contain an `images` collection.
-
 **Example**
 
 ```json
@@ -224,23 +224,30 @@ The `facets` role is meant to indicate that a collection contains a facet group.
 
 ```json
 {
-  "metadata": {
-    "title": "Example for facets"
-  },
-  
-  "links": [
-    {"rel": "self", "href": "http://example.com/faceted", "type": "application/opds+json"}
-  ],
-  
   "facets": [
     {
       "metadata": {
         "title": "Language"
       },
       "links": [
-        {"href": "/fr", "type": "application/opds+json", "title": "French", "properties": {"numberOfItems": 10}},
-        {"href": "/en", "type": "application/opds+json", "title": "English", "properties": {"numberOfItems": 40}},
-        {"href": "/de", "type": "application/opds+json", "title": "German", "properties": {"numberOfItems": 6}}
+        {
+          "href": "/fr", 
+          "type": "application/opds+json", 
+          "title": "French", 
+          "properties": { "numberOfItems": 10 }
+        },
+        {
+          "href": "/en", 
+          "type": "application/opds+json", 
+          "title": "English", 
+          "properties": { "numberOfItems": 40 }
+        },
+        {
+          "href": "/de", 
+          "type": "application/opds+json", 
+          "title": "German", 
+          "properties": { "numberOfItems": 6 }
+        }
       ]
     }
   ]
@@ -295,8 +302,6 @@ In addition, each group <em class="rfc">may</em> also provide:
 ```
 
 **Example 2: Mixing navigation & publications**
-
-_A group may for example contain a `publications` collection with 5 publications embedded, but indicate in `numberOfItems` that there are 50 publications in total and provide a link to that full collection._
 
 ```json
 {
@@ -385,23 +390,23 @@ An OPDS Catalog can contain a very large number of publications. While such cata
 
 To handle that issue, OPDS 2.0 supports pagination based on `metadata` and `links`.
 
-In `metadata` a feed can contain the following elements:
+In `metadata` a feed <em class="rfc">may</em> contain the following elements:
 
 | Key  | Definition | Format |
 | ---- | ---------- | ------ | 
-| numberOfItems  | Indicates the total number of items in a collection.  | Integer |
-| itemsPerPage  | Indicates the number of items displayed per page for the current collection.  | Integer |
-| currentPage  | Indicates the current page number.  | Integer |
+| `numberOfItems`  | Indicates the total number of items in a collection.  | Integer |
+| `itemsPerPage`  | Indicates the number of items displayed per page for the current collection.  | Integer |
+| `currentPage`  | Indicates the current page number.  | Integer |
 
 
-In `links` the following relations can be used:
+In `links` the following relations <em class="rfc">may</em> be used:
 
 | Relation  | Definition | Reference |
 | ------------- | ---------- | --------- | 
-| next  | Refers to the next resource in a ordered series of resources.  | [HTML4](https://www.w3.org/TR/html4/types.html#type-links) |
-| previous  | Refers to the previous resource in an ordered series of resources. Synonym for "prev".  | [HTML4](https://www.w3.org/TR/html4/types.html#type-links) |
-| first  | An IRI that refers to the furthest preceding resource in a series of resources.  | [RFC5988](https://tools.ietf.org/html/rfc5988) |
-| last  | An IRI that refers to the furthest following resource in a series of resources. | [RFC5988](https://tools.ietf.org/html/rfc5988) |
+| `next`  | Refers to the next resource in a ordered series of resources.  | [HTML4](https://www.w3.org/TR/html4/types.html#type-links) |
+| `previous`  | Refers to the previous resource in an ordered series of resources. Synonym for "prev".  | [HTML4](https://www.w3.org/TR/html4/types.html#type-links) |
+| `first`  | An IRI that refers to the furthest preceding resource in a series of resources.  | [RFC5988](https://tools.ietf.org/html/rfc5988) |
+| `last`  | An IRI that refers to the furthest following resource in a series of resources. | [RFC5988](https://tools.ietf.org/html/rfc5988) |
 
 
 **Example: Basic pagination**
@@ -489,36 +494,36 @@ OPDS 2.0 allows the following relations to indicate that a publication can be ac
 
 | Relation  | Definition | Reference |
 | ------------- | ---------- | --------- | 
-| http://opds-spec.org/acquisition  | Fallback acquisition relation when no other relation is a good fit to express the nature of the transaction.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
-| http://opds-spec.org/acquisition/open-access  | Indicates that a publication is freely accessible without any requirement, including authentication.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
-| http://opds-spec.org/acquisition/borrow  | Indicates that a publication can be borrowed for a limited period of time.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
-| http://opds-spec.org/acquisition/buy  | Indicates that a publication can be purchased for a given price. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
-| http://opds-spec.org/acquisition/sample  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
-| preview  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [RFC6903](https://tools.ietf.org/html/rfc6903#section-3) |
-| http://opds-spec.org/acquisition/subscribe  | Indicates that a publication be subscribed to, usually as part of a purchase and for a limited period of time. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| `http://opds-spec.org/acquisition`  | Fallback acquisition relation when no other relation is a good fit to express the nature of the transaction.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| `http://opds-spec.org/acquisition/open-access`  | Indicates that a publication is freely accessible without any requirement, including authentication.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| `http://opds-spec.org/acquisition/borrow`  | Indicates that a publication can be borrowed for a limited period of time.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| `http://opds-spec.org/acquisition/buy`  | Indicates that a publication can be purchased for a given price. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| `http://opds-spec.org/acquisition/sample`  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| `preview`  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [RFC6903](https://tools.ietf.org/html/rfc6903#section-3) |
+| `http://opds-spec.org/acquisition/subscribe`  | Indicates that a publication be subscribed to, usually as part of a purchase and for a limited period of time. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
 
-An OPDS 2.0 catalog <em class="rfc">should not</em> use "http://opds-spec.org/acquisition" when another link relation is suitable to express the interaction.
+An OPDS 2.0 catalog <em class="rfc">should not</em> use `http://opds-spec.org/acquisition` when another link relation is suitable to express the interaction.
 
 In addition to link relations, OPDS 2.0 also defines a number of properties to express relevant information for these interactions:
 
 | Key  | Definition | Format |
 | ---- | ---------- | ------ | 
-| price  | Provides the acquisition price in a given currency.  | Price Object |
-| indirectAcquisition  | Provides the expected download format for a publication, after an acquisition through an intermediate resource.  | Array of Acquisition Objects |
+| `price`  | Provides the acquisition price in a given currency.  | Price Object |
+| `indirectAcquisition`  | Provides the expected download format for a publication, after an acquisition through an intermediate resource.  | Array of Acquisition Objects |
 
 The Price Object can contain the following keys:
 
 | Key  | Definition | Format |
 | ---- | ---------- | ------ | 
-| currency  | Provides the currency for a specific price.  | ISO 4217 currency code |
-| value  | Provides the decimal value for a specific price.  | Float |
+| `currency`  | Provides the currency for a specific price.  | ISO 4217 currency code |
+| `value`  | Provides the decimal value for a specific price.  | Float |
 
 The Acquisition Object can contain the following keys:
 
 | Key  | Definition | Format |
 | ---- | ---------- | ------ | 
-| type  | Indicates the media type in which the publication can be indirectly acquired.  | MIME Media Type|
-| child  | Contains an additional level of indirection if necessary.  | Array of Acquisition Objects |
+| `type`  | Indicates the media type in which the publication can be indirectly acquired.  | MIME Media Type|
+| `child` | Contains an additional level of indirection if necessary.  | Array of Acquisition Objects |
 
 **Example 1: Simple paid acquisition**
 
