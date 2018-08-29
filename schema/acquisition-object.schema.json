@@ -14,5 +14,7 @@
       }
     }
   },
-  "required": ["type"]
+  "required": [
+    "type"
+  ]
 }

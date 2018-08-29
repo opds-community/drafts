@@ -12,14 +12,22 @@
       "description": "Feed-level links such as search or pagination",
       "type": "array",
       "items": {
-        "$ref": "link.schema.json",
+        "$ref": "link.schema.json"
       },
       "contains": {
         "properties": {
           "rel": {
             "anyOf": [
-              { "type": "string", "const": "self" },
-              { "type": "array", "contains": { "const": "self" } }
+              {
+                "type": "string",
+                "const": "self"
+              },
+              {
+                "type": "array",
+                "contains": {
+                  "const": "self"
+                }
+              }
             ]
           }
         }
@@ -42,7 +50,9 @@
         {
           "description": "Each Link Object in a navigation collection must contain a title",
           "items": {
-            "required": ["title"]
+            "required": [
+              "title"
+            ]
           }
         }
       ]
@@ -96,19 +106,28 @@
       }
     }
   },
-  "required": ["metadata", "links"],
+  "required": [
+    "metadata",
+    "links"
+  ],
   "additionalProperties": {
-    "$ref": "http://readium.org/webpub-manifest/schema/subcollection.schema.json"
+    "$ref": "https://readium.org/webpub-manifest/schema/subcollection.schema.json"
   },
   "anyOf": [
     {
-      "required": ["publications"]
+      "required": [
+        "publications"
+      ]
     },
     {
-      "required": ["navigation"]
+      "required": [
+        "navigation"
+      ]
     },
     {
-      "required": ["groups"]
+      "required": [
+        "groups"
+      ]
     }
   ]
 }

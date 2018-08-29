@@ -13,10 +13,18 @@
       "format": "uri"
     },
     "title": {
-      "type": ["string", "array", "object"]
+      "type": [
+        "string",
+        "array",
+        "object"
+      ]
     },
     "subtitle": {
-      "type": ["string", "array", "object"]
+      "type": [
+        "string",
+        "array",
+        "object"
+      ]
     },
     "modified": {
       "type": "string",
@@ -38,5 +46,7 @@
       "minimum": 0
     }
   },
-  "required": ["title"]
+  "required": [
+    "title"
+  ]
 }

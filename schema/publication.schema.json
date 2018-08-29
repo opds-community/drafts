@@ -5,7 +5,7 @@
   "type": "object",
   "properties": {
     "metadata": {
-      "$ref": "http://readium.org/webpub-manifest/schema/metadata.schema.json"
+      "$ref": "https://readium.org/webpub-manifest/schema/metadata.schema.json"
     },
     "links": {
       "type": "array",
@@ -19,13 +19,29 @@
             "anyOf": [
               {
                 "type": "string",
-                "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/acquisition/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
+                "enum": [
+                  "preview",
+                  "http://opds-spec.org/acquisition",
+                  "http://opds-spec.org/acquisition/buy",
+                  "http://opds-spec.org/acquisition/open-access",
+                  "http://opds-spec.org/acquisition/borrow",
+                  "http://opds-spec.org/acquisition/sample",
+                  "http://opds-spec.org/acquisition/subscribe"
+                ]
               },
               {
                 "type": "array",
                 "contains": {
                   "type": "string",
-                  "enum": ["preview", "http://opds-spec.org/acquisition", "http://opds-spec.org/acquisition/buy", "http://opds-spec.org/acquisition/open-access", "http://opds-spec.org/acquisition/borrow", "http://opds-spec.org/acquisition/sample", "http://opds-spec.org/acquisition/subscribe"]
+                  "enum": [
+                    "preview",
+                    "http://opds-spec.org/acquisition",
+                    "http://opds-spec.org/acquisition/buy",
+                    "http://opds-spec.org/acquisition/open-access",
+                    "http://opds-spec.org/acquisition/borrow",
+                    "http://opds-spec.org/acquisition/sample",
+                    "http://opds-spec.org/acquisition/subscribe"
+                  ]
                 }
               }
             ]
@@ -45,12 +61,22 @@
           "description": "At least one image resource must use one of the following formats: image/jpeg, image/png or image/gif.",
           "contains": {
             "properties": {
-              "type": { "enum": ["image/jpeg", "image/png", "image/gif"] }
+              "type": {
+                "enum": [
+                  "image/jpeg",
+                  "image/png",
+                  "image/gif"
+                ]
+              }
             }
           }
         }
       ]
     }
   },
-  "required": ["metadata", "links", "images"]
+  "required": [
+    "metadata",
+    "links",
+    "images"
+  ]
 }
