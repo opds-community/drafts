@@ -18,7 +18,10 @@
     },
     "rel": {
       "description": "Relation between the linked resource and its containing collection",
-      "type": ["string", "array"],
+      "type": [
+        "string",
+        "array"
+      ],
       "items": {
         "title": "string"
       }
@@ -47,11 +50,16 @@
       "type": "boolean"
     }
   },
-  "required": ["href"],
+  "required": [
+    "href"
+  ],
   "if": {
     "properties": {
       "templated": {
-        "enum": [false, null]
+        "enum": [
+          false,
+          null
+        ]
       }
     }
   },
@@ -68,6 +76,5 @@
         "format": "uri-template"
       }
     }
-  }}
   }
 }
