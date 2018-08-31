@@ -2,8 +2,8 @@
 
 ## Current Drafts
 
-- [OPDS 1.2](opds-1.2)
-- [OPDS 2.0](opds-2.0)
+- [OPDS 1.2](https://drafts.opds.io/opds-1.2)
+- [OPDS 2.0](https://drafts.opds.io/opds-2.0)
 
 ## Other Drafts
 
