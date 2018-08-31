@@ -14,6 +14,7 @@
       "items": {
         "$ref": "link.schema.json"
       },
+      "uniqueItems": true,
       "contains": {
         "properties": {
           "rel": {
@@ -30,7 +31,10 @@
               }
             ]
           }
-        }
+        },
+        "required": [
+          "rel"
+        ]
       }
     },
     "publications": {
@@ -38,7 +42,8 @@
       "type": "array",
       "items": {
         "$ref": "publication.schema.json"
-      }
+      },
+      "uniqueItems": true
     },
     "navigation": {
       "description": "Navigation for the catalog using links",
@@ -46,6 +51,7 @@
       "items": {
         "$ref": "link.schema.json"
       },
+      "uniqueItems": true,
       "allOf": [
         {
           "description": "Each Link Object in a navigation collection must contain a title",
@@ -70,10 +76,12 @@
             "type": "array",
             "items": {
               "$ref": "link.schema.json"
-            }
+            },
+            "uniqueItems": true
           }
         }
-      }
+      },
+      "uniqueItems": true
     },
     "groups": {
       "description": "Groups provide a curated experience, grouping publications or navigation links together",
@@ -88,19 +96,22 @@
             "type": "array",
             "items": {
               "$ref": "link.schema.json"
-            }
+            },
+            "uniqueItems": true
           },
           "publications": {
             "type": "array",
             "items": {
               "$ref": "publication.schema.json"
-            }
+            },
+            "uniqueItems": true
           },
           "navigation": {
             "type": "array",
             "items": {
               "$ref": "link.schema.json"
-            }
+            },
+            "uniqueItems": true
           }
         }
       }

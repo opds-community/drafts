@@ -59,7 +59,7 @@
         },
         "position": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 0
         }
       }
     },
@@ -91,6 +91,7 @@
           ]
         },
         "since": {
+          "description": "Timestamp for the previous state change",
           "type": "string",
           "anyOf": [
             {
@@ -102,6 +103,7 @@
           ]
         },
         "until": {
+          "description": "Timestamp for the next state change",
           "type": "string",
           "anyOf": [
             {
