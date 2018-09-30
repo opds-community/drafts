@@ -39,7 +39,7 @@ Potential syntax for these enhancements:
 "metadata": {
   "title": "Science Fiction Flash Sale",
   "color": "blue",
-  "description"
+  "description": "Up to -70% on selected titles"
 },
 "images": [
   {
@@ -70,4 +70,26 @@ Potential syntax for highlights:
 
 ## 4. Visual Navigation
 
+*Relevant for feeds & groups.*
+
 ![Bibliotheek Online Example](images/visualnavigation1.png)
+
+![Cantook Station Example](images/visualnavigation2.png)
+
+Potential syntax for visual navigation:
+
+```
+"navigation": [
+  {
+    "title": "Science Fiction",
+    "href": "scifi.json",
+    "type": "application/opds+json",
+    "images": [
+      {
+        "href": "spaceship.jpg",
+        "type": "image/jpeg"
+      }
+    ]
+  }
+]
+```
