@@ -49,11 +49,13 @@ Potential syntax for these enhancements:
 ]
 ```
 
-## 3. Highlight
+## 3. Highlights
 
 *Relevant for groups only.*
 
 ![Bibliotheek Online Example](images/highlight1.png)
+
+![iOS iBooks Example](images/highlight2.jpg)
 
 Potential syntax for highlights:
 
