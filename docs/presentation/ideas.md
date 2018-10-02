@@ -14,6 +14,10 @@ To maximize compability with existing parsers and clients, these extensions shou
 
 ![iOS AppStore Ranking Example](images/ranking.jpg)
 
+Rankings are faily common in catalogs (mostly for best selling/most popular publications) and could be identified in either a feed or a group to trigger:
+
+* the position of each publication in the ranking
+* and eventually present publications slightly differently 
 
 Potential syntax for rankings:
 
@@ -32,6 +36,15 @@ Potential syntax for rankings:
 
 ![iOS iBooks Example](images/feed_with_enhancements.png)
 
+Repeating groups without any visual element to make them unique can be "visually boring" which is why many platforms use colors or images for their background.
+
+Both [iOS](https://developer.apple.com/design/human-interface-guidelines/ios/bars/navigation-bars/) and [Android](https://material.io/design/components/app-bars-top.html#anatomy) also provide their own recommendations for pages with a large "top navigation/app bar" which is a great fit to also provide more visual diversity.
+
+Such bars can easily include a custom color and/or image, but there's a risk in terms of visibility for any text rendered over it.
+
+In groups, while colors and description are an easy fit, images can be a little challenging as well due to the same visibility issues as well as finding a good fit in terms of ratio and resolution.
+
+Colors themselves could be limited to a few values (expressed as words) which would make it easier for apps to find suitable colors for their design.
 
 Potential syntax for these enhancements:
 
