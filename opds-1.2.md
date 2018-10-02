@@ -66,6 +66,7 @@ This document is a draft of the 1.2 version of the OPDS Catalog specification.
   * [5.2. Catalog Entry Relations](#52-catalog-entry-relations)
       + [5.2.1. Acquisition Relations](#521-acquisition-relations)
       + [5.2.2. Artwork Relations](#522-artwork-relations)
+      + [5.2.3. Grouping Relations](#523-grouping-relations)
   * [5.3. Acquiring Publications](#53-acquiring-publications)
   * [5.4. Element Definitions](#54-element-definitions)
       + [The `atom:entry` Element](#the--atom-entry--element)
@@ -698,6 +699,12 @@ Additional `atom:link` elements <em class="rfc">may</em> also include resources 
 While either image Resource is optional and may be included independently, OPDS Catalog providers are encouraged to provide both these relations and Resources whenever possible.
 
 Some OPDS Catalog providers MAY choose to provide `http://opds-spec.org/image` thumbnail image Resources using the `data` URL scheme from [[RFC2397](https://tools.ietf.org/html/rfc2397)].
+
+#### 5.2.3. Grouping Relations
+
+An OPDS Catalog Entry <em class="rfc">may</em> include one or more `atom:link` elements to Navigation Feeds and Acquisition Feeds which contain it, either directly or indirectly. This specification uses the IANA standard link relation `collection` for this purpose.
+
+An OPDS client <em class="rfc">may</em> choose to group together all entries in an OPDS Feed whose `collection` link points to a given target.
 
 ### 5.3. Acquiring Publications
 
