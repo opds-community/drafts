@@ -14,8 +14,6 @@
 
 * [https://drafts.opds.io/authentication-for-opds-1.0](https://drafts.opds.io/authentication-for-opds-1.0)
 
-**Previous version:**
-
 **Editors:**
 
 * Hadrien Gardeur ([Feedbooks](http://www.feedbooks.com))
@@ -67,9 +65,10 @@ This document is a draft of the 1.0 version of the Authentication for OPDS speci
 
 ### 1.1. Purpose and Scope
 
-This section is informative
+*This section is informative.*
 
 This specification, Authentication for OPDS Catalogs (1.0), defines a standard way for OPDS Catalog providers and clients to:
+
   * provide relevant information for clients to display an authentication page
   * expose how a client can authenticate using various Authentication Flows
 
@@ -114,16 +113,19 @@ All examples in this specification are informative.
 ## 2. Authentication Document
 
 ### 2.1. Introduction
-This section is informative
+
+*This section is informative.*
 
 The Authentication Document is essentially a service discovery document.
 
 Part of its content is meant to identify how a client will authenticate a user with a Catalog provider:
+
 * a list of supported Authentication Flows
 * locations where specific interactions can be made
 * a unique identifier for the Catalog
 
 The rest of its content is meant to be displayed to the user:
+
 * title of the service
 * a logo
 * a text prompt
@@ -135,14 +137,13 @@ The rest of its content is meant to be displayed to the user:
 
 An Authentication Document <em class="rfc">must</em> meet all of the following criteria:
 
-Document properties
 * It <em class="rfc">must</em> meet the conformance constraints for JSON documents as defined in [[JSON](http://www.ietf.org/rfc/rfc4627)].
 * It <em class="rfc">must</em> parse as a single JSON object.
 * It <em class="rfc">must</em> be encoded using UTF-8.
 
 Access to an Authentication Document <em class="rfc">must not</em> require any form of authentication.
 
-The MIME media type for an Authentication Document is `application/vnd.opds.authentication.v1.0+json`, and HTTP servers <em class="rfc">must</em> set the “Content-Type” header appropriately.
+The MIME media type for an Authentication Document is `application/vnd.opds.authentication.v1.0+json`, and HTTP servers <em class="rfc">must</em> set the `Content-Type` header appropriately.
 
 ### 2.3. Syntax
 
@@ -184,16 +185,16 @@ This specification introduces the following link relations:
 
 |Relation|Semantics|Required?|
 |--------|---------|---------|
-|`logo`|Logo associated to the Catalog provider.|No|
-|`register`|Location where a user can register.|No|
-|`support`|Support resources for the user (either a website, an email or a telephone number).|No|
+|`logo`| Logo associated to the Catalog provider.| No|
+|`register`| Location where a user can register.| No|
+|`help`| Support resources for the user (either a website, an email or a telephone number).| No|
 
 Link relations <em class="rfc">may</em> also be extended for vendor-specific applications. Such links <em class="rfc">must</em> use a URL instead of a string to identify their link relations.
 
 
 #### 2.3.3. Example
 
-This section is informative
+*This section is informative.*
 
 In the following example, the Authentication Document indicates that the Catalog can support two Authentication Flows: Basic Auth and OAuth 2.0 through the implicit grant.
 
@@ -204,9 +205,9 @@ In the following example, the Authentication Document indicates that the Catalog
   "description": "Enter a valid library card number and PIN code to authenticate on our service.",
   "links": [
     {"rel": "logo", "href": "http://example.com/logo.jpg", "type": "image/jpeg", "width": 90, "height": 90},
-    {"rel": "support", "href": "mailto:support@example.org"},
-    {"rel": "support", "href": "tel:1800836482"},
-    {"rel": "support", "href": "http://example.com/support", "type": "text/html"},
+    {"rel": "help", "href": "mailto:support@example.org"},
+    {"rel": "help", "href": "tel:1800836482"},
+    {"rel": "help", "href": "http://example.com/support", "type": "text/html"},
     {"rel": "register", "href": "http://example.com/registration", "type": "text/html"}
   ],
   "authentication": [
@@ -229,6 +230,7 @@ In the following example, the Authentication Document indicates that the Catalog
 ```
 
 ### 2.4. Authentication Provider
+
 In order to require the client to authenticate, an Authentication Provider <em class="rfc">must</em> send a `401 Unauthorized` HTTP status code. In this context, the Authentication Provider <em class="rfc">must</em> also serve the Authentication Document as the content of the response along with the proper MIME media type (`application/vnd.opds.authentication.v1.0+json`) in its "Content-Type" header.
 
 The Authentication Provider <em class="rfc">may</em> also use the "Link" header from [[Web-Linking](https://tools.ietf.org/html/rfc5988)] to indicate the location of the Authentication Document. The link-value <em class="rfc">must</em> be identified by the `http://opds-spec.org/auth/document` relationship and `application/vnd.opds.authentication.v1.0+json` MIME media type.
@@ -254,7 +256,7 @@ For some Authentication Flows, the client <em class="rfc">must</em> display an A
 
 ### 3.1. Introduction
 
-This section is informative
+*This section is informative.*
 
 In addition to the Authentication Document, this specification also defines multiple scenarios to handle how the client is authenticated.
 
@@ -317,7 +319,7 @@ Basic Authentication is weaker than the other Authentication Flows exposed in th
 
 #### 3.5.1. introduction
 
-This section is informative
+*This section is informative.*
 
 The OAuth 2.0 Authorization Framework is widely used to grant access to protected resources.
 
@@ -345,6 +347,7 @@ Specific OPDS clients <em class="rfc">may</em> also be registered by each Catalo
 All of the OAuth-based Authentication Flows described in this document rely on the `Authorization` header field in HTTP to transmit an Access Token as described in section [2.1. Authorization Request Header Field](https://tools.ietf.org/html/rfc6750#section-2.1) of [[RFC6750](https://tools.ietf.org/html/rfc6750)].
 
 Using a Bearer token to transmit an Access Token.
+
 ```http
 GET /resource HTTP/1.1
 Host: server.example.com
@@ -354,6 +357,7 @@ Authorization: Bearer mF_9.B5f-4.1JqM
 #### 3.5.4. Security Considerations
 
 All clients and Authentication Providers <em class="rfc">should</em> follow the security considerations as detailed in:
+
 * Section [10. Security Considerations](https://tools.ietf.org/html/rfc6749#section-10) of the [[OAuth](https://tools.ietf.org/html/rfc6749)] specification
 * Section [5. Security Considerations](https://tools.ietf.org/html/rfc6750#section-5) of the [[RFC6750](https://tools.ietf.org/html/rfc6750)] specification
 
@@ -370,12 +374,14 @@ A valid Authentication Object that lists the Implicit Grant as an available Auth
 If a client detects and decides to use this Authentication Flow, it <em class="rfc">must not</em> display an Authentication Page. Instead, it <em class="rfc">must</em> redirect the user to a webview or browser to the location indicated in the link identified by the `authenticate` relationship.
 
 If the authentication is successful, the Authentication Provider <em class="rfc">must</em> provide an Access Token Response with the following restrictions:
+
 * it <em class="rfc">must</em> use the OPDS callback URI as described in [3.5.2. A Shared Client Identifier](#352-a-shared-client-identifier)
 * it <em class="rfc">must</em> follow the requirements from the [[OAuth](https://tools.ietf.org/html/rfc6749)] specification as described in [4.2.2. Access Token Response](https://tools.ietf.org/html/rfc6749#section-4.2.2)
 * it <em class="rfc">must</em> use the `id` query parameter to indicate the Authentication Document identifier
 * it <em class="rfc">must</em> use `bearer` as the value for the `token_type` query parameter
 
 Example of an OPDS callback containing an Access Token
+
 ```
 opds://authorize/?id=http%3A%2F%2Fexample.org%2Fauth.json&access_token=9b3dc428-df5f-4bd2-9f0d-72497cbf8464&token_type=bearer
 ```
@@ -404,12 +410,13 @@ In case of a successful request, the OAuth Response Document <em class="rfc">mus
 
 #### 3.5.7. OAuth Response Document
 
-We'll define additional information that can show up in the document (such as LCP Keys or Vendor ID account).
+> We'll define additional information that can show up in the document (such as LCP Keys or Vendor ID account).
 
 ### 3.6. Extensions
 
-Preference for JWT based extensions.
-All extensions identified by URIs (for types, labels and for link relationships)
+>Preference for JWT based extensions.
+>
+> All extensions identified by URIs (for types, labels and for link relationships)
 
 ## 4. References
 

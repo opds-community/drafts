@@ -4,11 +4,11 @@
 
 - [OPDS 1.2](https://drafts.opds.io/opds-1.2)
 - [OPDS 2.0](https://drafts.opds.io/opds-2.0)
+- [Authentication for OPDS 1.0](https://drafts.opds.io/authentication-for-opds-1.0)
 - [ODL 1.0 (Open Distribution to Libraries)](https://drafts.opds.io/odl-1.0)
 
 ## Other Drafts
 
-- [Authentication for OPDS 1.0](https://drafts.opds.io/authentication-for-opds-1.0)
 - [OPDS for Library Patrons](https://github.com/NYPL-Simplified/Simplified/wiki/OPDS-For-Library-Patrons)
 
 ## Getting Involved
