@@ -161,7 +161,7 @@ In addition, the Authentication Document <em class="rfc">may</em> contain the fo
 
 |Name|Value|Format/Data Type|
 |----|-----|----------------|
-|`description`|A text prompt displayed to the user.|String|
+|`description`|A description of the service being displayed to the user.|String|
 
 #### 2.3.2. Links
 
@@ -286,8 +286,8 @@ It <em class="rfc">may</em> contain the following name/value pairs:
 
 |Label|Semantics|Authentication Flows|
 |-----|---------|--------------------|
-|`login`|Alternate label for a login.|Basic Authentication, OAuth with Client Credentials|
-|`password`|Alternate label for a password.|Basic Authentication, OAuth with Client Credentials|
+|`login`|Alternate label for a login.|Basic Authentication<br />OAuth with Resource Owner Password Credentials Grant|
+|`password`|Alternate label for a password.|Basic Authentication<br />OAuth with Resource Owner Password Credentials Grant|
 
 #### 3.3.2. Links
 
@@ -422,6 +422,6 @@ In case of a successful request, the OAuth Response Document <em class="rfc">mus
 
 ### 4.1. Normative References
 
-- [JSON] [The application/json Media Type for JavaScript Object Notation (JSON)](http://www.ietf.org/rfc/rfc4627).
-- [Web-Linking] [RFC 5988 - Web Linking](https://tools.ietf.org/html/rfc5988).
-- [OAuth] [RFC 6749 - The OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749).
+- [[JSON](http://www.ietf.org/rfc/rfc4627)] RFC 4627 - The application/json Media Type for JavaScript Object Notation (JSON).
+- [[Web-Linking](https://tools.ietf.org/html/rfc5988)] RFC 5988 - Web Linking.
+- [[OAuth](https://tools.ietf.org/html/rfc6749)] RFC 6749 - The OAuth 2.0 Authorization Framework.
