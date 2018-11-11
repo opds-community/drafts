@@ -19,7 +19,7 @@ with a focus on aggregating publications together in order to facilitate their d
 
 **Previous version:**
 
-* [https://specs.opds.io/opds-1.1.html](https://specs.opds.io/opds-1.1.html)
+* [https://specs.opds.io/opds-1.2](https://specs.opds.io/opds-1.2)
 
 **Editors:**
 
