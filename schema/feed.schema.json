@@ -12,7 +12,7 @@
       "description": "Feed-level links such as search or pagination",
       "type": "array",
       "items": {
-        "$ref": "link.schema.json"
+        "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
       },
       "uniqueItems": true,
       "contains": {
@@ -49,7 +49,7 @@
       "description": "Navigation for the catalog using links",
       "type": "array",
       "items": {
-        "$ref": "link.schema.json"
+        "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
       },
       "uniqueItems": true,
       "allOf": [
@@ -75,7 +75,7 @@
           "links": {
             "type": "array",
             "items": {
-              "$ref": "link.schema.json"
+              "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
             },
             "uniqueItems": true
           }
@@ -95,7 +95,7 @@
           "links": {
             "type": "array",
             "items": {
-              "$ref": "link.schema.json"
+              "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
             },
             "uniqueItems": true
           },
@@ -109,7 +109,7 @@
           "navigation": {
             "type": "array",
             "items": {
-              "$ref": "link.schema.json"
+              "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
             },
             "uniqueItems": true
           }

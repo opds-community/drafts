@@ -10,7 +10,7 @@
     "links": {
       "type": "array",
       "items": {
-        "$ref": "link.schema.json"
+        "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
       },
       "contains": {
         "description": "A publication must contain at least one acquisition link.",
@@ -53,7 +53,7 @@
       "description": "Images are meant to be displayed to the user when browsing publications",
       "type": "array",
       "items": {
-        "$ref": "link.schema.json"
+        "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
       },
       "minItems": 1,
       "allOf": [
