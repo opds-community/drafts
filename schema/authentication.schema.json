@@ -20,7 +20,7 @@
     "links": {
       "type": "array",
       "items": {
-        "$ref": "link.schema.json"
+        "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
       },
       "uniqueItems": true,
     },
@@ -36,7 +36,7 @@
           "links": {
             "type": "array",
             "items": {
-              "$ref": "link.schema.json"
+              "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
             },
             "uniqueItems": true,
           },
