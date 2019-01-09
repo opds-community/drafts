@@ -115,7 +115,7 @@ The Authentication Document <em class="rfc">must</em> contain the following keys
 
 | Key | Definition | Format |
 | --- | ---------- | ------ |
-| `authentication` | A list of supported Authentication Flows as defined in section [3. Authentication Flows](#3-authentication-flows).| Authentication Object |
+| `authentication` | A list of supported Authentication Flows as defined in section [3. Authentication Flows](#3-authentication-flows).| [Authentication Object](31-authentication-object) |
 | `title` | Title of the Catalog being accessed. | String |
 | `id` | Unique identifier for the Catalog provider and canonical location for the Authentication Document. | URL |
 
@@ -123,7 +123,7 @@ In addition, the Authentication Document <em class="rfc">may</em> contain the ke
 
 | Key | Definition | Format |
 | --- | ---------- | ------ |
-|`description`|A description of the service being displayed to the user.|String|
+| `description` | A description of the service being displayed to the user. |String |
 
 #### 2.3.2. Links
 
@@ -133,15 +133,17 @@ This is used to associate the Authentication Document with resources that are no
 
 The `links` object contains one or more link with the following keys:
 
-| Key | Definition | Format | Required? |
-| --- | ---------- | ------ | --------- |
-|`href`|Link location|URI or URI Template|Yes|
-|`rel`|Relation between the resource and the Authentication Document|String or URI for extensions|Yes|
-|`title`|Title of the link|String|No|
-|`type`|Expected MIME media type value for the external resources|MIME media type|No, but highly recommended|
-|`templated`|Indicates that the href is a URI Template|Boolean|No, default value is "false"|
-|`height`|Indicates the height of the linked resource in pixels|Integer|No|
-|`width`|Indicates the width of the linked resource in pixels|Integer|No|
+| Key  | Definition | Format | Required? |
+| ---- | -----------| -------| ----------|
+| `href`  | URI or URI template of the linked resource  | URI or URI template | Yes  |
+| `templated`  | Indicates that `href` is a URI template  | Boolean, defaults to `false`  | Only when `href` is a URI template  |
+| `type`  | Media type of the linked resource  | MIME Media Type  | No  |
+| `title`  | Title of the linked resource  | String  | No  |
+| `rel`  | Relation between the resource and its containing collection  | One or more Link Relations | No |
+| `height`  | Height of the linked resource in pixels | Integer  | No  |
+| `width`  | Width of the linked resource in pixels | Integer | No  |
+| `duration`  | Duration of the linked resource in seconds | Float| No  |
+| `bitrate`  | Bit rate of the linked resource in kilobits per second | Float| No  |
 
 This specification introduces the following link relations:
 
@@ -206,6 +208,7 @@ The link-value <em class="rfc">must</em> be identified by:
 *Example: Discovery using the Link header in HTTP*
 
 ```http
+GET /resource HTTP/1.1
 Link: <http://example.com/auth_document>;                              
          rel="http://opds-spec.org/auth/document";
          type="application/opds-authentication+json"
@@ -230,11 +233,11 @@ In addition to the Authentication Document, this specification also defines mult
 
 Each Authentication Document contains at least one Authentication Object that describes how a client can leverage an Authentication Flow.
 
-The Authentication Document must contain at least a `type`:
+The Authentication Object <em class="rfc">must</em> contain at least a `type`.
 
-| Name | Value | Format/Data Type |
-| ---- | ----- | ---------------- |
-|`type`|A URI that identifies the nature of an Authentication Flow.|URI|
+| Key | Definition | Format |
+| --- | ---------- | ------ |
+| `type` | A URI that identifies the nature of an Authentication Flow. | URI |
 
 #### 3.1.1. Labels
 
@@ -242,12 +245,12 @@ An Authentication Object <em class="rfc">may</em> also include a `labels` object
 
 The `labels` object is meant to provide alternate labels for fields that the client will display to the user. All alternate labels <em class="rfc">must</em> be provided as a string.
 
-It <em class="rfc">may</em> contain the following name/value pairs:
+It <em class="rfc">may</em> contain the following keys:
 
-| Label | Semantics | Authentication Flows |
-| ----- | --------- | -------------------- |
-|`login`|Alternate label for a login.|Basic Authentication<br />OAuth with Resource Owner Password Credentials Grant|
-|`password`|Alternate label for a password.|Basic Authentication<br />OAuth with Resource Owner Password Credentials Grant|
+| Key | Definition | Authentication Flows |
+| --- | ---------- | -------------------- |
+| `login` | Alternate label for a login. | [Basic Authentication](#33-basic-authentication) & [OAuth with Resource Owner Password Credentials Grant](#346-resource-owner-password-credentials-grant) |
+| `password` | Alternate label for a password. | [Basic Authentication](#33-basic-authentication) & [OAuth with Resource Owner Password Credentials Grant](#346-resource-owner-password-credentials-grant) |
 
 #### 3.1.2. Links
 
@@ -255,10 +258,10 @@ An Authentication Object <em class="rfc">may</em> also include a `links` object 
 
 The following link relations are defined in this context:
 
-| Relation | Semantics | Required? |
-| -------- | --------- | --------- |
-|`authenticate`|Location where a client can authenticate the user with OAuth.|Yes if the Authentication Flow list contains OAuth|
-|`refresh`|Location where a client can refresh the Access Token by sending a Refresh Token.|No|
+| Relation | Definition | Required? |
+| -------- | ---------- | --------- |
+| `authenticate` | Location where a client can authenticate the user with OAuth. | Yes if the Authentication Flow list contains OAuth |
+| `refresh` | Location where a client can refresh the Access Token by sending a Refresh Token. | No |
 
 ### 3.2. Use of TLS
 
@@ -283,7 +286,7 @@ Basic Authentication is weaker than the other Authentication Flows exposed in th
 
 ### 3.4. OAuth 2.0
 
-#### 3.4.1. introduction
+#### 3.4.1. Introduction
 
 *This section is informative.*
 
