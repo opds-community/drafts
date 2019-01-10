@@ -38,14 +38,14 @@ This document is a draft of the 1.0 version of the Authentication for OPDS speci
 
 ### 1.1. Terminology
 
-This specification uses the following OPDS terms:
+This specification uses the following terms from [[OPDS](https://specs.opds.io/opds-1.2)]:
 
 <dl>
   <dt>OPDS Catalog</dt>
   <dd>All of the Atom Feeds (Acquisition and Navigation) and Entries (Partial and Complete) following this specification published together to describe a consolidated group of available Publications.</dd>
 
   <dt>Acquisition Link</dt>
-  <dd>An atom:link element with a relation that begins with "http://opds-spec.org/acquisition" and refers to the Resource which holds the content of the described Publication or the Resource through which it may be acquired for any OPDS Catalog Entry. See the Sections Acquisition Relations and Acquiring Publications. They are serialized as OPDS Catalog Feed Documents.</dd>
+  <dd>An atom:link element with a relation that begins with <code>http://opds-spec.org/acquisition</code> and refers to the Resource which holds the content of the described Publication or the Resource through which it may be acquired for any OPDS Catalog Entry. See the Sections Acquisition Relations and Acquiring Publications. They are serialized as OPDS Catalog Feed Documents.</dd>
 </dl>
 
 In addition, it defines the following terms:
@@ -99,7 +99,7 @@ The rest of its content is meant to be displayed to the user:
 
 An Authentication Document <em class="rfc">must</em> meet all of the following criteria:
 
-* It <em class="rfc">must</em> meet the conformance constraints for JSON documents as defined in [[JSON](http://www.ietf.org/rfc/rfc4627)].
+* It <em class="rfc">must</em> meet the conformance constraints for JSON documents as defined in [[RFC4627](http://www.ietf.org/rfc/rfc4627)].
 * It <em class="rfc">must</em> parse as a single JSON object.
 * It <em class="rfc">must</em> be encoded using UTF-8.
 
@@ -199,7 +199,7 @@ In order to require the client to authenticate, an Authentication Provider <em c
 
 In this context, the Authentication Provider <em class="rfc">must</em> also serve the Authentication Document as the content of the response along with the proper MIME media type (`application/opds-authentication+json`) in its `Content-Type` header.
 
-The Authentication Provider <em class="rfc">may</em> also use the `Link` header from [[Web-Linking](https://tools.ietf.org/html/rfc5988)] to indicate the location of the Authentication Document. 
+The Authentication Provider <em class="rfc">may</em> also use the `Link` header from [[RFC5988](https://tools.ietf.org/html/rfc5988)] to indicate the location of the Authentication Document. 
 The link-value <em class="rfc">must</em> be identified by: 
 
 * the `http://opds-spec.org/auth/document` relationship 
@@ -327,16 +327,16 @@ Authorization: Bearer mF_9.B5f-4.1JqM
 
 All clients and Authentication Providers <em class="rfc">should</em> follow the security considerations as detailed in:
 
-* Section [10. Security Considerations](https://tools.ietf.org/html/rfc6749#section-10) of the [[OAuth](https://tools.ietf.org/html/rfc6749)] specification
+* Section [10. Security Considerations](https://tools.ietf.org/html/rfc6749#section-10) of the [[RFC6749](https://tools.ietf.org/html/rfc6749)] specification
 * Section [5. Security Considerations](https://tools.ietf.org/html/rfc6750#section-5) of the [[RFC6750](https://tools.ietf.org/html/rfc6750)] specification
 
 #### 3.4.5. Implicit Grant
 
-In order to identify the use of an Implicit Grant Authentication Flow (as defined in [[OAuth](https://tools.ietf.org/html/rfc6749)] in section [4.2. Implicit Grant](https://tools.ietf.org/html/rfc6749#section-4.2)), this specification defines a new type value:
+In order to identify the use of an Implicit Grant Authentication Flow (as defined in [[RFC6749](https://tools.ietf.org/html/rfc6749)] in section [4.2. Implicit Grant](https://tools.ietf.org/html/rfc6749#section-4.2)), this specification defines a new type value:
 
 | Value | Scope |
 | ----- | ----- |
-|`http://opds-spec.org/auth/oauth/implicit`|The `type` object as defined in [3.3. Authentication Object](#33-authentication-object)|
+|`http://opds-spec.org/auth/oauth/implicit`|The `type` object as defined in [3.1. Authentication Object](#31-authentication-object)|
 
 A valid Authentication Object that lists the Implicit Grant as an available Authentication Flow <em class="rfc">must</em> also include a link identified by the `authenticate` relationship.
 
@@ -345,7 +345,7 @@ If a client detects and decides to use this Authentication Flow, it <em class="r
 If the authentication is successful, the Authentication Provider <em class="rfc">must</em> provide an Access Token Response with the following restrictions:
 
 * it <em class="rfc">must</em> use the OPDS callback URI as described in [3.5.2. A Shared Client Identifier](#352-a-shared-client-identifier)
-* it <em class="rfc">must</em> follow the requirements from the [[OAuth](https://tools.ietf.org/html/rfc6749)] specification as described in [4.2.2. Access Token Response](https://tools.ietf.org/html/rfc6749#section-4.2.2)
+* it <em class="rfc">must</em> follow the requirements from the [[RFC6749](https://tools.ietf.org/html/rfc6749)] specification as described in [4.2.2. Access Token Response](https://tools.ietf.org/html/rfc6749#section-4.2.2)
 * it <em class="rfc">must</em> use the `id` query parameter to indicate the Authentication Document identifier
 * it <em class="rfc">must</em> use `bearer` as the value for the `token_type` query parameter
 
@@ -360,11 +360,12 @@ An OPDS client can then associate this Access Token to an OPDS Catalog and its A
 Upon receiving this Access Token, the client <em class="rfc">should</em> attempt to authenticate on the same resource that initially prompted the Authentication Document.
 
 #### 3.4.6. Resource Owner Password Credentials Grant
-In order to identify the use of a Resource Owner Password Credentials Grant Authentication Flow (as defined in [[OAuth](https://tools.ietf.org/html/rfc6749)] in section [4.3. Resource Owner Password Credentials Grant](https://tools.ietf.org/html/rfc6749#section-4.3)), this specification defines defines a new `type` value:
+
+In order to identify the use of a Resource Owner Password Credentials Grant Authentication Flow (as defined in [[RFC6749](https://tools.ietf.org/html/rfc6749)] in section [4.3. Resource Owner Password Credentials Grant](https://tools.ietf.org/html/rfc6749#section-4.3)), this specification defines defines a new `type` value:
 
 | Value | Scope |
 | ----- | ----- |
-|`http://opds-spec.org/auth/oauth/password`|The `type` object as defined in [3.3. Authentication Object](#33-authentication-object)|
+|`http://opds-spec.org/auth/oauth/password`|The `type` object as defined in [3.1. Authentication Object](#31-authentication-object)|
 
 A valid Authentication Object that lists the Resource Owner Password Credentials Grant as an available Authentication Flow <em class="rfc">must</em> also include an `authenticate` link.
 It <em class="rfc">may</em> also include a `refresh` link if the Authentication Provider includes a Refresh Token in its Response Document.
@@ -381,19 +382,18 @@ In case of a successful request, the OAuth Response Document <em class="rfc">mus
 
 > We'll define additional information that can show up in the document (such as LCP Keys or Vendor ID account).
 
-### 3.5. Extensions
+### 4. Extensibility
 
->Preference for JWT based extensions.
->
 > All extensions identified by URIs (for types, labels and for link relationships)
 
-## 4. References
+## 5. References
 
-### 4.1. Normative References
+### 5.1. Normative References
 
-- [[JSON](http://www.ietf.org/rfc/rfc4627)] RFC 4627 - The application/json Media Type for JavaScript Object Notation (JSON).
-- [[Web-Linking](https://tools.ietf.org/html/rfc5988)] RFC 5988 - Web Linking.
-- [[OAuth](https://tools.ietf.org/html/rfc6749)] RFC 6749 - The OAuth 2.0 Authorization Framework.
+- [[OPDS](https://specs.opds.io/opds-1.2)] OPDS Catalog 1.2.
+- [[RFC4627](http://www.ietf.org/rfc/rfc4627)] The application/json Media Type for JavaScript Object Notation (JSON).
+- [[RFC5988](https://tools.ietf.org/html/rfc5988)] Web Linking.
+- [[RFC6749](https://tools.ietf.org/html/rfc6749)] The OAuth 2.0 Authorization Framework.
 
 ## Appendix A. JSON Schema
 
