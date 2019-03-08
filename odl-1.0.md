@@ -1,11 +1,4 @@
 [![OPDS Logo](https://opds.io/img/logo.png)](https://opds.io)
-<style>
-.rfc {
-    color: #d55;
-    font-variant: small-caps;
-    font-style: normal;
-}
-</style>
 
 # Open Distribution to Libraries (1.0)
 
@@ -25,34 +18,6 @@
 
 This document is a draft of the 1.0 version of the ODL specification.
 
-## Table of Contents
-
-* [1. Overview](#1-overview)
-  * [1.1. Purpose and Scope](#11-purpose-and-scope)
-  * [1.2. Terminology](#12-terminology)
-    * [OPDS terms](#opds-terms)
-    * [ODL terms](#odl-terms)
-  * [1.3. XML Namespace](#13-xml-namespace)
-* [2. ODL Feed](#2-odl-feed)
-  * [2.1. Relationship to OPDS](#21-relationship-to-opds)
-  * [2.2. Additional requirements](#22-additional-requirements)
-* [3. Copies](#3-copies)
-  * [3.1. The copy element](#31-the-copy-element)
-  * [3.2. The terms element](#32-the-terms-element)
-  * [3.3. The protection element](#33-the-protection-element)
-  * [3.4. Example](#34-example)
-  * [3.5. Checking the status of a Copy](#35-checking-out-the-status-of-a-copy)
-    * [3.5.1. Copy Status Document](#351-copy-status-document)
-    * [3.5.2. Linking to the Copy Status Document](#352-linking-to-the-copy-status-document)
-    * [3.5.3. Example](#353-example)
-* [4. Checkouts](#4-checkouts)
-  * [4.1. Checking out a Publication](#41-checking-out-a-publication)
-    * [4.1.1. The tlink element](#411-the-tlink-element)
-    * [4.1.2. Checkout Link](#412-checkout-link)
-    * [4.1.3. Interacting with a Checkout Link](#413-interacting-with-a-checkout-link)
-  * [4.2. Status of a Checkout](#42-status-of-a-checkout)
-  * [4.3. Notifications](#43-notifications)
-* [5. Authentication](#5-authentication)
 
 ## 1. Overview
 
@@ -70,41 +35,55 @@ This specification, Open Distribution to Libraries 1.0 (referenced as ODL in the
 
 ### 1.2 Terminology
 
-_OPDS terms_
+*OPDS terms*
 
 This specification adopts terms defined in the OPDS specification.  Important terms used include:
 
-**Acquisition Feed** – An Atom Feed whose Atom Entries are exclusively OPDS Catalog Entries.
+<dl>
+	<dt>Acquisition Feed</dt>
+	<dd>An Atom Feed whose Atom Entries are exclusively OPDS Catalog Entries.</dd>
 
-**Acquisition Link** – An atom:link element with a relation that begins with "http://opds-spec.org/acquisition" and refers to the Resource which holds the content of the described Publication or the Resource through which it may be acquired for any OPDS Catalog Entry. See the Sections Acquisition Relations and Acquiring Publications. They are serialized as OPDS Catalog Feed Documents.
+  <dt>Acquisition Link</dt>
+  <dd>An atom:link element with a relation that begins with `http://opds-spec.org/acquisition` and refers to the Resource which holds the content of the described Publication or the Resource through which it may be acquired for any OPDS Catalog Entry. See the Sections Acquisition Relations and Acquiring Publications. They are serialized as OPDS Catalog Feed Documents.</dd>
 
-**Complete Catalog Entry** – An OPDS Catalog Entry that includes all known metadata about the described Publication and is referenced by a Partial Catalog Entry.
+  <dt>Complete Catalog Entry</dt>
+  <dd>An OPDS Catalog Entry that includes all known metadata about the described Publication and is referenced by a Partial Catalog Entry.</dd>
 
-**Navigation Feed** – An Atom Feed whose Atom Entries are not OPDS Catalog Entries but instead links to other Navigation Feeds, Acquisition Feeds, or other Resources to establish a hierarchical, browsable presentation of the OPDS Catalog.
+  <dt>Navigation Feed</dt>
+  <dd>An Atom Feed whose Atom Entries are not OPDS Catalog Entries but instead links to other Navigation Feeds, Acquisition Feeds, or other Resources to establish a hierarchical, browsable presentation of the OPDS Catalog.</dd>
 
-**OPDS Catalog Entry** – An Atom Entry that provides a representation of an available Publication and includes an Acquisition Link. They are serialized as OPDS Catalog Entry Documents.
+  <dt>OPDS Catalog Entry</dt>
+  <dd>An Atom Entry that provides a representation of an available Publication and includes an Acquisition Link. They are serialized as OPDS Catalog Entry Documents.</dd>
 
-**Partial Catalog Entry** – An OPDS Catalog Entry that includes the minimal required metadata about the described Publication but no other metadata and links to the Complete Catalog Entry.
+ <dt>Partial Catalog Entry</dt>
+ <dd>An OPDS Catalog Entry that includes the minimal required metadata about the described Publication but no other metadata and links to the Complete Catalog Entry.</dd>
 
-**Publication** – An electronic document, typically available as a single file. OPDS Catalogs are agnostic about the particular format of Publications.
+  <dt>Publication</dt>
+  <dd>An electronic document, typically available as a single file. OPDS Catalogs are agnostic about the particular format of Publications.</dd>
 
-_ODL terms_
+*ODL terms*
 
 In addition this specification defines the following terms:
 
-**Checkout Link**  – A URI template from which a library can generate a loan for a patron.
+<dl>
 
-**Copy** – A set of terms and rights and a Checkout Link from which a loan can be created.
+  <dt>Checkout Link</dt>
+  <dd>A URI template from which a library can generate a loan for a patron.</dd>
 
-**Copy Status Document** – A JSON document providing additional information about the current status of a Copy.
+  <dt>Copy</dt>
+  <dd>A set of terms and rights and a Checkout Link from which a loan can be created.</dd>
 
-**ODL Feed** – An OPDS Acquisition Feed from which a library can harvest metadata, copies and links.
+  <dt>Copy Status Document</dt>
+  <dd>A JSON document providing additional information about the current status of a Copy.</dd>
+
+ <dt>ODL Feed</dt>
+ <dd>An OPDS Acquisition Feed from which a library can harvest metadata, copies and links.</dd>
+ 
+</dl>
 
 ### 1.3. XML Namespace
 
-The namespace name [REC-xml-names] for new elements defined in this specification is:
-
-http://opds-spec.org/odl
+The namespace name [REC-xml-names] for new elements defined in this specification is: `http://opds-spec.org/odl`
 
 ## 2. ODL Feed
 
@@ -115,6 +94,7 @@ Open Distribution to Libraries is based on the Open Publication Distribution Sys
 All of the information (metadata, copies and links) are distributed through an OPDS Acquisition Feed.
 
 An ODL Feed  <em class="rfc">must</em> be a valid OPDS Acquisition Feed as defined in [OPDS] with one difference:
+
 * the [OPDS] specification states that: "Each OPDS Catalog Entry Document  <em class="rfc">must</em> include at least one Acquisition Link, which is an atom:link element with a relation that begins "http://opds-spec.org/acquisition"."
 * in the context of an Open Distribution to Libraries Feed this is changed to: "Each OPDS Catalog Entry Document  <em class="rfc">must</em> include at least one Open-Access Acquisition Link (http://opds-spec.org/acquisition/open-access) or one Copy that contains a Checkout Link."
 
@@ -122,6 +102,7 @@ An ODL Feed  <em class="rfc">must</em> be a valid OPDS Acquisition Feed as defin
 ### 2.2 Additional requirements
 
 In addition to the [OPDS] requirements for an Acquisition Feed, this specification defines the following requirements for a valid ODL Feed:
+
 * each Acquisition Entry  <em class="rfc">must</em> include at least one Copy containing a Checkout Link
 * in the case where an Acquisition Entry has both an atom:summary and an atom:content it  <em class="rfc">must</em> include both in its Partial Catalog Entry
 * if an OPDS Catalog Entry Document has a Partial Catalog Entry it  <em class="rfc">should</em> contain as much metadata as possible and assume that not all clients will access the Complete Catalog Entry
@@ -386,3 +367,11 @@ If another HTTP status is returned, additional attempts to send a notification  
 In order to secure the ability to harvest Copies and create Checkouts, an ODL server  <em class="rfc">should</em> use either Basic Authentication or a Bearer Token to limit the access to the ODL feed.
 
 All interactions with an ODL server  <em class="rfc">must</em> use TLS 1.0 or later.
+
+<style>
+.rfc {
+    color: #d55;
+    font-variant: small-caps;
+    font-style: normal;
+}
+</style>
