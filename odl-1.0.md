@@ -124,10 +124,11 @@ The `copy` element  <em class="rfc">must</em> also contain two links:
 * a [Copy Status Link](#351-copy-status-document)
 
 The `copy` element  <em class="rfc">should</em> also contain the following elements:
+
 | Name | Value | Format/data type |
 | ---- | ----- | ---------------- |
 | `odl:terms` | Terms associated to the Copy | [See Section 3.2](#32-the-terms-element) |
-| `odl:proteciton` | Protection associated to the Publication associated to the Copy | [See Section 3.3](#33-the-protection-element) |
+| `odl:protection` | Protection associated to the Publication associated to the Copy | [See Section 3.3](#33-the-protection-element) |
 
 The `copy` element  <em class="rfc">may</em> also contain the following elements:
 
