@@ -4,7 +4,7 @@
 
 - [OPDS 2.0](https://drafts.opds.io/opds-2.0)
 - [Authentication for OPDS 1.0](https://drafts.opds.io/authentication-for-opds-1.0)
-- [ODL 1.0 (Open Distribution to Libraries)](https://drafts.opds.io/odl-1.0)
+- [Open Distribution to Libraries 1.0](https://drafts.opds.io/odl-1.0)
 
 ## Other Drafts
 
