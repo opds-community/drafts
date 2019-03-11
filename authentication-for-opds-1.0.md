@@ -275,7 +275,7 @@ In order to identify the use of Basic Authentication as defined in [[RFC2617](ht
 
 | Value | Scope |
 | ----- | ----- |
-|`http://opds-spec.org/auth/basic`|The `type` object as defined in [3.3. Authentication Object](#33-authentication-object)|
+|`http://opds-spec.org/auth/basic`|The `type` object as defined in [3.1. Authentication Object](#31-authentication-object)|
 
 A client that detects and decides to use Basic Authentication as an Authentication Flow for a catalog <em class="rfc">must</em> display an Authentication Page containing all the information available in the Authentication Document.
 The Authentication Page <em class="rfc">must</em> contain two input fields for the username and password. If the Authentication Document includes alternate labels, the Authentication Page <em class="rfc">must</em> display these labels next to the input fields.
@@ -390,10 +390,10 @@ In case of a successful request, the OAuth Response Document <em class="rfc">mus
 
 ### 5.1. Normative References
 
-- [[OPDS](https://specs.opds.io/opds-1.2)] OPDS Catalog 1.2.
-- [[RFC4627](http://www.ietf.org/rfc/rfc4627)] The application/json Media Type for JavaScript Object Notation (JSON).
-- [[RFC5988](https://tools.ietf.org/html/rfc5988)] Web Linking.
-- [[RFC6749](https://tools.ietf.org/html/rfc6749)] The OAuth 2.0 Authorization Framework.
+- [[OPDS](https://specs.opds.io/opds-1.2)] H. Gardeur; L. Richardson. [OPDS Catalog 1.2](https://specs.opds.io/opds-1.2). December 2018.
+- [[RFC4627](https://tools.ietf.org/html/rfc4627)] D. Crockford. [The application/json Media Type for JavaScript Object Notation (JSON)](https://tools.ietf.org/html/rfc4627). July 2006.
+- [[RFC5988](https://tools.ietf.org/html/rfc5988)] M. Nottingham. [Web Linking](https://tools.ietf.org/html/rfc5988). October 2010.
+- [[RFC6749](https://tools.ietf.org/html/rfc6749)] D. Hardt. [The OAuth 2.0 Authorization Framework](https://tools.ietf.org/html/rfc6749). October 2012.
 
 ## Appendix A. JSON Schema
 
