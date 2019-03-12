@@ -2,6 +2,17 @@
 
 # Open Distribution to Libraries 1.0
 
+
+In order to distribute digital publications from multiple sources, a library needs to be able to easily harvest metadata and lend such publications to patrons.
+
+This specification, Open Distribution to Libraries 1.0 (referenced as ODL in the rest of this specification) defines a standard way to:
+
+* distribute metadata about a publication
+* provide the rights and terms associated to each license that the library acquired
+* check the status of each license
+* lend a digital publication
+* check the status of that loan
+
 **This version:**
 
 * [https://drafts.opds.io/odl-1.0](https://drafts.opds.io/odl-1.0)
@@ -16,21 +27,7 @@ This document is a draft of the 1.0 version of the ODL specification.
 
 ## 1. Overview
 
-### 1.1 Purpose and Scope
-
-*This section is informative*
-
-In order to distribute digital publications from multiple sources, a library needs to be able to easily harvest metadata, check the status and lend such publications to patrons.
-
-This specification, Open Distribution to Libraries 1.0 (referenced as ODL in the rest of this specification) defines a standard way to:
-
-* distribute metadata about a publication
-* provide the rights and terms associated to each copy that the library acquired
-* check the status of each copy
-* lend a copy of a digital publication
-* check the status of that loan
-
-### 1.2 Terminology
+### 1.1. Terminology
 
 *OPDS terms*
 
@@ -80,48 +77,68 @@ In addition this specification defines the following terms:
  
 </dl>
 
-### 1.3. XML Namespace
+### 1.2. XML Namespace
 
-The namespace name [REC-xml-names] for new elements defined in this specification is: `http://opds-spec.org/odl`
+In order to provide compatibility with [[OPDS](#normative-references)], this specification introduces the `odl` XML namespace: `http://drafts.opds.io/odl-1.0#`.
+
+### 1.3. Conformance Statements
+
+The keywords <b class="rfc">must</b>, <b class="rfc">must not</b>, <b class="rfc">required</b>, <b class="rfc">shall</b>, <b class="rfc">shall not</b>, <b class="rfc">should</b>, <b class="rfc">should not</b>, <b class="rfc">recommended</b>, <b class="rfc">may</b>, and <b class="rfc">optional</b> in this document are to be interpreted as described in [[RFC2119](#normative-references)].
+
+All sections of this specification are normative except where identified by the informative status label "This section is informative". The application of informative status to sections and appendices applies to all child content and subsections they may contain.
+
+All examples in this specification are informative.
 
 ## 2. ODL Feed
 
-### 2.1 Relationship to OPDS
+Open Distribution to Libraries is based on the Open Publication Distribution System specification and fully compatible with both  [[OPDS](#normative-references)] and [[OPDS-2](#normative-references)].
 
-Open Distribution to Libraries is based on the Open Publication Distribution System [[OPDS](#normative-references)] specification and fully compatible with both OPDS 1.2 and 2.0.
+All of the information are distributed through an OPDS Feed.
 
-All of the information (metadata, licenses and links) are distributed through an OPDS Feed.
+### 2.1. OPDS 1.2
 
-An ODL Feed  <em class="rfc">must</em> be a valid OPDS Acquisition Feed as defined in [OPDS] with one difference:
+If the ODL Feed is serialized using [[OPDS](#normative-references)]:
 
-* the [[OPDS](#normative-references)] specification states that: "Each OPDS Catalog Entry Document  <em class="rfc">must</em> include at least one Acquisition Link, which is an atom:link element with a relation that begins "http://opds-spec.org/acquisition"."
-* in the context of an Open Distribution to Libraries Feed this is changed to: "Each OPDS Catalog Entry Document  <em class="rfc">must</em> include at least one Open-Access Acquisition Link (http://opds-spec.org/acquisition/open-access) or one License that contains a Checkout Link."
+* It <em class="rfc">must</em> be a valid OPDS Acquisition Feed as defined in  [[OPDS](#normative-references)] with one difference:
 
+  * the [[OPDS](#normative-references)] specification states that: "Each OPDS Catalog Entry Document  <em class="rfc">must</em> include at least one Acquisition Link, which is an atom:link element with a relation that begins "http://opds-spec.org/acquisition"."
+  * in the context of an Open Distribution to Libraries Feed this is changed to: "Each OPDS Catalog Entry Document  <em class="rfc">must</em> include at least one Open-Access Acquisition Link ([http://opds-spec.org/acquisition/open-access](http://opds-spec.org/acquisition/open-access)) or a License."
 
-### 2.2 Additional requirements
+* In the case where an Acquisition Entry has both an `atom:summary` and an `atom:content` it  <em class="rfc">must</em> include both in its Partial Catalog Entry
+* If an OPDS Catalog Entry Document has a Partial Catalog Entry it  <em class="rfc">should</em> contain as much metadata as possible and assume that not all clients will access the Complete Catalog Entry
 
-In addition to the [[OPDS](#normative-references)] requirements for an Acquisition Feed, this specification defines the following requirements for a valid ODL Feed:
+### 2.1. OPDS 2.0
 
-* each Acquisition Entry  <em class="rfc">must</em> include at least one License containing a Checkout Link
-* in the case where an Acquisition Entry has both an `atom:summary` and an `atom:content` it  <em class="rfc">must</em> include both in its Partial Catalog Entry
-* if an OPDS Catalog Entry Document has a Partial Catalog Entry it  <em class="rfc">should</em> contain as much metadata as possible and assume that not all clients will access the Complete Catalog Entry
+If the ODL Feed is serialized using [[OPDS-2](#normative-references)], it <em class="rfc">must</em> respect the following requirements:
+
+* It <em class="rfc">must</em> be a valid OPDS Feed as defined in [[OPDS-2](#normative-references)] with one difference:
+  * The requirement for the presence of an Acquisition Link is relaxed
+  * Instead, each Publication listed in `publications` <em class="rfc">must</em> either contain a `licenses` subcollection or an Open-Access Acquisition Link ([http://opds-spec.org/acquisition/open-access](http://opds-spec.org/acquisition/open-access))
+* It <em class="rfc">must</em> contain `publications`
+* It <em class="rfc">must not</em> contain `groups`, `facets` or `navigation`
 
 ## 3. Licenses
 
-### 3.1. Describing a License
+### 3.1. Serialization
+
+Licenses are serialized using:
+
+* `odl:license` in [[OPDS](#normative-references)] where `odl:license` is repeated for each License available
+* `licenses` in [[OPDS-2](#normative-references)] which contains one or more Full Collections (a Collection that contains both `metadata` and `links`)
+
+In [[OPDS](#normative-references)], both the description and the links associated to a License are listed directly inside `odl:license`.
+
+In [[OPDS-2](#normative-references)], the description of the License is expressed in `metadata` while all interactions (License Info Document and Checkouts) are listed under `links`.
+
+### 3.2. Describing a License
 
 A License <em class="rfc">must</em> contain the following metadata:
 
 | OPDS 2.0 | OPDS 1.2 | Semantics | Format |
 | -------- | -------- | --------- | ------ |
-| `identifier` | `dcterms:identifier` | A unique identifier for this Copy | URI |
-| `format` |  `dcterms:format` | Format of the publication associated to the license | MIME type |
-| `created` |  `created` | Date and time when the license was issued | ISO 8601 |
-
-In addition to these metadata, a License  <em class="rfc">must</em> also contain two links:
-
-* a [Checkout Link](#4-checkouts)
-* a [Copy Status Link](#351-copy-status-document)
+| `identifier` | `dcterms:identifier` | Unique identifier for the License | URI |
+| `format` |  `dcterms:format` | Format of the publication associated to the License | MIME type |
+| `created` |  `created` | Date and time when the License was issued | ISO 8601 |
 
 A License <em class="rfc">should</em> also contain the following metadata:
 
@@ -137,30 +154,30 @@ Finally, a License  <em class="rfc">may</em> also contain the following metadata
 | `price` |  `opds:price` | Price at which the library acquired the Copy | As defined in [[OPDS](#normative-references)] and [[OPDS-2](#normative-references)]|
 | `source` |   `dcterms:source` | Source of the license | URI |
 
-### 3.2 The `terms` element
+### 3.3. Terms
 
 The `terms` element  <em class="rfc">may</em> contain the following elements:
 
-| Name | Value | Format | Default value |
-| ---- | ----- | ------ | ------------- |
-| `total_checkouts` | Number of Checkouts before a Copy expires | Integer | Unlimited |
-| `expires` | Expiration date of the Copy | ISO 8601 | None |
-| `concurrent_checkouts` | Number of concurrent Checkouts allowed | Integer | Unlimited |
-| `maximum_checkout_length` | Maximum length in time allowed for a single Checkout in seconds | Integer | Unlimited |
+| OPDS 2.0 | OPDS 1.2 | Semantics | Format | Default Value |
+| -------- | -------- | --------- | ------ | ------------- |
+| `total_checkouts` |  `total_checkouts` | Number of Checkouts before a Copy expires | Integer | Unlimited |
+| `expires` | `expires` | Expiration date of the Copy | ISO 8601 | None |
+| `concurrent_checkouts` | `concurrent_checkouts` | Number of concurrent Checkouts allowed | Integer | Unlimited |
+| `maximum_checkout_length` | `maximum_checkout_length` | Maximum length in time allowed for a single Checkout in seconds | Integer | Unlimited |
 
-### 3.3 The `protection` element
+### 3.4. Protection
 
 The `protection` element  <em class="rfc">may</em> contain the following elements:
 
-| Name | Value | Format | Default value |
-| ---- | ----- | ------ | ------------- |
-| `dcterms:format` | Format of the DRM used to protect the Publication | MIME type | None |
-| `devices` | Number of devices allowed for a single Checkout | Integer | Unlimited |
-| `copy` | Indicates if the protection allows the user to copy content from the Publication | Boolean | True |
-| `print` | Indicates if the protection allows the user to print content from the Publication | Boolean | True |
-| `tts` | Indicates if the protection allows the user to use text to speech | Boolean | True |
+| OPDS 2.0 | OPDS 1.2 | Semantics | Format | Default Value |
+| -------- | -------- | --------- | ------ | ------------- |
+| `format` | `dcterms:format` | Format of the DRM used to protect the Publication | MIME type | None |
+| `devices` | `devices` | Number of devices allowed for a single Checkout | Integer | Unlimited |
+| `copy` | `copy` | Indicates if the protection allows the user to copy content from the Publication | Boolean | True |
+| `print` | `print` | Indicates if the protection allows the user to print content from the Publication | Boolean | True |
+| `tts` | `tts` | Indicates if the protection allows the user to use text to speech | Boolean | True |
 
-### 3.4 Examples
+### 3.5. Examples
 
 *Example 1: Simple license in OPDS 1.2*
 
@@ -196,7 +213,7 @@ The `protection` element  <em class="rfc">may</em> contain the following element
 </odl:license>
 ```
 
-*Example 2: Simple license in OPDS 2.0*
+*Example 2: License in OPDS 2.0 with two DRM options available*
 
 ```json
 "licenses": [
@@ -216,7 +233,10 @@ The `protection` element  <em class="rfc">may</em> contain the following element
         "max_checkout_length": 5097600
       },
       "protection": {
-        "format": "application/vnd.adobe.adept+xml",
+        "format": [
+          "application/vnd.adobe.adept+xml", 
+          "application/vnd.readium.lcp.license.v1.0+json"
+        ],
         "devices": 6,
         "copy": false,
         "print": false,
@@ -227,32 +247,37 @@ The `protection` element  <em class="rfc">may</em> contain the following element
       {
         "rel": "http://opds-spec.org/acquisition/borrow",
         "href": "http://www.example.com/get{?id,checkout_id,expires,patron_id,notification_url}",
-        "type: "application/vnd.readium.license.status.v1.0+json",
+        "type": "application/vnd.readium.license.status.v1.0+json",
         "templated": true
       },
       {
         "rel": "self",
         "href": "http://www.example.com/status/294024",
-        "type: "application/vnd.odl.info+json"
+        "type": "application/vnd.odl.info+json"
       },
     ]
   }
 ]
 ```
 
-### 4. License Info Document
+## 4. License Info Document
 
-In order to provide information about the current status of a License, this specification defines the License Info Document which  <em class="rfc">must</em> be:
+In order to provide information about the current state of a License, this specification defines the License Info Document. 
+
+A License Info Document <em class="rfc">must</em> be:
 
 * a valid [[JSON](#normative-references)] document
 * identified by the `application/vnd.odl.license+json` media type
+
+### 4.1. Syntax
 
 The License Info Document <em class="rfc">must</em> contain the following keys:
 
 | Key | Semantics | Format |
 | --- | --------- | ------ |
-| `status` | Indicates the status of a license | Boolean |
-| `checkouts` | List of currently active Checkouts | See below |
+| `identifier` | Unique identifier for the License | URI |
+| `status` | Indicates the status of a license | String |
+| `checkouts` | List of currently active Checkouts | Checkout Object |
 
 The `checkouts` key is an array in which each element  <em class="rfc">must</em> have the following keys:
 
@@ -271,42 +296,45 @@ The License Info Document  <em class="rfc">may</em> also have the following key/
 | `total_checkouts_left` | Total number of checkouts left before the License expires | Integer | Unlimited |
 | `concurrent_checkouts_available` | Total number of concurrent Checkouts available | Integer | Unlimited |
 
-#### 4.1. Linking to the License Info Document
+### 4.2. Linking to the License Info Document
 
-A `copy` element can link to a Copy Status Document by using a `link` element with the following requirements:
+Each License in an ODL Feed <em class="rfc">must</em> contain a link to a License Info Document where:
 
 * its `rel` value  <em class="rfc">must</em> be `self`
 * its `type` value  <em class="rfc">must</em> be `application/vnd.odl.info+json`
 
-#### 4.2. Example
+### 4.3. Example
+
+*A License Info Document where there are 18 total checkouts remaining for the License, 8 available checkouts at the moment and 2 active ones.*
 
 ```json
 {
-   "expired": false,
-   "expiration_date": "2015-04-03T11:47:54Z",
-   "checkout_available": false,
-   "total_checkouts_left": 16,
-   "concurrent_checkouts_available": 0,
-   "checkouts": [
-     {
-        "href": "https://www.example.com/3363f6c2-ed7d-11e3-b722-56847afe9799?transaction_id=36563230-0ef4-4659-a70e-cd6dcd0aeb9e",
-         "patron_id": "f7847120-fc6f-11e3-8158-56847afe9799",
-         "expires": "2014-06-24T11: 47: 54Z",
-         "id": "36563230-0ef4-4659-a70e-cd6dcd0aeb9e"
-     },
-     {
-        "href": "https://www.example.com/3363f6c2-ed7d-11e3-b722-56847afe9799?transaction_id=36563230-0ef4-4659-a70e-cd6dcd0aeb9d",
-        "patron_id": "f7847120-fc6f-11e3-8158-56847afe9799",
-        "expires": "2014-06-24T11: 47: 54Z",
-        "id": "36563230-0ef4-4659-a70e-cd6dcd0aeb9d"
-     }
-  ]
+  "id": "3363f6c2-ed7d-11e3-b722-56847afe9799"
+  "status": "available",
+  "checkouts": {
+    "left": 18,
+    "available": 8,
+    "active": [
+	   {
+	     "href": "https://www.example.com/3363f6c2-ed7d-11e3-b722-56847afe9799?transaction_id=36563230-0ef4-4659-a70e-cd6dcd0aeb9e",
+	     "patron_id": "f7847120-fc6f-11e3-8158-56847afe9799",
+	     "expires": "2014-06-24T11: 47: 54Z",
+	     "id": "36563230-0ef4-4659-a70e-cd6dcd0aeb9e"
+	   },
+	   {
+	     "href": "https://www.example.com/3363f6c2-ed7d-11e3-b722-56847afe9799?transaction_id=36563230-0ef4-4659-a70e-cd6dcd0aeb9d",
+	     "patron_id": "f7847120-fc6f-11e3-8158-56847afe9799",
+	     "expires": "2014-06-24T11: 47: 54Z",
+	     "id": "36563230-0ef4-4659-a70e-cd6dcd0aeb9d"
+	   }
+    ]
+  }
 }
 ```
 
 ## 5. Checkouts
 
-### 5.1 The `tlink` element
+### 5.1. The `tlink` element
 
 In order to introduce the ability to check out a Publication, this specification introduces a new element based on the `link` element in [[Atom](http://tools.ietf.org/html/rfc4287)]: the `tlink` element.
 
@@ -314,7 +342,7 @@ The `tlink` element inherits the semantics and syntax of the link element with t
 
 "The "href" attribute contains the link's IRI. atom:link elements  <em class="rfc">must</em> have an href attribute, whose value  <em class="rfc">must</em> be a IRI reference [[RFC3987](http://tools.ietf.org/html/rfc3987)] or a IRI template [[RFC6570](http://tools.ietf.org/html/rfc6570)]."
 
-### 5.2 Checkout Link
+### 5.2. Checkout Link
 
 A `tlink` element identified by the "http://opds-spec.org/acquisition/borrow" relationship, points to a templated URI to create a Checkout.
 
@@ -333,10 +361,10 @@ A Checkout Link  <em class="rfc">must</em> have the following parameters:
 A Checkout Link  <em class="rfc">may</em> also have the following parameters:
 
 
-| Parameter | Semantics | Format | Default value |
-| --------- | --------- | ------ | ------------- |
-| `expires` | Expiration date for the Checkout | ISO 8601 | None |
-| `notification_url` | URL where the library will be notified that the status of the Checkout changed | URI | None |
+| Parameter | Semantics | Format | Default Value | Required if present? |
+| --------- | --------- | ------ | ------------- | -------------------- |
+| `expires` | Expiration date for the Checkout | ISO 8601 | None | Yes |
+| `notification_url` | URL where the library will be notified that the status of the Checkout changed | URI | None | No |
 
 *Here's an example of such a templated link:*
 
@@ -367,7 +395,7 @@ This specification defines the following list of supported types:
 
 | Type | Description | HTTP Status Code |
 | ---- | ----------- | ---------------- |
-| http://opds-spec.org/odl/error | Generic error when a specific type can't be tied to the error. | 4xx, 5xx |
+| http://opds-spec.org/odl/error | Generic error when a specific type can't be tied to the error. | 4xx<br /> 5xx |
 | http://opds-spec.org/odl/error/checkout/id | Incorrect or missing Copy identifier when creating a Checkout. | 400 |
 | http://opds-spec.org/odl/error/checkout/checkout_id | Incorrect or missing Checkout identifier when creating a Checkout. | 400 |
 | http://opds-spec.org/odl/error/checkout/patron_id | Incorrect or missing patron identifier when creating a Checkout. | 400 |
@@ -424,14 +452,6 @@ In order to secure the ability to harvest Licenses and create Checkouts, an ODL 
 
 All interactions with an ODL server <em class="rfc">must</em> use TLS 1.0 or later.
 
-<style>
-.rfc {
-    color: #d55;
-    font-variant: small-caps;
-    font-style: normal;
-}
-</style>
-
 ## Normative References
 
 * [JSON] [The application/json Media Type for JavaScript Object Notation (JSON)](https://www.ietf.org/rfc/rfc4627).
@@ -439,3 +459,12 @@ All interactions with an ODL server <em class="rfc">must</em> use TLS 1.0 or lat
 * [OPDS-2] [OPDS Catalog 2.0](https://drafts.opds.io/opds-2.0)
 * [RFC2119] [Key words for use in RFCs to Indicate Requirement Levels](https://tools.ietf.org/html/rfc2119).
 * [URI-Template] [URI Template](https://tools.ietf.org/html/rfc6570).
+
+<style>
+.rfc {
+    color: #d55;
+    font-variant: small-caps;
+    font-style: normal;
+    font-weight: normal;
+}
+</style>
