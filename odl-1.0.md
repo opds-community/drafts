@@ -109,7 +109,7 @@ If the ODL Feed is serialized using [[OPDS](#normative-references)]:
 
 ### 2.1. OPDS 2.0
 
-If the ODL Feed is serialized using [[OPDS-2](#normative-references)], it <em class="rfc">must</em> respect the following requirements:
+If the ODL Feed is serialized using [[OPDS-2](#normative-references)]:
 
 * It <em class="rfc">must</em> be a valid OPDS Feed as defined in [[OPDS-2](#normative-references)] with one difference:
   * The requirement for the presence of an Acquisition Link is relaxed
@@ -144,8 +144,8 @@ A License <em class="rfc">should</em> also contain the following metadata:
 
 | OPDS 2.0 | OPDS 1.2 | Semantics | Format |
 | -------- | -------- | --------- | ------ |
-| `terms` |  `odl:terms` | Terms associated to the Copy | [See Section 3.2](#32-the-terms-element) |
-| `protection` |  `odl:protection` | Protection associated to the Publication associated to the Copy | [See Section 3.3](#33-the-protection-element) |
+| `terms` |  `odl:terms` | Terms associated to the Copy | [See Section 3.3](#33-terms) |
+| `protection` |  `odl:protection` | Protection associated to the Publication associated to the Copy | [See Section 3.4](#34-protection) |
 
 Finally, a License  <em class="rfc">may</em> also contain the following metadata:
 
@@ -276,25 +276,37 @@ The License Info Document <em class="rfc">must</em> contain the following keys:
 | Key | Semantics | Format |
 | --- | --------- | ------ |
 | `identifier` | Unique identifier for the License | URI |
-| `status` | Indicates the status of a license | String |
-| `checkouts` | List of currently active Checkouts | Checkout Object |
+| `status` | Indicates the status of a license | `preorder`, `available` or `unavailable` |
+| `checkouts` | List of currently active Checkouts | One or more Checkouts Object |
 
-The `checkouts` key is an array in which each element  <em class="rfc">must</em> have the following keys:
+The Checkouts Object  <em class="rfc">must</em> have the following keys:
 
 | Key | Semantics | Format |
 | --- | --------- | ------ |
-| `id` | Unique identifier for a Checkout | String |
-| `href` | URI where the LCP Status Document for this specific Checkout is available | URI |
-| `expires` | Expiration date and time for the Checkout using UTC.| ISO 8601 |
+| `left` | Total number of checkouts left for a License | Integer |
+| `available` | Number of concurrent checkouts currently available | Integer |
+| `active` | Contains one or more active loans associated to the License | One or more Loan Object |
+
+The Loan Object <em class="rfc">must</em> have the following keys:
+
+| Key | Semantics | Format |
+| --- | --------- | ------ |
+| `href` | Location of the LCP License Status Document associated to the loan | URI |
+| `id` | Unique identifier for the loan | String |
 | `patron_id` | Unique identifier for the patron | String |
+| `expires` | Date and time for the expiration of the loan | ISO 8601 |
 
-The License Info Document  <em class="rfc">may</em> also have the following key/value pairs:
+In addition, the License Info Document <em class="rfc">may</em> also include the information available for a License in an ODL Feed:
 
-| Name | Value | Format | Default value |
-| ---- | ----- | ------ | ------------- |
-| `expiration_date` | Date when the License expires | ISO 8601 | None |
-| `total_checkouts_left` | Total number of checkouts left before the License expires | Integer | Unlimited |
-| `concurrent_checkouts_available` | Total number of concurrent Checkouts available | Integer | Unlimited |
+| Key | Semantics | Format |
+| --- | --------- | ------ |
+| `identifier` | Unique identifier for the License | URI |
+| `format` | Format of the publication associated to the License | MIME type |
+| `created` | Date and time when the License was issued | ISO 8601 |
+| `terms` | Terms associated to the Copy | [See Section 3.3](#33-terms) |
+| `protection` | Protection associated to the Publication associated to the Copy | [See Section 3.4](#34-protection) |
+| `price` | Price at which the library acquired the Copy | As defined in [[OPDS-2](#normative-references)]|
+| `source` | Source of the license | URI |
 
 ### 4.2. Linking to the License Info Document
 
@@ -305,7 +317,7 @@ Each License in an ODL Feed <em class="rfc">must</em> contain a link to a Licens
 
 ### 4.3. Example
 
-*A License Info Document where there are 18 total checkouts remaining for the License, 8 available checkouts at the moment and 2 active ones.*
+*Example 3: a License Info Document with 18 total remaining checkouts, 8 available checkouts and 2 active ones*
 
 ```json
 {
@@ -366,7 +378,9 @@ A Checkout Link  <em class="rfc">may</em> also have the following parameters:
 | `expires` | Expiration date for the Checkout | ISO 8601 | None | Yes |
 | `notification_url` | URL where the library will be notified that the status of the Checkout changed | URI | None | No |
 
-*Here's an example of such a templated link:*
+### 5.3. Example
+
+*Example 4: Checkout Link in OPDS 1.2*
 
 ```xml
 <odl:tlink rel="http://opds-spec.org/acquisition/borrow" 
@@ -374,7 +388,20 @@ A Checkout Link  <em class="rfc">may</em> also have the following parameters:
            type="application/vnd.readium.license.status.v1.0+json" />
 ```
 
-### 5.3. Interacting with a Checkout Link
+*Example 5: Checkout Link in OPDS 2.0*
+
+```json
+"links": [
+  {
+    "rel": "http://opds-spec.org/acquisition/borrow",
+    "href": "http://library_example.com/loan{?id,checkout_id,expires,patron_id,notification_url}",
+    "type": "application/vnd.readium.license.status.v1.0+json",
+    "templated": true
+  }
+]
+```
+
+### 5.4. Interacting with a Checkout Link
 
 In order to create a Checkout, an ODL client  <em class="rfc">must</em> send a `POST` request to the Checkout Link with all the required parameters.
 
@@ -450,7 +477,7 @@ If another HTTP status is returned, additional attempts to send a notification  
 
 In order to secure the ability to harvest Licenses and create Checkouts, an ODL server  <em class="rfc">should</em> use either Basic Authentication or a Bearer Token to limit the access to the ODL feed.
 
-All interactions with an ODL server <em class="rfc">must</em> use TLS 1.0 or later.
+All interactions with an ODL server <em class="rfc">must</em> use TLS 1.2 or later.
 
 ## Normative References
 
