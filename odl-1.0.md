@@ -160,10 +160,10 @@ The `terms` element  <em class="rfc">may</em> contain the following elements:
 
 | OPDS 2.0 | OPDS 1.2 | Semantics | Format | Default Value |
 | -------- | -------- | --------- | ------ | ------------- |
-| `total_checkouts` |  `total_checkouts` | Number of Checkouts before a License expires | Integer | Unlimited |
+| `checkouts` |  `total_checkouts` | Number of Checkouts before a License expires | Integer | Unlimited |
 | `expires` | `expires` | Expiration date of the License | ISO 8601 | None |
-| `concurrent_checkouts` | `concurrent_checkouts` | Number of concurrent Checkouts allowed | Integer | Unlimited |
-| `maximum_checkout_length` | `maximum_checkout_length` | Maximum length in time allowed for a single Checkout in seconds | Integer | Unlimited |
+| `concurrency` | `concurrent_checkouts` | Number of concurrent Checkouts allowed | Integer | Unlimited |
+| `length` | `maximum_checkout_length` | Maximum length in time allowed for a single Checkout in seconds | Integer | Unlimited |
 
 ### 3.4. Protection
 
@@ -227,10 +227,10 @@ The `protection` element  <em class="rfc">may</em> contain the following element
       },
       "created": "2014-04-25T12:25:21+02:00",
       "terms": {
-        "total_checkouts": 30,
+        "checkouts": 30,
         "expires": "2016-04-25T12:25:21+02:00",
-        "concurrent_checkouts": 10,
-        "max_checkout_length": 5097600
+        "concurrency": 10,
+        "length": 5097600
       },
       "protection": {
         "format": [
@@ -246,7 +246,7 @@ The `protection` element  <em class="rfc">may</em> contain the following element
     "links": [
       {
         "rel": "http://opds-spec.org/acquisition/borrow",
-        "href": "http://www.example.com/get{?id,checkout_id,expires,patron_id,notification_url}",
+        "href": "http://www.example.com/get{?id,checkout_id,expires,patron_id,passphrase,hint,hint_url,notification_url}",
         "type": "application/vnd.readium.license.status.v1.0+json",
         "templated": true
       },
@@ -270,10 +270,10 @@ Each License in an ODL Feed <em class="rfc">must</em> contain a link to a Licens
 * its `rel` value  <em class="rfc">must</em> be `self`
 * its `type` value  <em class="rfc">must</em> be `application/vnd.odl.info+json`
 
-A License Info Document <em class="rfc">must</em> be:
+A License Info Document <em class="rfc">must</em>:
 
-* a valid [[JSON](#normative-references)] document
-* identified by the `application/vnd.odl.license+json` media type
+* be a valid [[JSON](#normative-references)] document
+* return the `application/vnd.odl.info+json` media type in its HTTP headers
 
 ### 4.1. Syntax
 
@@ -283,7 +283,7 @@ The License Info Document <em class="rfc">must</em> contain the following keys:
 | --- | --------- | ------ |
 | `identifier` | Unique identifier for the License | URI |
 | `status` | Indicates the status of a license | `preorder`, `available` or `unavailable` |
-| `checkouts` | List of currently active Checkouts | One or more Checkouts Object |
+| `checkouts` | Provides information about the availability of checkouts | Checkouts Object |
 
 The Checkouts Object  <em class="rfc">must</em> have the following keys:
 
@@ -320,7 +320,7 @@ In addition, the License Info Document <em class="rfc">may</em> also include the
 
 ```json
 {
-  "id": "3363f6c2-ed7d-11e3-b722-56847afe9799"
+  "identifier": "3363f6c2-ed7d-11e3-b722-56847afe9799"
   "status": "available",
   "checkouts": {
     "left": 18,
