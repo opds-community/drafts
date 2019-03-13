@@ -354,11 +354,11 @@ Each License in an ODL Feed <em class="rfc">must</em> contain a Checkout Link wh
 
 ### 5.1. Supporting URI Templates in OPDS 1.2
 
-In order to introduce the ability to check out a Publication, this specification introduces a new element based on the `link` element in [[RFC4287](#normative-references)]: the `tlink` element.
+In order to check out a Publication, this specification introduces a new element based on the `link` element in [[RFC4287](#normative-references)]: the `tlink` element.
 
 The `tlink` element inherits the semantics and syntax of the link element with the following modification to [section 4.2.7.1.  The "href" Attribute](https://tools.ietf.org/html/rfc4287#section-4.2.7.1):
 
-"The "href" attribute contains the link's IRI. atom:link elements  <em class="rfc">must</em> have an href attribute, whose value  <em class="rfc">must</em> be a IRI reference [[RFC3987](http://tools.ietf.org/html/rfc3987)] or a IRI template [[RFC6570](http://tools.ietf.org/html/rfc6570)]."
+"The "href" attribute contains the link's IRI. atom:link elements  <em class="rfc">must</em> have an href attribute, whose value  <em class="rfc">must</em> be a IRI reference [[RFC3987](#normative-references)] or a IRI template [[RFC6570](#normative-references)]."
 
 ### 5.2. URI Template of a Checkout Link
 
@@ -407,18 +407,18 @@ A Checkout Link  <em class="rfc">may</em> also have the following parameters:
 
 ### 5.4. Interacting with a Checkout Link
 
-In order to create a Checkout, an ODL client  <em class="rfc">must</em> send a `POST` request to the Checkout Link with all the required parameters.
+**Expected Behavior**
 
-In the case of a successful interaction with a Checkout Link, the server  <em class="rfc">must</em> return a valid Readium License Status Document (as defined in [[LSD](#normative-references)]) with a `201` ("Created") HTTP status code.
+* In order to create a Checkout, an ODL client  <em class="rfc">must</em> send a `POST` request to the Checkout Link with all the required parameters.
+* In the case of a successful interaction with a Checkout Link, the server  <em class="rfc">must</em> return a valid Readium License Status Document as defined in [[LSD](#normative-references)] with a `201` HTTP status code.
+* If a Checkout with the same `id` and `checkout_id` was created before, the server  <em class="rfc">must</em> return a `303` HTTP status code, with the `Location` header pointing to the Readium License Status Document that was previously created.<br />The server  <em class="rfc">must not</em> update the Checkout with the new parameters sent by the client in this case.
 
-If a Checkout with the same `id` and `checkout_id` was created before, the server  <em class="rfc">must</em> return a `303` ("See Other") HTTP status code, with the Location header pointing to the Readium License Status Document that was previously created.
+The Readium License Status Document returned by the server <em class="rfc">must</em> contain at least two links:
 
-The server  <em class="rfc">must</em> NOT update the Checkout with the new parameters sent by the client in this case.
+* a link identified by the `self` relation, that points back to this LCP Status Document
+* at least one link to acquire the Checkout's license file, identified by the `license` relation
 
-The LCP Status Document  <em class="rfc">must</em> contain at least two links:
-
-* a link identified by the self relationship, that points back to this LCP Status Document
-* at least one link to acquire the Checkout's license file, identified by the license relationship
+**Failure Modes**
 
 A server  <em class="rfc">must</em> respond with a Problem Details JSON Object as defined in [[RFC7807](#normative-references)] whenever a `4xx` or a `5xx` HTTP status code is sent back to the client.
 
@@ -427,23 +427,26 @@ This specification defines the following list of supported types:
 | Type | Description | HTTP Status Code |
 | ---- | ----------- | ---------------- |
 | http://opds-spec.org/odl/error | Generic error when a specific type can't be tied to the error. | 4xx<br /> 5xx |
-| http://opds-spec.org/odl/error/checkout/id | Incorrect or missing License identifier when creating a Checkout. | 400 |
-| http://opds-spec.org/odl/error/checkout/checkout_id | Incorrect or missing Checkout identifier when creating a Checkout. | 400 |
-| http://opds-spec.org/odl/error/checkout/patron_id | Incorrect or missing patron identifier when creating a Checkout. | 400 |
-| http://opds-spec.org/odl/error/checkout/expires | Incorrect or missing expiration date when creating a Checkout. | 400 |
+| http://opds-spec.org/odl/error/checkout/id | Incorrect or missing License identifier. | 400 |
+| http://opds-spec.org/odl/error/checkout/checkout_id | Incorrect or missing Checkout identifier. | 400 |
+| http://opds-spec.org/odl/error/checkout/patron_id | Incorrect or missing patron identifier. | 400 |
+| http://opds-spec.org/odl/error/checkout/expires | Incorrect or missing expiration date. | 400 |
 | http://opds-spec.org/odl/error/checkout/notification_url | Incorrect notification URL (usually means that it's not a URL). | 400 |
-| http://opds-spec.org/odl/error/checkout/expired | The License has expired and a Checkout cannot be created. | 403 |
-| http://opds-spec.org/odl/error/checkout/unavailable | The License has reached its concurrent Checkouts limit and is currently unavailable. | 403 |
+| http://opds-spec.org/odl/error/checkout/passphrase | Incorrect or missing passphrase. | 400 |
+| http://opds-spec.org/odl/error/checkout/hint | Incorrect or missing hint. | 400 |
+| http://opds-spec.org/odl/error/checkout/hint_url | Incorrect or missing URL hint. | 400 |
+| http://opds-spec.org/odl/error/checkout/expired | The License has expired. | 403 |
+| http://opds-spec.org/odl/error/checkout/unavailable | The License has reached its concurrent or total Checkouts limit. | 403 |
 
 ### 5.4. Status of a Checkout
 
-A client can get at anytime the status of a Checkout by doing an HTTP `GET` request to the `self` link included in the LCP Status Document initially returned after checking out a Publication.
+A client can get at anytime the status of a Checkout by doing an HTTP `GET` request to the `self` link included in the Readium License Status Document initially returned after checking out a Publication.
 
-The LCP Status Document contains a `status` element that provides the current status of the Checkout along with a timestamp.
+The Readium License Status Document contains a `status` element and a `timestamps` element that are both relevant to tracking changes.
 
 ## 6. Notifications
 
-Notifications  <em class="rfc">should</em> be sent for the following status changes:
+Notifications  <em class="rfc">should</em> be sent for the following status changes of a checkout:
 
 * `active`
 * `returned`
@@ -457,14 +460,14 @@ A notification  <em class="rfc">may</em> be sent for the following status change
 In order to notify such changes, the source for the ODL feed  <em class="rfc">must</em>:
 
 * send a `POST` request to the notification URI provided through the Checkout Link
-* include a minimal LCP Status Document in the body of the request
+* include a minimal Readium License Status Document in the body of the request
 
 The minimal LCP Status Document  <em class="rfc">must</em> contain at least the following elements:
 
 * `id`
 * `status`
 
-*Example of a minimal LCP Status Document used for a notification:*
+*Example 6: Minimal Readium License Status Document used for a notification:*
 
 ```json
 {
@@ -473,7 +476,7 @@ The minimal LCP Status Document  <em class="rfc">must</em> contain at least the 
 }
 ```
 
-A successful request  <em class="rfc">must</em> return a `204` ("No Content") HTTP status code, with no additional body content to the response.
+A successful request  <em class="rfc">must</em> return a `204` HTTP status code, with no additional body content to the response.
 
 If another HTTP status is returned, additional attempts to send a notification  <em class="rfc">should</em> be made.
 
@@ -490,10 +493,10 @@ All interactions with an ODL server <em class="rfc">must</em> use TLS 1.2 or lat
 * [OPDS] [OPDS Catalog 1.2](https://specs.opds.io/opds-1.2)
 * [OPDS-2] [OPDS Catalog 2.0](https://drafts.opds.io/opds-2.0)
 * [RFC2119] [Key words for use in RFCs to Indicate Requirement Levels](https://tools.ietf.org/html/rfc2119).
-* [RFC3987] 
-* [RFC4287]
-* [RFC6570]
-* [RFC7807] Problem Details for HTTP APIs
+* [RFC3987] [Internationalized Resource Identifiers (IRIs)](https://tools.ietf.org/html/rfc3987).
+* [RFC4287] [The Atom Syndication Format](https://tools.ietf.org/html/rfc4287).
+* [RFC6570] [URI Template](https://tools.ietf.org/html/rfc6570).
+* [RFC7807] [Problem Details for HTTP APIs](https://tools.ietf.org/html/rfc7807).
 * [URI-Template] [URI Template](https://tools.ietf.org/html/rfc6570).
 
 <style>
