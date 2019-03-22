@@ -432,7 +432,7 @@ In `links` the following relations <em class="rfc">may</em> be used:
 
 ### 4.1. OPDS Publication
 
-An OPDS Publication is essentially a Readium Web Publication without the requirement to include a `spine` collection:
+An OPDS Publication is essentially a Readium Web Publication without the requirement to include a `readingOrder` collection:
 
 * it <em class="rfc">must</em> be identified by the following media type: `application/opds-publication+json`
 * it <em class="rfc">must</em> contain at least one [Acquisition Link](#43-acquisition-link)
