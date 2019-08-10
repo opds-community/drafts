@@ -19,7 +19,7 @@ This specification, Open Distribution to Libraries 1.0 (referenced as ODL in the
 
 **Editors:**
 
-* Hadrien Gardeur ([Feedbooks](http://www.feedbooks.com))
+* Hadrien Gardeur ([De Marque](http://www.demarque.com))
 
 ## Status of this Document
 
@@ -306,7 +306,6 @@ In addition, the License Info Document <em class="rfc">may</em> also include the
 
 | Key | Semantics | Format |
 | --- | --------- | ------ |
-| `identifier` | Unique identifier for the License | URI |
 | `format` | Format of the publication associated to the License | MIME type |
 | `created` | Date and time when the License was issued | ISO 8601 |
 | `terms` | Terms associated to the License | [See Section 3.3](#33-terms) |

@@ -23,7 +23,7 @@ The primary objective is to allow access to specific feeds (such as bookshelf an
 
 **Editors:**
 
-* Hadrien Gardeur ([Feedbooks](http://www.feedbooks.com))
+* Hadrien Gardeur ([De Marque](http://www.demarque.com))
 
 **Participate:**
 
