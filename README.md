@@ -1,5 +1,3 @@
-[![OPDS Logo](https://opds.io/img/logo.png)](https://opds.io)
-
 ## Current Drafts
 
 - [OPDS 2.0](https://drafts.opds.io/opds-2.0)
