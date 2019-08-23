@@ -1,13 +1,3 @@
-[![OPDS Logo](https://opds.io/img/logo.png)](https://opds.io)
-
-<style>
-.rfc {
-    color: #d55;
-    font-variant: small-caps;
-    font-style: normal;
-}
-</style>
-
 # Authentication for OPDS 1.0
 
 This specification, Authentication for OPDS Catalogs (1.0), defines a standard way for OPDS Catalog providers and clients to:

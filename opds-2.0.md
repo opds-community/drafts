@@ -1,13 +1,3 @@
-[![OPDS Logo](https://opds.io/img/logo.png)](https://opds.io)
-
-<style>
-.rfc {
-    color: #d55;
-    font-variant: small-caps;
-    font-style: normal;
-}
-</style>
-
 # OPDS Catalog 2.0
 
 Open Publication Distribution System (OPDS) 2.0 is based on the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model and JSON-LD, 

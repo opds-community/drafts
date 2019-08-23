@@ -1,5 +1,3 @@
-[![OPDS Logo](https://opds.io/img/logo.png)](https://opds.io)
-
 # Open Distribution to Libraries 1.0
 
 
@@ -83,7 +81,7 @@ In order to provide compatibility with [[OPDS](#normative-references)], this spe
 
 ### 1.3. Conformance Statements
 
-The keywords <b class="rfc">must</b>, <b class="rfc">must not</b>, <b class="rfc">required</b>, <b class="rfc">shall</b>, <b class="rfc">shall not</b>, <b class="rfc">should</b>, <b class="rfc">should not</b>, <b class="rfc">recommended</b>, <b class="rfc">may</b>, and <b class="rfc">optional</b> in this document are to be interpreted as described in [[RFC2119](#normative-references)].
+The keywords <strong class="rfc">must</strong>, <strong class="rfc">must not</strong>, <strong class="rfc">required</strong>, <strong class="rfc">shall</strong>, <strong class="rfc">shall not</strong>, <strong class="rfc">should</strong>, <strong class="rfc">should not</strong>, <strong class="rfc">recommended</strong>, <strong class="rfc">may</strong>, and <strong class="rfc">optional</strong> in this document are to be interpreted as described in [[RFC2119](#normative-references)].
 
 All sections of this specification are normative except where identified by the informative status label "This section is informative". The application of informative status to sections and appendices applies to all child content and subsections they may contain.
 
