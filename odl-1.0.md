@@ -19,6 +19,11 @@ This specification, Open Distribution to Libraries 1.0 (referenced as ODL in the
 
 * Hadrien Gardeur ([De Marque](http://www.demarque.com))
 
+**Participate:**
+
+* [GitHub opds-community/drafts](https://github.com/opds-community/drafts)
+* [File an issue](https://github.com/opds-community/drafts/issues)
+
 ## Status of this Document
 
 This document is a draft of the 1.0 version of the ODL specification.
