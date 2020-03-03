@@ -22,7 +22,7 @@
       "items": {
         "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
       },
-      "uniqueItems": true,
+      "uniqueItems": true
     },
     "authentication": {
       "description": "A list of supported Authentication Flows",
@@ -38,7 +38,7 @@
             "items": {
               "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
             },
-            "uniqueItems": true,
+            "uniqueItems": true
           },
           "labels": {
             "type": "object",
