@@ -257,7 +257,7 @@ The `protection` element  <em class="rfc">may</em> contain the following element
         "rel": "self",
         "href": "http://www.example.com/status/294024",
         "type": "application/vnd.odl.info+json"
-      },
+      }
     ]
   }
 ]
