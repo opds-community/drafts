@@ -153,7 +153,8 @@ Each publication listed in an OPDS feed <em class="rfc">must</em> contain an `im
         "modified": "2015-09-29T17:00:00Z"
       },
       "links": [
-        {"rel": "self", "href": "http://example.org/manifest.json", "type": "application/webpub+json"}
+        {"rel": "self", "href": "http://example.org/publication.json", "type": "application/opds-publication+json"},
+        {"rel": "http://opds-spec.org/acquisition/open-access", "href": "http://example.org/file.epub", "type": "application/epub+zip"}
       ],
       "images": [
         {"href": "http://example.org/cover.jpg", "type": "image/jpeg", "height": 1400, "width": 800},
@@ -330,7 +331,8 @@ In addition, each group <em class="rfc">may</em> also provide:
             "modified": "2015-09-29T17:00:00Z"
           },
           "links": [
-            {"rel": "self", "href": "http://example.org/manifest.json", "type": "application/webpub+json"}
+            {"rel": "self", "href": "http://example.org/publication.json", "type": "application/opds-publication+json"},
+            {"rel": "http://opds-spec.org/acquisition/open-access", "href": "http://example.org/file.epub", "type": "application/epub+zip"}
           ],
           "images": [
             {"href": "http://example.org/cover.jpg", "type": "image/jpeg", "height": 1400, "width": 800},
