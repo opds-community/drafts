@@ -113,7 +113,10 @@
             },
             "uniqueItems": true
           }
-        }
+        },
+        "required": [
+          "metadata"
+        ]
       }
     }
   },
