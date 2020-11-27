@@ -1,6 +1,6 @@
 # OPDS Catalog 2.0
 
-Open Publication Distribution System (OPDS) 2.0 is based on the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model and JSON-LD, 
+Open Publication Distribution System (OPDS) 2.0 is based on the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model, 
 with a focus on aggregating publications together in order to facilitate their distribution.
 
 **This version:**
