@@ -16,6 +16,7 @@
       },
       "uniqueItems": true,
       "contains": {
+        "type": "object",
         "properties": {
           "rel": {
             "anyOf": [
@@ -64,6 +65,7 @@
         {
           "description": "Each Link Object in a navigation collection must contain a title",
           "items": {
+            "type": "object",
             "required": [
               "title"
             ]
