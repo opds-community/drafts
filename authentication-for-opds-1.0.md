@@ -175,8 +175,7 @@ In the following example, the Authentication Document indicates that the Catalog
     {
       "type": "http://opds-spec.org/auth/oauth/implicit",
       "links": [
-        {"rel": "authenticate", "href": "http://example.com/oauth", "type": "text/html"},
-        {"rel": "refresh", "href": "http://example.com/oauth/refresh", "type": "application/json"},
+        {"rel": "authenticate", "href": "http://example.com/oauth", "type": "text/html"}
       ]
     }
   ]
