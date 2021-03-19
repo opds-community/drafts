@@ -388,4 +388,4 @@ In case of a successful request, the OAuth Response Document <em class="rfc">mus
 
 A JSON Schema is available under version control at [https://github.com/opds-community/drafts/blob/master/schema/authentication.schema.json](https://github.com/opds-community/drafts/blob/master/schema/authentication.schema.json)
 
-For the purpose of validating an OPDS 2.0 catalog, use the following URL: [https://drafts.opds.io/schema/authentication.schema.json](https://drafts.opds.io/schema/authentication.schema.json)
+For the purpose of validating an OPDS Authentication Document, use the following URL: [https://drafts.opds.io/schema/authentication.schema.json](https://drafts.opds.io/schema/authentication.schema.json)
