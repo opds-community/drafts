@@ -35,6 +35,6 @@ All OPDS User Profile documents <strong class="rfc">must</strong> be served usin
 
 ## Appendix A. JSON Schema
 
-A JSON Schema is available under version control at [https://github.com/opds-community/drafts/blob/master/schema/profile.schema.json](https://github.com/opds-community/drafts/blob/master/schema/profile.schema.json)
+A JSON Schema is available under version control at <https://github.com/opds-community/drafts/blob/master/schema/profile.schema.json>
 
-For the purpose of validating an OPDS User Profile Document, use the following URL: [https://drafts.opds.io/schema/profile.schema.json](https://drafts.opds.io/schema/profile.schema.json)
+For the purpose of validating an OPDS User Profile Document, use the following URL: <https://drafts.opds.io/schema/profile.schema.json>

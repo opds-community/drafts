@@ -6,9 +6,10 @@
 - [Authentication for OPDS 1.0](https://drafts.opds.io/authentication-for-opds-1.0)
 - [Open Distribution to Libraries 1.0](https://drafts.opds.io/odl-1.0)
 
-## Other
+## Technical Notes
 
 - [OPDS for Library Patrons](https://github.com/NYPL-Simplified/Simplified/wiki/OPDS-For-Library-Patrons)
+- [OPDS User Profile](https://drafts.opds.io/opds-user-profile-1.0)
 
 ## Getting Involved
 

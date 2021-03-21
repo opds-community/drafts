@@ -50,7 +50,7 @@
       }
     },
     "holds": {
-      "description": "Library-specific features when a specific book is unavailable but provides a hold list",
+      "description": "Library-specific feature for unavailable books that support a hold list",
       "type": "object",
       "properties": {
         "total": {
@@ -78,7 +78,7 @@
       }
     },
     "availability": {
-      "description": "Indicated the availability of a given resource",
+      "description": "Indicates the availability of a given resource",
       "type": "object",
       "properties": {
         "state": {
