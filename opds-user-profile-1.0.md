@@ -12,14 +12,9 @@ All OPDS User Profile documents <strong class="rfc">must</strong> be served usin
   "email": "john.smith@example.com",
   "links": [
     {
-      "rel": "http://opds-spec.org/shelf",
-      "href": "https://example.com/bookshelf.json",
-      "type": "application/opds+json"
-    },
-    {
-      "rel": "http://opds-spec.org/history",
-      "href": "https://example.com/history.json",
-      "type": "application/opds+json"
+      "rel": "edit",
+      "href": "https://example.com/user/edit",
+      "type": "text/html"
     }
   ],
   "loans": {
