@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://drafts.opds.io/schema/profile.schema.json",
+  "title": "OPDS Profile Document",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Given name for the user",
+      "type": "string"
+    },
+    "email": {
+      "description": "Email address associated to the user",
+      "type": "string",
+      "format": "email"
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "https://readium.org/webpub-manifest/schema/link.schema.json"
+      },
+      "uniqueItems": true
+    },
+    "loans": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "description": "Number of loans allowed at any time for the users",
+          "type": "integer",
+          "minimum": 0
+        },
+        "available": {
+          "description": "Number of loans currently available to the user",
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "holds": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "description": "Number of holds allowed at any time for the users",
+          "type": "integer",
+          "minimum": 0
+        },
+        "available": {
+          "description": "Number of holds currently available to the user",
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}
