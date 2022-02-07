@@ -486,13 +486,13 @@ OPDS 2.0 allows the following relations to indicate that a publication can be ac
 
 | Relation  | Definition | Reference |
 | ------------- | ---------- | --------- | 
-| `http://opds-spec.org/acquisition`  | Fallback acquisition relation when no other relation is a good fit to express the nature of the transaction.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
-| `http://opds-spec.org/acquisition/open-access`  | Indicates that a publication is freely accessible without any requirement, including authentication.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
-| `http://opds-spec.org/acquisition/borrow`  | Indicates that a publication can be borrowed for a limited period of time.  | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
-| `http://opds-spec.org/acquisition/buy`  | Indicates that a publication can be purchased for a given price. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
-| `http://opds-spec.org/acquisition/sample`  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| `http://opds-spec.org/acquisition`  | Fallback acquisition relation when no other relation is a good fit to express the nature of the transaction.  | [OPDS 1.2](https://specs.opds.io/opds-1.2) |
+| `http://opds-spec.org/acquisition/open-access`  | Indicates that a publication is freely accessible without any requirement, including authentication.  | [OPDS 1.2](https://specs.opds.io/opds-1.2) |
+| `http://opds-spec.org/acquisition/borrow`  | Indicates that a publication can be borrowed for a limited period of time.  | [OPDS 1.2](https://specs.opds.io/opds-1.2) |
+| `http://opds-spec.org/acquisition/buy`  | Indicates that a publication can be purchased for a given price. | [OPDS 1.2](https://specs.opds.io/opds-1.2) |
+| `http://opds-spec.org/acquisition/sample`  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [OPDS 1.2](https://specs.opds.io/opds-1.2) |
 | `preview`  | Indicates that a sub-set of the full publication is freely accessible at a given URI, without any prior requirement. | [RFC6903](https://tools.ietf.org/html/rfc6903#section-3) |
-| `http://opds-spec.org/acquisition/subscribe`  | Indicates that a publication be subscribed to, usually as part of a purchase and for a limited period of time. | [OPDS 1.2](https://github.com/opds-community/opds-revision/blob/master/opds-1.2.md) |
+| `http://opds-spec.org/acquisition/subscribe`  | Indicates that a publication be subscribed to, usually as part of a purchase and for a limited period of time. | [OPDS 1.2](https://specs.opds.io/opds-1.2) |
 
 An OPDS 2.0 catalog <em class="rfc">should not</em> use `http://opds-spec.org/acquisition` when another link relation is suitable to express the interaction.
 
