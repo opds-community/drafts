@@ -75,6 +75,8 @@ OPDS 2.0 feeds are identified using the following media type: `application/opds+
 ### 1.2. Terminology
 
 <dl>
+  <dt><dfn>Blank Value</dfn></dt>
+  <dd>Value encoded in JSON as a `null`, a zero-length string `""`, a zero-length list `[]`, or an object without user-defined properties `{}`.</dd>
   <dt><dfn>Compact Collection</dfn></dt>
   <dd>Collection containing only Link values as defined in the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest)</dd>
 </dl>
@@ -458,6 +460,8 @@ OPDS 2.0 introduces a slight extension to this model by allowing <em class="rfc"
 * `collection`
 
 The `links` element is used for that purpose with an array of Link Objects.
+
+A `metadata` object in OPDS 2.0 <em class="rfc">should not</em> contain any properties with a <a>blank value</a>.
 
 **Example: Publication metadata enhanced with links**
 
