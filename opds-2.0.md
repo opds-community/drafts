@@ -318,7 +318,7 @@ In addition, each group <em class="rfc">may</em> also provide:
         "numberOfItems": 20
       },
       "links": [
-        {"rel": "self", "href": "/featured", "type": "application/opds+json"}
+        {"rel": "self", "href": "https://example.com/featured", "type": "application/opds+json"}
       ],
       "publications": [
         {
@@ -412,10 +412,10 @@ In `links` the following relations <em class="rfc">may</em> be used:
     "currentPage": 2
   },
   "links": [
-    {"rel": "self", "href": "/?page=2", "type": "application/opds+json"},
-    {"rel": ["first", "previous"], "href": "/?page=1", "type": "application/opds+json"},
-    {"rel": "next", "href": "/?page=3", "type": "application/opds+json"},
-    {"rel": "last", "href": "/?page=114", "type": "application/opds+json"}
+    {"rel": "self", "href": "https://example.com/?page=2", "type": "application/opds+json"},
+    {"rel": ["first", "previous"], "href": "https://example.com/?page=1", "type": "application/opds+json"},
+    {"rel": "next", "href": "https://example.com/?page=3", "type": "application/opds+json"},
+    {"rel": "last", "href": "https://example.com/?page=114", "type": "application/opds+json"}
   ]
 }
 ```
