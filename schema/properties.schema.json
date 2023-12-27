@@ -78,7 +78,7 @@
       }
     },
     "availability": {
-      "$ref": "https://drafts.opds.io/schema/availability.schema.json"
+      "$ref": "availability.schema.json"
     }
   }
 }
