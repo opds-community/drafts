@@ -13,7 +13,7 @@ with a focus on aggregating publications together in order to facilitate their d
 
 **Editors:**
 
-* Hadrien Gardeur ([De Marque](http://www.demarque.com))
+* Hadrien Gardeur
 
 **Participate:**
 

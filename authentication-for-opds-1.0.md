@@ -13,7 +13,7 @@ The primary objective is to allow access to specific feeds (such as bookshelf an
 
 **Editors:**
 
-* Hadrien Gardeur ([De Marque](http://www.demarque.com))
+* Hadrien Gardeur
 
 **Participate:**
 

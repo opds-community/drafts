@@ -17,7 +17,7 @@ This specification, Open Distribution to Libraries 1.0 (referenced as ODL in the
 
 **Editors:**
 
-* Hadrien Gardeur ([De Marque](http://www.demarque.com))
+* Hadrien Gardeur
 
 **Participate:**
 
