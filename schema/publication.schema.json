@@ -14,6 +14,7 @@
       },
       "contains": {
         "description": "A publication must contain at least one acquisition link.",
+        "type": "object",
         "properties": {
           "rel": {
             "anyOf": [
@@ -60,6 +61,7 @@
         {
           "description": "At least one image resource must use one of the following formats: image/jpeg, image/png or image/gif.",
           "contains": {
+            "type": "object",
             "properties": {
               "type": {
                 "enum": [

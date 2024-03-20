@@ -16,6 +16,7 @@
       },
       "uniqueItems": true,
       "contains": {
+        "type": "object",
         "properties": {
           "rel": {
             "anyOf": [
@@ -37,6 +38,14 @@
         ]
       }
     },
+    "catalogs": {
+      "description": "A list of catalog-entry objects, to reference other OPDS feeds",
+      "type": "array",
+      "items": {
+        "$ref": "catalog-entry.schema.json"
+      },
+      "uniqueItems": true
+    },
     "publications": {
       "description": "A list of publications that can be acquired",
       "type": "array",
@@ -56,6 +65,7 @@
         {
           "description": "Each Link Object in a navigation collection must contain a title",
           "items": {
+            "type": "object",
             "required": [
               "title"
             ]
@@ -141,6 +151,11 @@
     {
       "required": [
         "groups"
+      ]
+    },
+    {
+      "required": [
+        "catalogs"
       ]
     }
   ]
