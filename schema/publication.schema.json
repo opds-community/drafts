@@ -5,7 +5,14 @@
   "type": "object",
   "properties": {
     "metadata": {
-      "$ref": "https://readium.org/webpub-manifest/schema/metadata.schema.json"
+      "allOf": [
+       {
+         "$ref": "https://readium.org/webpub-manifest/schema/metadata.schema.json" 
+       },
+       {
+         "$ref": "metadata.schema.json" 
+       }
+      ]
     },
     "links": {
       "type": "array",
@@ -78,5 +85,8 @@
     "metadata",
     "links",
     "images"
-  ]
+  ],
+  "additionalProperties": {
+    "$ref": "https://readium.org/webpub-manifest/schema/subcollection.schema.json"
+  }
 }
