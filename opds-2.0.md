@@ -27,22 +27,27 @@ This document is a draft of the 2.0 version of the OPDS Catalog specification.
 
 ## Table of Contents
 
-* [Overview](#overview)
-* [1. Collections](#1-collections)
-  * [1.1. Navigation](#11-navigation)
-  * [1.2. Publications](#12-publications)
-  * [1.3. Images](#13-images)
-  * [1.4. Facets](#14-facets)
-  * [1.5. Groups](#15-groups)
-* [2. Search](#2-search)
-* [3. Pagination](#3-pagination)
-* [4. Publications](#4-publications)
-  * [4.1. OPDS Publication](#41-opds-publication)
-  * [4.2. Metadata](#42-metadata)
-  * [4.3. Acquisition Links](#43-acquisition-links)
+* [1. Overview](#1-overview)
+  * [1.1. Introduction](#11-introduction)
+  * [1.2. Terminology](#12-terminology)
+  * [1.3. Conformance Statements](#13-conformance-statements)
+* [2. Collections](#2-collections)
+  * [2.1. Navigation](#21-navigation)
+  * [2.2. Publications](#22-publications)
+  * [2.3. Images](#23-images)
+  * [2.4. Facets](#24-facets)
+  * [2.5. Groups](#25-groups)
+* [3. Search](#3-search)
+* [4. Pagination](#4-pagination)
+* [5. Publications](#5-publications)
+  * [5.1. OPDS Publication](#51-opds-publication)
+  * [5.2. Metadata](#52-metadata)
+  * [5.3. Acquisition Links](#53-acquisition-links)
 * [Appendix A. JSON Schema](#appendix-a-json-schema)
 
-## Overview
+## 1. Overview
+
+### 1.1. Introduction
 
 OPDS 2.0 is based on the same abstract model as the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest).
 
@@ -67,22 +72,35 @@ An OPDS 2.0 Catalog Feed is a collection too, with the following requirements:
 
 OPDS 2.0 feeds are identified using the following media type: `application/opds+json`
 
-## 1. Collections
+### 1.2. Terminology
+
+<dl>
+  <dt><dfn>Blank Value</dfn></dt>
+  <dd>Value encoded in JSON as a `null`, a zero-length string `""`, a zero-length list `[]`, or an object without user-defined properties `{}`.</dd>
+  <dt><dfn>Compact Collection</dfn></dt>
+  <dd>Collection containing only Link values as defined in the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest)</dd>
+</dl>
+
+### 1.3. Conformance Statements
+
+The key words <em class="rfc">must</em>, <em class="rfc">must not</em>, <em class="rfc">required</em>, <em class="rfc">shall</em>, <em class="rfc">shall not</em>, <em class="rfc">should</em>, <em class="rfc">should not</em>, <em class="rfc">recommended</em>, <em class="rfc">may</em>, and <em class="rfc">optional</em> in this document are to be interpreted as described in [RFC2119](https://tools.ietf.org/html/rfc2119).
+
+## 2. Collections
 
 OPDS 2.0 introduces five new collection roles to the Readium Web Publication Manifest model.
 
 
 | Role  | Semantics | Compact? | Required? | Reference |
 | ----- | --------- | -------- | --------- | --------- |
-| [navigation](#11-navigation)  | An ordered list of links meant to browse a catalog in depth.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
-| [publications](#12-publications)  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
-| [images](#13-images)  | Visual representations for a publication.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
-| [facets](#14-facets)   | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
-| [groups](#15-groups)   | Structural element in a catalog meant to contain `navigation` or `publications` collections.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [navigation](#21-navigation)  | An ordered list of links meant to browse a catalog in depth.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
+| [publications](#22-publications)  | Contains a list of publications.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [images](#23-images)  | Visual representations for a publication.  | Yes  | No  | [OPDS 2.0](opds-2.0.md) |
+| [facets](#24-facets)   | Links meant to obtain a sub-set of the current list of publications, or the same list in a different order.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
+| [groups](#25-groups)   | Structural element in a catalog meant to contain `navigation` or `publications` collections.  | No  | No  | [OPDS 2.0](opds-2.0.md) |
 
-### 1.1. Navigation
+### 2.1. Navigation
 
-A `navigation` collection is meant to provide links that an end user can follow in order to browse a catalog. 
+A `navigation` collection is meant to provide links that an end user can follow in order to browse a catalog. It <em class="rfc">must</em> be a <a>compact collection</a>.
 
 Each Link Object <em class="rfc">must</em> contain a `title`.
 
@@ -119,14 +137,14 @@ Catalog providers <em class="rfc">should</em> also attempt to provide a meaningf
 }
 ```
 
-### 1.2. Publications
+### 2.2. Publications
 
 A `publications` collection is meant to list publications in an OPDS feed.
 
 Publications <em class="rfc">must</em> either be:
 
 - a [Readium Web Publication](https://github.com/readium/webpub-manifest) with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
-- or an [OPDS Publication](#41-opds-publication)   
+- or an [OPDS Publication](#51-opds-publication)   
 
 Each publication listed in an OPDS feed <em class="rfc">must</em> contain an `images` collection.
 
@@ -166,11 +184,11 @@ Each publication listed in an OPDS feed <em class="rfc">must</em> contain an `im
 }
 ```
 
-### 1.3. Images
+### 2.3. Images
 
 While previous versions of OPDS relied on link relations to identify visual representations, OPDS 2.0 introduces a dedicated collection role for that purpose.
 
-This new collection role is mostly meant to support responsive images across all types of devices.
+An `images` collection is meant to support responsive images across all types of devices. It <em class="rfc">must</em> be a <a>compact collection</a>.
 
 Link Objects in `images` <em class="rfc">may</em> include any number of image format, resolution or aspect ratio.
 
@@ -199,7 +217,7 @@ At least one image resource <em class="rfc">must</em> use one of the following f
 ]
 ```
 
-### 1.4. Facets
+### 2.4. Facets
 
 Facets are meant to allow a user to explore a large collection of publications by either changing the order or obtaining a sub-set for the current feed.
 
@@ -245,7 +263,7 @@ The `facets` role is meant to indicate that a collection contains a facet group.
 }
 ```
 
-### 1.5. Groups
+### 2.5. Groups
 
 When an OPDS catalog feed needs to contain more than one `navigation` or `publications` collection, it needs to rely on the `groups` role.
 
@@ -346,7 +364,7 @@ In addition, each group <em class="rfc">may</em> also provide:
 }
 ```
 
-## 2. Search
+## 3. Search
 
 Each catalog <em class="rfc">may</em> provide the ability to search.
 
@@ -376,7 +394,7 @@ For example the following Link Object allows keyword search as well as restricti
 }
 ```
 
-## 3. Pagination
+## 4. Pagination
 
 An OPDS Catalog can contain a very large number of publications. While such catalogs are usually broken down using navigation, facets and groups, a single sub-collection could still contain thousands of publications.
 
@@ -420,17 +438,17 @@ In `links` the following relations <em class="rfc">may</em> be used:
 }
 ```
 
-## 4. Publications
+## 5. Publications
 
-### 4.1. OPDS Publication
+### 5.1. OPDS Publication
 
 An OPDS Publication is essentially a Readium Web Publication without the requirement to include a `readingOrder` collection:
 
 * it <em class="rfc">must</em> be identified by the following media type: `application/opds-publication+json`
-* it <em class="rfc">must</em> contain at least one [Acquisition Link](#43-acquisition-link)
+* it <em class="rfc">must</em> contain at least one [Acquisition Link](#53-acquisition-link)
 * it <em class="rfc">should</em> contain a `self` link
 
-### 4.2. Metadata
+### 5.2. Metadata
 
 Metadata expression in OPDS 2.0 is based on the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest) model and [its default context](https://github.com/readium/webpub-manifest/tree/master/contexts/default).
 
@@ -442,6 +460,8 @@ OPDS 2.0 introduces a slight extension to this model by allowing <em class="rfc"
 * `collection`
 
 The `links` element is used for that purpose with an array of Link Objects.
+
+A `metadata` object in OPDS 2.0 <em class="rfc">should not</em> contain any properties with a <a>blank value</a>.
 
 **Example: Publication metadata enhanced with links**
 
@@ -476,7 +496,7 @@ The `links` element is used for that purpose with an array of Link Objects.
 }
 ```
 
-### 4.3. Acquisition Links
+### 5.3. Acquisition Links
 
 In OPDS 2.0, the concept of an Acquision Link is not as central as in OPDS 1.x since publications can also be accessed through a manifest.
 
