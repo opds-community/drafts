@@ -76,9 +76,9 @@ OPDS 2.0 feeds are identified using the following media type: `application/opds+
 
 <dl>
   <dt><dfn>Blank Value</dfn></dt>
-  <dd>Value encoded in JSON as a `null`, a zero-length string `""`, a zero-length list `[]`, or an object without user-defined properties `{}`.</dd>
+  <dd>Value encoded in JSON as a <code>null</code>, a zero-length string <code>""</code>, a zero-length list <code>[]</code>, or an object without user-defined properties <code>{}</code>.</dd>
   <dt><dfn>Compact Collection</dfn></dt>
-  <dd>Collection containing only Link values as defined in the [Readium Web Publication Manifest](https://github.com/readium/webpub-manifest)</dd>
+  <dd>Collection containing only Link values as defined in the <a href="https://readium.org/webpub-manifest/">Readium Web Publication Manifest</a></dd>
 </dl>
 
 ### 1.3. Conformance Statements
