@@ -76,7 +76,6 @@
   },
   "required": [
     "metadata",
-    "links",
-    "images"
+    "links"
   ]
 }

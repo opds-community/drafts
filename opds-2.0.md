@@ -128,7 +128,7 @@ Publications <em class="rfc">must</em> either be:
 - a [Readium Web Publication](https://github.com/readium/webpub-manifest) with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
 - or an [OPDS Publication](#41-opds-publication)   
 
-Each publication listed in an OPDS feed <em class="rfc">must</em> contain an `images` collection.
+Each publication listed in an OPDS feed <em class="rfc">should</em> contain an `images` collection.
 
 **Example**
 
