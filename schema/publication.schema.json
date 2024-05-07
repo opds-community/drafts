@@ -83,8 +83,7 @@
   },
   "required": [
     "metadata",
-    "links",
-    "images"
+    "links"
   ],
   "additionalProperties": {
     "$ref": "https://readium.org/webpub-manifest/schema/subcollection.schema.json"
