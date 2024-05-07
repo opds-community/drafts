@@ -146,7 +146,7 @@ Publications <em class="rfc">must</em> either be:
 - a [Readium Web Publication](https://github.com/readium/webpub-manifest) with no restrictions in terms of access (no payment, no credentials required, no limitations whatsoever)
 - or an [OPDS Publication](#51-opds-publication)   
 
-Each publication listed in an OPDS feed <em class="rfc">must</em> contain an `images` collection.
+Each publication listed in an OPDS feed <em class="rfc">should</em> contain an `images` collection.
 
 **Example**
 
@@ -192,7 +192,7 @@ An `images` collection is meant to support responsive images across all types of
 
 Link Objects in `images` <em class="rfc">may</em> include any number of image format, resolution or aspect ratio.
 
-At least one image resource <em class="rfc">must</em> use one of the following formats: `image/jpeg`, `image/png` or `image/gif`.
+At least one image resource <em class="rfc">must</em> use one of the following formats: `image/jpeg`, `image/avif`, `image/png` or `image/gif`.
 
 **Example**
 
