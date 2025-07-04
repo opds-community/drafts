@@ -37,11 +37,11 @@ For example, in the case of a publication available either as EPUB or PDF protec
   "type": "application/opds-publication+json",
   "properties": {
     "indirectAcquisition": [
-	   {
-	     "type": "application/vnd.readium.lcp.license.v1.0+json",
-	     "child": [{"type": "application/epub+zip"}, {"type": "application/pdf"}]
-	   }
-	]
+      {
+        "type": "application/vnd.readium.lcp.license.v1.0+json",
+        "child": [{"type": "application/epub+zip"}, {"type": "application/pdf"}]
+      }
+    ]
   }
 }
 ```
@@ -59,11 +59,7 @@ A successful interaction would therefore include two acquisition links in the OP
       "since": "2025-07-02T14:46:46.889Z",
       "until": "2025-08-01T14:46:46.889Z"
     },
-    "indirectAcquisition": [
-      {
-        "type": "application/epub+zip"
-      }
-    ],
+    "indirectAcquisition": [{"type": "application/epub+zip"}],
     "lcp_hashed_passphrase": "+usAylGL6nyxGn7zH7YYO0ibG26tt5K+xkoDs/b/gKg="
   }
 }
@@ -77,19 +73,15 @@ A successful interaction would therefore include two acquisition links in the OP
       "since": "2025-07-02T14:46:46.889Z",
       "until": "2025-08-01T14:46:46.889Z"
     },
-    "indirectAcquisition": [
-      {
-        "type": "application/pdf"
-      }
-    ],
+    "indirectAcquisition": [{"type": "application/pdf"}],
     "lcp_hashed_passphrase": "+usAylGL6nyxGn7zH7YYO0ibG26tt5K+xkoDs/b/gKg="
   }
 }
 ```
 
-Borrow links also usually require authentication from the client using [Authentication for OPDS 1.0](authentication-for-opds-1.0). 
+Borrow links usually require authentication from the client using [Authentication for OPDS 1.0](authentication-for-opds-1.0). 
 
-In order to optimize this interaction, this document recommends using an `authenticate` property to advise the client as well:
+In order to optimize this interaction, this document recommends using the `authenticate` hint:
 
 ```json
 {
@@ -99,19 +91,136 @@ In order to optimize this interaction, this document recommends using an `authen
   "properties": {
     "authenticate": "https://example.com/authentication"
     "indirectAcquisition": [
-	   {
-	     "type": "application/vnd.readium.lcp.license.v1.0+json",
-	     "child": [{"type": "application/epub+zip"}, {"type": "application/pdf"}]
-	   }
-	]
+      {
+        "type": "application/vnd.readium.lcp.license.v1.0+json",
+        "child": [{"type": "application/epub+zip"}, {"type": "application/pdf"}]
+      }
+    ]
   }
 }
 ```
 
-## 2. Bookshelf and Profile
+## 2. Bookshelf
+
+Allowing users to read on any device is one of the core principles of OPDS.
+
+For catalogs that allow users to borrow books, this means that all loans (and holds) must show up in an OPDS bookshelf where they can be freely downloaded again.
+
+To maximize the discoverability of the user's bookshelf, catalogs must include a link to this bookshelf in their [Authentication Document](../authentication-for-opds-1.0.md#2-authentication-document):
+
+```json
+{
+  "id": "https://example.com/authentication",
+  "title": "Public Library",
+  "description": "Enter a valid library card number and PIN code to authenticate on our service.",
+  "links": [
+    {
+      "rel": "http://opds-spec.org/shelf", 
+      "href": "https://example.com/user/loans", 
+      "type": "application/opds+json"
+    }
+  ],
+  "authentication": [
+    {
+      "type": "http://opds-spec.org/auth/basic",
+      "labels": {
+        "login": "Library card",
+        "password": "PIN"
+      }
+    }
+  ]
+}
+```
+
+In addition, it's also recommended to include a link to this bookshelf in all OPDS feeds returned by a catalog:
+
+```json
+{
+  "rel": "http://opds-spec.org/shelf", 
+  "href": "https://example.com/user/loans", 
+  "type": "application/opds+json",
+  "properties": {
+    "authenticate": "https://example.com/authentication"
+  }
+ }
+```
+
+If a bookshelf can grow to contain more than a few publications at a time, it's recommended to support both [facets](./opds-2.0.md#24-facets) and [search](./opds-2.0.md#3-search) (scoped to the bookshelf rather than the entire catalog).
+
+
+## 3. Profile
+
+Catalogs that offer the ability to borrow publications may also need to enforce limitations to the number of loans (and holds) allowed at any given time.
+
+To convey this information to clients, catalogs should implement a [User Profile](./opds-user-profile-1.0.md) that can be discovered through the Authentication Document:
+
+```json
+{
+  "id": "https://example.com/authentication",
+  "title": "Public Library",
+  "description": "Enter a valid library card number and PIN code to authenticate on our service.",
+  "links": [
+    {
+      "rel": "http://opds-spec.org/shelf", 
+      "href": "https://example.com/user/loans", 
+      "type": "application/opds+json"
+    },
+    {
+      "rel": "profile", 
+      "href": "https://example.com/user/profile", 
+      "type": "application/opds-profile+json"
+    }
+  ],
+  "authentication": [
+    {
+      "type": "http://opds-spec.org/auth/basic",
+      "labels": {
+        "login": "Library card",
+        "password": "PIN"
+      }
+    }
+  ]
+}
+```
+
+All fields are optional in this User Profile, but it's recommended to include at least a `name` and a link where the user can edit their profile:
+
+```json
+{
+  "name": "John Smith",
+  "links": [
+    {
+      "rel": "edit",
+      "href": "https://example.com/user/edit",
+      "type": "text/html"
+    }
+  ]
+ }
+```
+
+If the catalog enforces a maximum number of loans at any given time, it must also include a `loans` object that indicates the total and remaining number of loans:
+
+```
+{
+  "name": "John Smith",
+  "links": [
+    {
+      "rel": "edit",
+      "href": "https://example.com/user/edit",
+      "type": "text/html"
+    }
+  ],
+  "loans": {
+    "total": 10,
+    "available": 5
+  }
+}
+```
+
+## 4. Holds
 
 TODO
 
-## 3. Holds
+## Appendix A - Catalog examples
 
-TODO
+* [🇧🇪 Lirtuel](https://www.lirtuel.be/v1/home.opds2)

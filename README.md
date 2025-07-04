@@ -2,14 +2,20 @@
 
 ## Active
 
-- [OPDS 2.0](https://drafts.opds.io/opds-2.0)
-- [Authentication for OPDS 1.0](https://drafts.opds.io/authentication-for-opds-1.0)
-- [Open Distribution to Libraries 1.0](https://drafts.opds.io/odl-1.0)
+- [OPDS 2.0](opds-2.0.md)
+- [Authentication for OPDS 1.0](authentication-for-opds-1.0.md)
+- [Open Distribution to Libraries 1.0](odl-1.0.md)
+- [OPDS User Profile](opds-user-profile-1.0.md)
+
+
+## Best practices
+
+- [Best Practices: Borrowing a Publication in OPDS 2.0](./best-practices/borrowing.md)
 
 ## Technical Notes
 
 - [OPDS for Library Patrons](https://github.com/NYPL-Simplified/Simplified/wiki/OPDS-For-Library-Patrons)
-- [OPDS User Profile](https://drafts.opds.io/opds-user-profile-1.0)
+
 
 ## Getting Involved
 
