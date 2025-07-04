@@ -2,11 +2,11 @@
 
 With wide adoption from public libraries in multiple countries, borrowing has become one of the most common use-cases for OPDS 2.0.
 
-This document covers best practices that implementers should be aware of when implementing this use case.
+This document covers best practices that catalogs and clients should be aware of when implementing this use case.
 
-## 1. Borrow links
+## 1. Borrow Links
 
-OPDS 2.0 requires publications to include at least one [acquisition link](../opds-2.0.md#53-acquisition-links). 
+OPDS 2.0 requires publications to include at least one [Acquisition Link](../opds-2.0.md#53-acquisition-links). 
 
 For publications that can be borrowed, this means using `http://opds-spec.org/acquisition/borrow` as the `rel` value of a Link Object.
 
@@ -62,7 +62,7 @@ A successful interaction would therefore include two acquisition links in the OP
     "indirectAcquisition": [{"type": "application/epub+zip"}],
     "lcp_hashed_passphrase": "+usAylGL6nyxGn7zH7YYO0ibG26tt5K+xkoDs/b/gKg="
   }
-}
+},
 {
   "href": "https://example.com/download/pdf",
   "rel": "http://opds-spec.org/acquisition",
@@ -79,9 +79,9 @@ A successful interaction would therefore include two acquisition links in the OP
 }
 ```
 
-Borrow links usually require authentication from the client using [Authentication for OPDS 1.0](authentication-for-opds-1.0). 
+Borrow links usually require authentication from the client using [Authentication for OPDS 1.0](../authentication-for-opds-1.0). 
 
-In order to optimize this interaction, this document recommends using the `authenticate` hint:
+In order to optimize this interaction, catalogs should use the `authenticate` property and identify the Authentication Document involved in this process.
 
 ```json
 {
@@ -89,7 +89,7 @@ In order to optimize this interaction, this document recommends using the `authe
   "rel": "http://opds-spec.org/acquisition/borrow",
   "type": "application/opds-publication+json",
   "properties": {
-    "authenticate": "https://example.com/authentication"
+    "authenticate": "https://example.com/authentication",
     "indirectAcquisition": [
       {
         "type": "application/vnd.readium.lcp.license.v1.0+json",
@@ -145,14 +145,14 @@ In addition, it's also recommended to include a link to this bookshelf in all OP
  }
 ```
 
-If a bookshelf can grow to contain more than a few publications at a time, it's recommended to support both [facets](./opds-2.0.md#24-facets) and [search](./opds-2.0.md#3-search) (scoped to the bookshelf rather than the entire catalog).
+If a bookshelf can grow to contain more than a few publications at a time, it's recommended to support both [facets](../opds-2.0.md#24-facets) and [search](../opds-2.0.md#3-search) (scoped to the bookshelf rather than the entire catalog).
 
 
 ## 3. Profile
 
 Catalogs that offer the ability to borrow publications may also need to enforce limitations to the number of loans (and holds) allowed at any given time.
 
-To convey this information to clients, catalogs should implement a [User Profile](./opds-user-profile-1.0.md) that can be discovered through the Authentication Document:
+To convey this information to clients, catalogs should implement a [User Profile](../opds-user-profile-1.0.md) that can be discovered through the [Authentication Document](../authentication-for-opds-1.0.md#2-authentication-document):
 
 ```json
 {
@@ -219,8 +219,132 @@ If the catalog enforces a maximum number of loans at any given time, it must als
 
 ## 4. Holds
 
-TODO
+In some cases, publications have limitations that can force a catalog to implement a hold queue.
 
-## Appendix A - Catalog examples
+When a publications is unavailable, catalogs must use the `availability` object in the Borrow Link to indicate this information where the `state` is set to `unavailable`.
 
-* [🇧🇪 Lirtuel](https://www.lirtuel.be/v1/home.opds2)
+Catalogs should also include additional context to the user, such as:
+
+* an estimated availability data using `until`
+* and the length of the hold queue using the `holds` object and the `total` property
+
+```json
+{
+  "href": "https://example.com/borrow",
+  "rel": "http://opds-spec.org/acquisition/borrow",
+  "type": "application/opds-publication+json",
+  "properties": {
+    "availability": {
+      "state": "unavailable",
+      "until": "2025-12-01",
+      "holds": {
+        "total": 12
+      }
+    },
+    "authenticate": "https://example.com/authentication",
+    "indirectAcquisition": [
+      {
+        "type": "application/vnd.readium.lcp.license.v1.0+json",
+        "child": [{"type": "application/epub+zip"}]
+      }
+    ]
+  }
+}
+```
+
+Placing a hold successfully must return an updated OPDS Publication where the Borrow Link has been updated with a new availability `state` set to `reserved`.
+
+At that time, the hold should also be automatically added to the user's bookshelf, to allow them to track it.
+
+Catalogs should also include the position of the patron in the hold queue using `position`.
+
+If the catalog allows the patron to cancel a hold, it should include the `cancellable` property as well.
+
+```json
+{
+  "href": "https://example.com/borrow",
+  "rel": "http://opds-spec.org/acquisition/borrow",
+  "type": "application/opds-publication+json",
+  "properties": {
+    "availability": {
+      "state": "reserved",
+      "until": "2025-12-01",
+      "holds": {
+        "total": 12
+        "position": 12
+      }
+    },
+    "cancellable": true,
+    "authenticate": "https://example.com/authentication",
+    "indirectAcquisition": [
+      {
+        "type": "application/vnd.readium.lcp.license.v1.0+json",
+        "child": [{"type": "application/epub+zip"}]
+      }
+    ]
+  }
+}
+```
+
+Sending a `DELETE` request to the URL will cancel the hold and return an updated OPDS Publication where the `state` is no longer set to `reserved`.
+
+When the user reaches the head of the hold queue and the publication becomes available to them, the catalog must replace the Borrow Link with a Download Link.
+
+It is recommended to also include the date where the loan started using `since` and the date where the loan ends using `until`.
+
+
+```json
+{
+  "href": "https://example.com/download/epub",
+  "rel": "http://opds-spec.org/acquisition",
+  "type": "application/vnd.readium.lcp.license.v1.0+json",
+  "properties": {
+    "availability": {
+      "state": "available",
+      "since": "2025-12-02T14:46:46.889Z",
+      "until": "2025-12-23T14:46:46.889Z"
+    },
+    "indirectAcquisition": [{"type": "application/epub+zip"}],
+    "lcp_hashed_passphrase": "+usAylGL6nyxGn7zH7YYO0ibG26tt5K+xkoDs/b/gKg="
+  }
+}
+```
+
+Some catalogs may require the user to confirm their loan when they reach the head of the hold queue. 
+
+To do so, these catalogs may use an intermediary state using `ready` where the loan must be confirmed by the user. 
+
+In this case, they must also include the date and time where the loan can no longer be confirmed and will be passed to the next user in the hold queue using `until`.
+
+In this state, the user may still cancel their hold if they're no longer interested.
+
+```json
+{
+  "href": "https://example.com/borrow",
+  "rel": "http://opds-spec.org/acquisition/borrow",
+  "type": "application/opds-publication+json",
+  "properties": {
+    "availability": {
+      "state": "ready",
+      "until": "2025-12-04T14:46:46.889Z"
+    },
+    "cancellable": true,
+    "authenticate": "https://example.com/authentication",
+    "indirectAcquisition": [
+      {
+        "type": "application/vnd.readium.lcp.license.v1.0+json",
+        "child": [{"type": "application/epub+zip"}]
+      }
+    ]
+  }
+}
+```
+
+Whenever a hold becomes available for a user (whether it needs to be confirmed or automatically turned into a loan), catalogs should contact the user to warn them.
+
+Clients may also fetch a user's bookshelf on a regular basis to warn the user of these changes in a publication's availability.
+
+
+## Appendix A - Catalog Examples
+
+* 🇧🇪 [Lirtuel](https://www.lirtuel.be/v1/home.opds2)
