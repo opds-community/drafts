@@ -1,4 +1,4 @@
-# Best Practices: Borrowing a Publication in OPDS 2.0
+# Best Practices: Borrowing Publications with OPDS 2.0
 
 With wide adoption from public libraries in multiple countries, borrowing has become one of the most common use-cases for OPDS 2.0.
 
@@ -10,15 +10,7 @@ OPDS 2.0 requires publications to include at least one [Acquisition Link](../opd
 
 For publications that can be borrowed, this means using `http://opds-spec.org/acquisition/borrow` as the `rel` value of a Link Object.
 
-While the specification is neutral about what acquisition links should return, this document recommends returning an OPDS publication:
-
-```json
-{
-  "href": "https://example.com/borrow",
-  "rel": "http://opds-spec.org/acquisition/borrow",
-  "type": "application/opds-publication+json"
-}
-```
+While the specification is neutral about what acquisition links should return, this document recommends returning an OPDS publication using `application/opds-publication+json` in `type`.
 
 Returning an OPDS publication provides several benefits over returning the publication itself:
 
@@ -26,7 +18,7 @@ Returning an OPDS publication provides several benefits over returning the publi
 - if the publication is protected by Readium LCP, it also allows [the auto-discovery of the user's passphrase](https://readium.org/lcp-specs/notes/lcp-key-retrieval.html#including-a-hashed-passphrase-in-an-opds-publication)
 - and can include additional information, such as the expiration date for a loan
 
-In order to properly set expectations for clients, borrow links should also include which publication formats will be available using [`indirectAcquisition`](https://drafts.opds.io/opds-2.0#53-acquisition-links).
+In order to properly set expectations for clients, borrow links must also include which publication formats will be available using [`indirectAcquisition`](https://drafts.opds.io/opds-2.0#53-acquisition-links).
 
 For example, in the case of a publication available either as EPUB or PDF protected by LCP:
 
@@ -152,7 +144,7 @@ If a bookshelf can grow to contain more than a few publications at a time, it's 
 
 Catalogs that offer the ability to borrow publications may also need to enforce limitations to the number of loans (and holds) allowed at any given time.
 
-To convey this information to clients, catalogs should implement a [User Profile](../opds-user-profile-1.0.md) that can be discovered through the [Authentication Document](../authentication-for-opds-1.0.md#2-authentication-document):
+To convey this information to clients, catalogs should implement a [User Profile](../opds-user-profile-1.0.md) that must be discoverable through the [Authentication Document](../authentication-for-opds-1.0.md#2-authentication-document) with a link where `rel` is set to `profile` and `type` set to `application/opds-profile+json`.
 
 ```json
 {
@@ -198,7 +190,7 @@ All fields are optional in this User Profile, but it's recommended to include at
  }
 ```
 
-If the catalog enforces a maximum number of loans at any given time, it must also include a `loans` object that indicates the total and remaining number of loans:
+If the catalog enforces a maximum number of loans and/or holds, it should also include this information in the User Profile.
 
 ```
 {
@@ -213,6 +205,10 @@ If the catalog enforces a maximum number of loans at any given time, it must als
   "loans": {
     "total": 10,
     "available": 5
+  },
+  "holds": {
+    "total": 5,
+    "available": 2
   }
 }
 ```
@@ -342,9 +338,13 @@ In this state, the user may still cancel their hold if they're no longer interes
 
 Whenever a hold becomes available for a user (whether it needs to be confirmed or automatically turned into a loan), catalogs should contact the user to warn them.
 
-Clients may also fetch a user's bookshelf on a regular basis to warn the user of these changes in a publication's availability.
+Clients may also fetch a user's bookshelf on a regular basis to warn the user of these changes to a publication's availability.
 
 
 ## Appendix A - Catalog Examples
 
 * 🇧🇪 [Lirtuel](https://www.lirtuel.be/v1/home.opds2)
+
+## Appendix B - Error Handling
+
+TODO

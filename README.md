@@ -10,7 +10,7 @@
 
 ## Best practices
 
-- [Best Practices: Borrowing a Publication in OPDS 2.0](./best-practices/borrowing.md)
+- [Best Practices: Borrowing Publications with OPDS 2.0](./best-practices/borrowing.md)
 
 ## Technical Notes
 
