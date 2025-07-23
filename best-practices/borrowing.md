@@ -71,9 +71,11 @@ A successful interaction would therefore include two acquisition links in the OP
 }
 ```
 
-Borrow links usually require authentication from the client using [Authentication for OPDS 1.0](../authentication-for-opds-1.0). 
+## 2. Authentication
 
-In order to optimize this interaction, catalogs should use the `authenticate` property and identify the Authentication Document involved in this process.
+Borrow links usually require authentication from the client using [Authentication for OPDS 1.0](../authentication-for-opds-1.0.md). 
+
+In order to optimize this interaction, catalogs should use the `authenticate` property and identify the [Authentication Document](../authentication-for-opds-1.0.md#2-authentication-document) that will be returned by the server.
 
 ```json
 {
@@ -92,7 +94,11 @@ In order to optimize this interaction, catalogs should use the `authenticate` pr
 }
 ```
 
-## 2. Bookshelf
+Using this hint, catalogs can also introduce optional authentication throughout their catalog.
+
+For example, a server could serve a list of custom recommendations for a logged in user, while everyone else would see a default list of publications.
+
+## 3. Bookshelf
 
 Allowing users to read on any device is one of the core principles of OPDS.
 
@@ -140,7 +146,7 @@ In addition, it's also recommended to include a link to this bookshelf in all OP
 If a bookshelf can grow to contain more than a few publications at a time, it's recommended to support both [facets](../opds-2.0.md#24-facets) and [search](../opds-2.0.md#3-search) (scoped to the bookshelf rather than the entire catalog).
 
 
-## 3. Profile
+## 4. Profile
 
 Catalogs that offer the ability to borrow publications may also need to enforce limitations to the number of loans (and holds) allowed at any given time.
 
@@ -192,7 +198,7 @@ All fields are optional in this User Profile, but it's recommended to include at
 
 If the catalog enforces a maximum number of loans and/or holds, it should also include this information in the User Profile.
 
-```
+```json
 {
   "name": "John Smith",
   "links": [
@@ -213,7 +219,7 @@ If the catalog enforces a maximum number of loans and/or holds, it should also i
 }
 ```
 
-## 4. Holds
+## 5. Holds
 
 In some cases, publications have limitations that can force a catalog to implement a hold queue.
 
