@@ -85,7 +85,7 @@ To maximize the discoverability of the user's bookshelf, catalogs must include a
   "links": [
     {
       "rel": "http://opds-spec.org/shelf", 
-      "href": "https://example.com/user/loans", 
+      "href": "https://example.com/user/shelf", 
       "type": "application/opds+json"
     }
   ],
@@ -115,6 +115,24 @@ In addition, it's also recommended to include a link to this bookshelf in all OP
 
 It's recommended to support both [facets](../opds-2.0.md#24-facets) and [search](../opds-2.0.md#3-search) scoped to the bookshelf rather than the entire catalog.
 
+## 4. Callbacks
+
+Once the payment has been completed, a catalog will usually display download links for the newly purchased publications.
+
+In addition to these links, a catalog may also display a callback using the `opds://` URI scheme. 
+
+This callback should either point to a specific publication or to a user's bookshelf and may require the user to authenticate if they haven't previously done so.
+
+**Example: Link to a bookshelf from an HTML page**
+
+```html
+<a href="opds://example.com/user/shelf">Download in your reading app</a>
+```
+
+Through these callbacks, OPDS clients should:
+
+- allow the user to download their publications
+- and automatically discover new OPDS bookshelves
 
 ## Appendix A - Catalog Examples
 
