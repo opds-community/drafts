@@ -14,7 +14,7 @@ For publications that can be purchased, this means using `http://opds-spec.org/a
 
 Since buying can be a complex operation that can require the user to accept specific terms and set up a payment option, most catalogs will rely on a browser to finalize the transaction.
 
-This means that buy link usually rely on `text/html` in `type` plus [`indirectAcquisition`](https://drafts.opds.io/opds-2.0#53-acquisition-links) to indicate to the user the format and/or DRM of what they're buying.
+This means that buy links usually rely on `text/html` in `type` plus [`indirectAcquisition`](https://drafts.opds.io/opds-2.0#53-acquisition-links) to indicate to the user the format and/or DRM of what they're buying.
 
 **Example: Buy link for an LCP protected EPUB**
 
@@ -40,7 +40,7 @@ This means that buy link usually rely on `text/html` in `type` plus [`indirectAc
 
 ## 2. Price and Currency
 
-OPDS 2.0 supports a [`price`]() object in the `properties` of a link where:
+OPDS 2.0 supports a [`price`](https://github.com/opds-community/drafts/blob/main/schema/properties.schema.json#L12-L39) object in the `properties` of a link where:
 
 * `value` contains the price (expressed using a number)
 * and `currency` contains the currency (using a three letter code)
@@ -133,6 +133,10 @@ Through these callbacks, OPDS clients should:
 
 - allow the user to download their publications
 - and automatically discover new OPDS bookshelves
+
+
+## 5. Buying Directly in OPDS
+
 
 ## Appendix A - Catalog Examples
 
