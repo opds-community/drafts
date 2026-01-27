@@ -3,7 +3,8 @@
 ## Active
 
 - [OPDS 2.0](opds-2.0.md)
-- [Authentication for OPDS 1.0](authentication-for-opds-1.0.md)
+- [OPDS Authentication 1.0](authentication-for-opds-1.0.md)
+- [OPDS Progression 1.0](opds-progression-1.0.md)
 - [Open Distribution to Libraries 1.0](odl-1.0.md)
 - [OPDS User Profile 1.0](opds-user-profile-1.0.md)
 
