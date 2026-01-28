@@ -15,7 +15,7 @@ It can be detected using:
 
 ```json
 {
-  "href": "https://example.com/1/position",
+  "href": "https://example.com/019c0435-5361-7e59-89b7-4ee01a6d87b8/progression",
   "type": "application/opds-progression+json",
   "rel": "http://opds-spec.org/progression"
 }
@@ -27,7 +27,7 @@ When authentication is required, OPDS Catalogs should use an `authenticate` hint
 
 ```json
 {
-  "href": "https://example.com/1/position",
+  "href": "https://example.com/019c0435-5361-7e59-89b7-4ee01a6d87b8/progression",
   "type": "application/opds-progression+json",
   "rel": "http://opds-spec.org/progression",
   "properties": {
@@ -52,10 +52,10 @@ Fragments are extensible by nature but the following well-known fragments have b
 
 | Specification | Scope | Examples |
 | ------------- | ----- | ------- |
-| [HTML](https://html.spec.whatwg.org/) | HTML | `id` |
+| [HTML](https://html.spec.whatwg.org/) | HTML | `#id` |
 | [Scroll to Text Fragment](https://wicg.github.io/scroll-to-text-fragment/) | Text |  `#:~:text=an%20example` |
-| [Media Fragment URI 1.0](https://www.w3.org/TR/media-frags/) | Audio, Video and Images | `t=67`, `xywh=160,120,320,240`|
-| [PDF](http://tools.ietf.org/rfc/rfc3778) | PDF | `page=12` |
+| [Media Fragment URI 1.0](https://www.w3.org/TR/media-frags/) | Audio, Video and Images | `#t=67`, `#xywh=160,120,320,240`|
+| [PDF](http://tools.ietf.org/rfc/rfc3778) | PDF | `#page=12` |
 
 ### Device Object
 
@@ -90,7 +90,7 @@ Fragments are extensible by nature but the following well-known fragments have b
     "name": "Ebook Reader (Pixel 10 Pro)"
   },
   "progression": 0.0174920,
-  "fragments": ["t=40.274", "#par36"]
+  "fragments": ["#t=40.274", "#par36"]
 }
 ```
 
@@ -104,7 +104,7 @@ Fragments are extensible by nature but the following well-known fragments have b
     "name": "Web Reader"
   },
   "progression": 0.048204,
-  "fragments": ["page=17"]
+  "fragments": ["#page=17"]
 }
 ```
 
@@ -118,7 +118,7 @@ Fragments are extensible by nature but the following well-known fragments have b
     "name": "Audiobook Player (Sonos Era 300)"
   },
   "progression": 0.72370325,
-  "fragments": ["t=849.250"]
+  "fragments": ["#t=849.250"]
 }
 ```
 
