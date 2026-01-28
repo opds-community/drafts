@@ -67,7 +67,7 @@ Fragments are extensible by nature but the following well-known fragments have b
 
 ### Examples
 
-*Example 2: Progression in an EPUB*
+*Example 3: Progression in an EPUB*
 
 ```json
 {
@@ -80,7 +80,7 @@ Fragments are extensible by nature but the following well-known fragments have b
 }
 ```
 
-*Example 3: Progression in an EPUB with Media Overlays*
+*Example 4: Progression in an EPUB with Media Overlays*
 
 ```json
 {
@@ -94,7 +94,7 @@ Fragments are extensible by nature but the following well-known fragments have b
 }
 ```
 
-*Example 4: Progression in a PDF*
+*Example 5: Progression in a PDF*
 
 ```json
 {
@@ -108,7 +108,7 @@ Fragments are extensible by nature but the following well-known fragments have b
 }
 ```
 
-*Example 5: Progression in an audiobook*
+*Example 6: Progression in an audiobook*
 
 ```json
 {
