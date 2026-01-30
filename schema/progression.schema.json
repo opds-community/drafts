@@ -4,6 +4,9 @@
   "title": "OPDS Progression Document",
   "type": "object",
   "properties": {
+    "title": {
+      "type": "string"
+    },
     "modified": {
       "type": "string",
       "format": "date-time"

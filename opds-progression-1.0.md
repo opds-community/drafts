@@ -43,6 +43,7 @@ When authentication is required, OPDS Catalogs should use an `authenticate` hint
 
 | Key | Definition | Format | Required |
 | --- | ---------- | ------ | -------- |
+| `title` | Contains text that can be relevant to identify or contextualize the progression. | String | No |
 | `modified` | Timestamp for the last-known progression. | ISO 8601 time and date | Yes |
 | `device` | Identifies the device that provided the last-known progression. | [Device Object](#device-object) | Yes |
 | `progression` | Total progression in the publication expressed as a percentage (%). | Float between 0 and 1 | Yes |
@@ -71,6 +72,7 @@ Fragments are extensible by nature but the following well-known fragments have b
 
 ```json
 {
+  "title": "Chapter 1 - A New Dawn",
   "modified": "2026-01-27T11:00:00Z",
   "device": {
     "id": "urn:uuid:019c0047-cc8d-7ec4-a3c3-938ccadc020a",
@@ -84,6 +86,7 @@ Fragments are extensible by nature but the following well-known fragments have b
 
 ```json
 {
+  "title": "Chapter 1 - A New Dawn",
   "modified": "2026-01-28T00:24:00Z",
   "device": {
     "id": "urn:uuid:019c0047-cc8d-7ec4-a3c3-938ccadc020a",
@@ -112,6 +115,7 @@ Fragments are extensible by nature but the following well-known fragments have b
 
 ```json
 {
+  "title": "Part 4",
   "modified": "2025-12-25T12:00:00Z",
   "device": {
     "id": "urn:uuid:019c0049-6e8c-745c-adb1-5b03f8ad50c4",
