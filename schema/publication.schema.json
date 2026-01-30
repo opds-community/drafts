@@ -67,6 +67,7 @@
                   "image/webp",
                   "image/avif",
                   "image/png",
+                  "image/jxl",
                   "image/gif"
                 ]
               }
