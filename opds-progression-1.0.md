@@ -46,7 +46,7 @@ When authentication is required, OPDS Catalogs should use an `authenticate` hint
 | `modified` | Timestamp for the last-known progression. | ISO 8601 time and date | Yes |
 | `device` | Identifies the device that provided the last-known progression. | [Device Object](#device-object) | Yes |
 | `progression` | Total progression in the publication expressed as a percentage (%). | Float between 0 and 1 | Yes |
-| `fragments` | Media-specific fragments. | Array of fragments using strings | No |
+| `references` | References inside the publication. | Array of URI references | No |
 
 Fragments are extensible by nature but the following well-known fragments have been identified while writing up this document:
 
@@ -90,7 +90,7 @@ Fragments are extensible by nature but the following well-known fragments have b
     "name": "Ebook Reader (Pixel 10 Pro)"
   },
   "progression": 0.0174920,
-  "fragments": ["#t=40.274", "#par36"]
+  "references": ["#t=40.274", "chapter1.html#par36"]
 }
 ```
 
@@ -104,7 +104,7 @@ Fragments are extensible by nature but the following well-known fragments have b
     "name": "Web Reader"
   },
   "progression": 0.048204,
-  "fragments": ["#page=17"]
+  "references": ["#page=17"]
 }
 ```
 
@@ -118,7 +118,7 @@ Fragments are extensible by nature but the following well-known fragments have b
     "name": "Audiobook Player (Sonos Era 300)"
   },
   "progression": 0.72370325,
-  "fragments": ["#t=849.250"]
+  "references": ["#t=849.250"]
 }
 ```
 
