@@ -66,6 +66,7 @@
                   "image/jpeg",
                   "image/avif",
                   "image/png",
+                  "image/svg+xml",
                   "image/gif"
                 ]
               }

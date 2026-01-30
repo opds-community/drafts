@@ -192,7 +192,7 @@ An `images` collection is meant to support responsive images across all types of
 
 Link Objects in `images` <em class="rfc">may</em> include any number of image format, resolution or aspect ratio.
 
-At least one image resource <em class="rfc">must</em> use one of the following formats: `image/jpeg`, `image/avif`, `image/png` or `image/gif`.
+At least one image resource <em class="rfc">must</em> use one of the following formats: `image/jpeg`, `image/avif`, `image/png`, `image/svg+xml` or `image/gif`.
 
 **Example**
 
