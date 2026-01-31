@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://drafts.opds.io/schema/availability.schema.json",
+  "title": "Availability Object",
+  "description": "Indicates the availability of a given resource",
+  "type": "object",
+  "properties": {
+    "state": {
+      "type": "string",
+      "enum": [
+        "available",
+        "unavailable",
+        "reserved",
+        "ready"
+      ]
+    },
+    "detail": {
+      "description": "Provides a human-readable message regarding the availability of a resource",
+      "type": "string"
+    },
+    "reason": {
+      "description": "Provides a machine-readable string that identifies the reason why a resource is available/unavailable",
+      "type": "string",
+      "format": "uri"
+    },
+    "since": {
+      "description": "Timestamp for the previous state change",
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "date"
+        },
+        {
+          "format": "date-time"
+        }
+      ]
+    },
+    "until": {
+      "description": "Timestamp for the next state change",
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "date"
+        },
+        {
+          "format": "date-time"
+        }
+      ]
+    }
+  },
+  "required": [
+    "state"
+  ]
+}

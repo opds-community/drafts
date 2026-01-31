@@ -78,46 +78,7 @@
       }
     },
     "availability": {
-      "description": "Indicates the availability of a given resource",
-      "type": "object",
-      "properties": {
-        "state": {
-          "type": "string",
-          "enum": [
-            "available",
-            "unavailable",
-            "reserved",
-            "ready"
-          ]
-        },
-        "since": {
-          "description": "Timestamp for the previous state change",
-          "type": "string",
-          "anyOf": [
-            {
-              "format": "date"
-            },
-            {
-              "format": "date-time"
-            }
-          ]
-        },
-        "until": {
-          "description": "Timestamp for the next state change",
-          "type": "string",
-          "anyOf": [
-            {
-              "format": "date"
-            },
-            {
-              "format": "date-time"
-            }
-          ]
-        }
-      },
-      "required": [
-        "state"
-      ]
+      "$ref": "availability.schema.json"
     }
   }
 }
