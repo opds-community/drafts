@@ -146,13 +146,55 @@ In general, it is recommended to use more specific references over more generic 
 }
 ```
 
+*Example 7: Progression in a Web Publication*
+
+```json
+{
+  "modified": "2026-02-01T16:00:00Z",
+  "device": {
+    "id": "https://reader.example.com",
+    "name": "Web Reader"
+  },
+  "progression": 0.029402,
+  "references": ["https://example.com/chapter1"]
+}
+```
+
 # Interactions
+
+## Fetching a progression
 
 | HTTP Verb | Expected behavior | 
 | --------- | ----------------- | 
 | `GET` | Client requests the last-known progression from the server. If this information is more up-to-date than what the client has, it requests to the user if they'd like to jump to the new progression. |
+
+### Success codes
+
+| HTTP Status Code | Payload | 
+| ---------------- | ------- | 
+| `200 OK` | [Progression Document](#progression-document) or an empty payload|
+
+
+## Updating a progression
+
+| HTTP Verb | Expected behavior | 
+| --------- | ----------------- | 
 | `PUT` | Client sends the last-known progression to the server. Server determines whether the progression should be updated and returns a progression. |
 
+### Success codes
+
+| HTTP Status Code | Payload | 
+| ---------------- | ------- | 
+| `200 OK` | [Progression Document](#progression-document) |
+| `201 Created` | [Progression Document](#progression-document) |
+
+### Failure codes
+
+| HTTP Status Code | 
+| ---------------- | 
+| `400 Bad Request` |
+| `403 Forbidden` |
+| `409 Conflict` |
 
 # Appendix A - JSON Schema
 
