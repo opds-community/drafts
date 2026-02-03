@@ -71,7 +71,6 @@ This document has identified the following specifications for media fragments:
 | [HTML](https://html.spec.whatwg.org/) | HTML | `#id` |
 | [Scroll to Text Fragment](https://wicg.github.io/scroll-to-text-fragment/) | Text |  `#:~:text=an%20example` |
 | [Media Fragment URI 1.0](https://www.w3.org/TR/media-frags/) | Audio, Video and Images | `#t=67`, `#xywh=160,120,320,240`|
-| [PDF](http://tools.ietf.org/rfc/rfc3778) | PDF | `#page=12` |
 
 This document does not provide processing rules for clients or servers.
 
@@ -98,7 +97,8 @@ In general, it is recommended to use more specific references over more generic 
     "id": "urn:uuid:019c0047-cc8d-7ec4-a3c3-938ccadc020a",
     "name": "Ebook Reader (Pixel 10 Pro)"
   },
-  "progression": 0.0174920
+  "progression": 0.0174920,
+  "references": ["chapter1.html#:~:text=It%20was%20expected"]
 }
 ```
 
@@ -117,7 +117,7 @@ In general, it is recommended to use more specific references over more generic 
 }
 ```
 
-*Example 5: Progression in a PDF*
+*Example 5: Progression in a PDF on a Web Reader*
 
 ```json
 {
@@ -126,8 +126,7 @@ In general, it is recommended to use more specific references over more generic 
     "id": "https://reader.example.com",
     "name": "Web Reader"
   },
-  "progression": 0.048204,
-  "references": ["#page=17"]
+  "progression": 0.048204
 }
 ```
 
@@ -155,8 +154,8 @@ In general, it is recommended to use more specific references over more generic 
     "id": "https://reader.example.com",
     "name": "Web Reader"
   },
-  "progression": 0.029402,
-  "references": ["https://example.com/chapter1"]
+  "progression": 0.1,
+  "references": ["https://example.com/chapter1#:~:text=It%20was%20expected"]
 }
 ```
 
