@@ -71,6 +71,7 @@ This document has identified the following specifications for media fragments:
 | [HTML](https://html.spec.whatwg.org/) | HTML | `#id` |
 | [Scroll to Text Fragment](https://wicg.github.io/scroll-to-text-fragment/) | Text |  `#:~:text=an%20example` |
 | [Media Fragment URI 1.0](https://www.w3.org/TR/media-frags/) | Audio, Video and Images | `#t=67`, `#xywh=160,120,320,240`|
+| [PDF](https://www.rfc-editor.org/rfc/rfc8118.html#section-3) | PDF documents | `#page=6` |
 
 This document does not provide processing rules for clients or servers.
 
@@ -86,7 +87,7 @@ In general, it is recommended to use more specific references over more generic 
 
 ## Examples
 
-*Example 3: Progression in an EPUB*
+*Example 3: Progression in a reflowable EPUB*
 
 
 ```json
@@ -102,7 +103,7 @@ In general, it is recommended to use more specific references over more generic 
 }
 ```
 
-*Example 4: Progression in an EPUB with Media Overlays*
+*Example 4: Progression in a reflowable EPUB with Media Overlays*
 
 ```json
 {
@@ -117,7 +118,22 @@ In general, it is recommended to use more specific references over more generic 
 }
 ```
 
-*Example 5: Progression in a PDF on a Web Reader*
+*Example 5: Progression in a pre-paginated EPUB*
+
+```json
+{
+  "title": "Chapter 5 - A twist",
+  "modified": "2026-02-05T13:14:00Z",
+  "device": {
+    "id": "urn:uuid:019c0047-cc8d-7ec4-a3c3-938ccadc020a",
+    "name": "Ebook Reader (Pixel 10 Pro)"
+  },
+  "progression": 0.0528999,
+  "references": ["chapter5.html"]
+}
+```
+
+*Example 6: Progression in a PDF on a Web Reader*
 
 ```json
 {
@@ -126,11 +142,26 @@ In general, it is recommended to use more specific references over more generic 
     "id": "https://reader.example.com",
     "name": "Web Reader"
   },
-  "progression": 0.048204
+  "progression": 0.048204,
+  "references": ["#page=87"]
 }
 ```
 
-*Example 6: Progression in an audiobook*
+*Example 7: Progression in a CBZ*
+
+```json
+{
+  "modified": "2026-02-05T14:24:00Z",
+  "device": {
+    "id": "urn:uuid:019c2df6-90f8-7096-b162-a0e69cd52844",
+    "name": "Comics Reader"
+  },
+  "progression": 0.4999,
+  "references": ["page78.jxl"]
+}
+```
+
+*Example 8: Progression in an audiobook*
 
 ```json
 {
@@ -145,7 +176,7 @@ In general, it is recommended to use more specific references over more generic 
 }
 ```
 
-*Example 7: Progression in a Web Publication*
+*Example 9: Progression in a Web Publication*
 
 ```json
 {
