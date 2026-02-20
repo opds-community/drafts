@@ -192,6 +192,25 @@ In general, it is recommended to use more specific references over more generic 
 
 # Interactions
 
+## Payload
+
+Successful interactions must either return a [Progression Document](#progression-document) or an empty payload (when a progression hasn't been communicated to the service yet).
+
+If the interaction returns a `401 Unauthorized` code, the payload must contain an [OPDS Authentication Document](https://drafts.opds.io/authentication-for-opds-1.0.html).
+
+For any other error, the payload must contain a [Problem Details Object](https://datatracker.ietf.org/doc/html/rfc7807) with a `type` and `title`.
+
+This document defines a list of values for that implementations are strongly advised to follow.
+
+*Example 10: Problem Details Object*
+
+```json
+{
+  "type": "https://registry.opds.io/error#progression-date",
+  "title": "A more recent progression point is already available."
+}
+```
+
 ## Fetching a progression
 
 | HTTP Verb | Expected behavior | 
@@ -220,14 +239,15 @@ In general, it is recommended to use more specific references over more generic 
 
 ### Failure codes
 
-| HTTP Status Code | 
-| ---------------- | 
-| `400 Bad Request` |
-| `403 Forbidden` |
-| `409 Conflict` |
+| HTTP Status Code | Type | Title |
+| ---------------- | ---- | ----- |
+| `400 Bad Request` | <https://registry.opds.io/error#progression-invalid-payload> | Progression could not be updated due to an invalid payload. |
+| `403 Forbidden` | <https://registry.opds.io/error#progression-incorrect-user> | Progression could not be updated for the current user. |
+| `403 Forbidden` | <https://registry.opds.io/error#progression-locked> | Progression can no longer be updated for this publication. |
+| `409 Conflict` | <https://registry.opds.io/error#progression-date> | A more recent progression point is already available. |
 
 # Appendix A - JSON Schema
 
-A JSON Schema is available under version control at https://github.com/opds-community/drafts/blob/master/schema/progression.schema.json
+A JSON Schema is available under version control at <https://github.com/opds-community/drafts/blob/master/schema/progression.schema.json>
 
-For the purpose of validating an OPDS Authentication Document, use the following URL: https://drafts.opds.io/schema/progression.schema.json
+For the purpose of validating an OPDS Authentication Document, use the following URL: <https://drafts.opds.io/schema/progression.schema.json>
