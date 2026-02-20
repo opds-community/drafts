@@ -33,7 +33,7 @@
       "minimum": 0,
       "maximum": 1
     },
-    "refs": {
+    "references": {
       "type": "array",
       "items": {
         "type": "string",
