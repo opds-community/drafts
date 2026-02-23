@@ -45,7 +45,7 @@ When authentication is required, OPDS Catalogs should use an `authenticate` hint
 
 | Key | Definition | Format | Required |
 | --- | ---------- | ------ | -------- |
-| `title` | Contains text that can be relevant to identify or contextualize the progression. | String | No |
+| `title` | Contains text that can be relevant to identify or contextualize the progression, such as a chapter title. | String | No |
 | `modified` | Timestamp for the last-known progression. | ISO 8601 time and date | Yes |
 | `device` | Identifies the device that provided the last-known progression. | [Device Object](#device-object) | Yes |
 | `progression` | Total progression in the publication expressed as a percentage (%). | Float between 0 and 1 | Yes |
@@ -75,7 +75,7 @@ This document has identified the following specifications for media fragments:
 
 This document does not provide processing rules for clients or servers.
 
-In general, it is recommended to use more specific references over more generic one and to always fallback to `progression` when none of the URI references included in `references` can't be resolved.
+In general, it is recommended to use more specific references over more generic one and to always fallback to `progression` when none of the URI references included in `references` can be resolved.
 
 ## Device Object
 
@@ -250,4 +250,4 @@ This document defines a list of values for that implementations are strongly adv
 
 A JSON Schema is available under version control at <https://github.com/opds-community/drafts/blob/master/schema/progression.schema.json>
 
-For the purpose of validating an OPDS Authentication Document, use the following URL: <https://drafts.opds.io/schema/progression.schema.json>
+For the purpose of validating an OPDS Progression Document, use the following URL: <https://drafts.opds.io/schema/progression.schema.json>
