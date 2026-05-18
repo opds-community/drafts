@@ -493,7 +493,7 @@ All interactions with an ODL server <em class="rfc">must</em> use TLS 1.2 or lat
 * [JSON] [The application/json Media Type for JavaScript Object Notation (JSON)](https://www.ietf.org/rfc/rfc4627).
 * [LSD] [Readium License Status Document](https://readium.org/lcp-specs/lsd.html).
 * [OPDS] [OPDS Catalog 1.2](https://specs.opds.io/opds-1.2)
-* [OPDS-2] [OPDS Catalog 2.0](https://drafts.opds.io/opds-2.0)
+* [OPDS-2] [OPDS Catalog 2.0](https://specs.opds.io/opds-2.0)
 * [RFC2119] [Key words for use in RFCs to Indicate Requirement Levels](https://tools.ietf.org/html/rfc2119).
 * [RFC3987] [Internationalized Resource Identifiers (IRIs)](https://tools.ietf.org/html/rfc3987).
 * [RFC4287] [The Atom Syndication Format](https://tools.ietf.org/html/rfc4287).

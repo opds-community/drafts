@@ -6,7 +6,7 @@ This document covers best practices that catalogs and clients should be aware of
 
 ## 1. Borrow Links
 
-OPDS 2.0 requires publications to include at least one [Acquisition Link](../opds-2.0.md#53-acquisition-links). 
+OPDS 2.0 requires publications to include at least one [Acquisition Link](https://specs.opds.io/opds-2.0.md#53-acquisition-links). 
 
 For publications that can be borrowed, this means using `http://opds-spec.org/acquisition/borrow` as the `rel` value of a Link Object.
 
@@ -18,7 +18,7 @@ Returning an OPDS publication provides several benefits over returning the publi
 - if the publication is protected by Readium LCP, it also allows [the auto-discovery of the user's passphrase](https://readium.org/lcp-specs/notes/lcp-key-retrieval.html#including-a-hashed-passphrase-in-an-opds-publication)
 - and can include additional information, such as the expiration date for a loan
 
-In order to properly set expectations for clients, borrow links must also include which publication formats will be available using [`indirectAcquisition`](https://drafts.opds.io/opds-2.0#53-acquisition-links).
+In order to properly set expectations for clients, borrow links must also include which publication formats will be available using [`indirectAcquisition`](https://specs.opds.io/opds-2.0#53-acquisition-links).
 
 For example, in the case of a publication available either as EPUB or PDF protected by LCP:
 
@@ -143,7 +143,7 @@ In addition, it's also recommended to include a link to this bookshelf in all OP
  }
 ```
 
-If a bookshelf can grow to contain more than a few publications at a time, it's recommended to support both [facets](../opds-2.0.md#24-facets) and [search](../opds-2.0.md#3-search) (scoped to the bookshelf rather than the entire catalog).
+If a bookshelf can grow to contain more than a few publications at a time, it's recommended to support both [facets](https://specs.opds.io/opds-2.0.md#24-facets) and [search](https://specs.opds.io/opds-2.0.md#3-search) (scoped to the bookshelf rather than the entire catalog).
 
 
 ## 4. Profile

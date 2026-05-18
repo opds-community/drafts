@@ -8,13 +8,13 @@ This document covers best practices that catalogs and clients should be aware of
 
 ## 1. Buy Links
 
-OPDS 2.0 requires publications to include at least one [Acquisition Link](../opds-2.0.md#53-acquisition-links). 
+OPDS 2.0 requires publications to include at least one [Acquisition Link](https://specs.opds.io/opds-2.0.md#53-acquisition-links). 
 
 For publications that can be purchased, this means using `http://opds-spec.org/acquisition/buy` as the `rel` value of a Link Object.
 
 Since buying can be a complex operation that can require the user to accept specific terms and set up a payment option, most catalogs will rely on a browser to finalize the transaction.
 
-This means that buy links usually rely on `text/html` in `type` plus [`indirectAcquisition`](https://drafts.opds.io/opds-2.0#53-acquisition-links) to indicate to the user the format and/or DRM of what they're buying.
+This means that buy links usually rely on `text/html` in `type` plus [`indirectAcquisition`](https://specs.opds.io/opds-2.0#53-acquisition-links) to indicate to the user the format and/or DRM of what they're buying.
 
 **Example: Buy link for an LCP protected EPUB**
 
@@ -113,7 +113,7 @@ In addition, it's also recommended to include a link to this bookshelf in all OP
  }
 ```
 
-It's recommended to support both [facets](../opds-2.0.md#24-facets) and [search](../opds-2.0.md#3-search) scoped to the bookshelf rather than the entire catalog.
+It's recommended to support both [facets](https://specs.opds.io/opds-2.0.md#24-facets) and [search](https://specs.opds.io/opds-2.0.md#3-search) scoped to the bookshelf rather than the entire catalog.
 
 ## 4. Callbacks
 
